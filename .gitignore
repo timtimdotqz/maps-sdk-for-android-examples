@@ -35,6 +35,7 @@ captures/
 # Intellij
 *.iml
 .idea/
+TomTom_Maps_Android_SDK*.pdf
 
 # Keystore files
 *.jks
