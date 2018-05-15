@@ -2,8 +2,6 @@ import java.text.SimpleDateFormat
 
 def releaseProps = new Properties()
 releaseProps.load(new FileInputStream("$rootProject.rootDir/release.properties"))
-Properties localProps = new Properties()
-localProps.load(new FileInputStream("$rootProject.rootDir/local.properties"))
 
 
 
@@ -12,7 +10,6 @@ ext {
     release_notify_group = "sampleapp_group_internal";
     buildNumber = getBuildNumber()
     proguardEnable = getProguardOn()
-    androidNdk = localProps.getProperty('ndk.dir')
     currentDateTime = getDate()
     println "proguardEnable " + proguardEnable
     //When empty build all platforms
