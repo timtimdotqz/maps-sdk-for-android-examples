@@ -1,5 +1,7 @@
 = Maps SDK For Android Examples
 
+image:https://circleci.com/gh/tomtom-international/maps-sdk-for-android-examples/tree/master.svg?style=svg["CircleCI", link="https://circleci.com/gh/tomtom-international/maps-sdk-for-android-examples/tree/master"]
+
 Clone repository and build the Maps SDK Examples app to see key features of the Maps SDK.
 Modify the source code to learn more about the SDK.
 This Maps SDK Examples app is provided by TomTom and subject to TomToms privacy policy at https://www.tomtom.com/privacy/[https://tomtom.com/privacy].
