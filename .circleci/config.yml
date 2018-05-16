@@ -23,7 +23,7 @@ jobs:
           command: sed -i "s/undefined/$SECRET/g" sampleapp/src/main/AndroidManifest.xml 
       - run:
           name: Run Tests
-          command: ./gradlew build
+          command: bundle exec fastlane android build
       - store_artifacts:
           path: sampleapp/build/reports
           destination: reports
