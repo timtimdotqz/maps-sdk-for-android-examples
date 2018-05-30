@@ -82,9 +82,4 @@ public class BalloonCustomPresenter extends BaseFunctionalExamplePresenter {
                 DEFAULT_ZOOM_LEVEL, MapConstants.ORIENTATION_NORTH);
     }
 
-    public Context getContext() {
-        return view.getContext();
-    }
-
-
 }

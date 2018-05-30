@@ -8,9 +8,7 @@
  * licensee then you are not authorised to use this software in any manner and should
  * immediately return it to TomTom N.V.
  */
-package com.tomtom.online.sdk.samples.cases.map.manipulation.compass;
-
-import android.content.Context;
+package com.tomtom.online.sdk.samples.cases.map.manipulation.uiextensions;
 
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.TomtomMap;
@@ -20,7 +18,7 @@ import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
 
-public class CompassAndCurrentLocationPresenter extends BaseFunctionalExamplePresenter {
+public class MapUiExtensionsPresenter extends BaseFunctionalExamplePresenter {
 
 
     @Override
@@ -34,7 +32,7 @@ public class CompassAndCurrentLocationPresenter extends BaseFunctionalExamplePre
 
     @Override
     public FunctionalExampleModel getModel() {
-        return new CompassAndCurrentLocationFunctionalExample();
+        return new MapUiExtensionsFunctionalExample();
     }
 
     @Override
@@ -44,10 +42,15 @@ public class CompassAndCurrentLocationPresenter extends BaseFunctionalExamplePre
                 Locations.AMSTERDAM_LOCATION.getLongitude(),
                 DEFAULT_ZOOM_LEVEL,
                 MapConstants.ORIENTATION_NORTH);
+        defaultMapComponentIcons();
+        defaultMapComponentsVisibility();
+    }
+
+    private void defaultMapComponentsVisibility() {
         tomtomMap.getUiSettings().getCompassView().show();
         tomtomMap.getUiSettings().getCurrentLocationView().show();
-
-        defaultMapComponentIcons();
+        tomtomMap.getUiSettings().getPanningControlsView().hide();
+        tomtomMap.getUiSettings().getZoomingControlsView().hide();
     }
 
     private void centerOnAmsterdam() {
@@ -61,6 +64,18 @@ public class CompassAndCurrentLocationPresenter extends BaseFunctionalExamplePre
     public void defaultMapComponentIcons() {
         tomtomMap.getUiSettings().getCompassView().getView().setImageResource(R.drawable.btn_compass);
         tomtomMap.getUiSettings().getCurrentLocationView().getView().setImageResource(R.drawable.btn_current_location);
+
+        //tag::set_default_panning_controls[]
+        tomtomMap.getUiSettings().getPanningControlsView().getView().getArrowDownButton().setImageResource(R.drawable.btn_down);
+        tomtomMap.getUiSettings().getPanningControlsView().getView().getArrowUpButton().setImageResource(R.drawable.btn_up);
+        tomtomMap.getUiSettings().getPanningControlsView().getView().getArrowLeftButton().setImageResource(R.drawable.btn_left);
+        tomtomMap.getUiSettings().getPanningControlsView().getView().getArrowRightButton().setImageResource(R.drawable.btn_right);
+        //end::set_default_panning_controls[]
+
+        //tag::set_default_zooming_controls[]
+        tomtomMap.getUiSettings().getZoomingControlsView().getView().getZoomInButton().setImageResource(R.drawable.btn_zoom_in);
+        tomtomMap.getUiSettings().getZoomingControlsView().getView().getZoomOutButton().setImageResource(R.drawable.btn_zoom_out);
+        //end::set_default_zooming_controls[]
     }
 
     public void show() {
@@ -72,6 +87,14 @@ public class CompassAndCurrentLocationPresenter extends BaseFunctionalExamplePre
         //tag::show_current_location[]
         tomtomMap.getUiSettings().getCurrentLocationView().show();
         //end::show_current_location[]
+
+        //tag::show_panning_controls[]
+        tomtomMap.getUiSettings().getPanningControlsView().show();
+        //end::show_panning_controls[]
+
+        //tag::show_zooming_controls[]
+        tomtomMap.getUiSettings().getZoomingControlsView().show();
+        //end::show_zooming_controls[]
     }
 
     public void hide() {
@@ -83,6 +106,14 @@ public class CompassAndCurrentLocationPresenter extends BaseFunctionalExamplePre
         //tag::hide_current_location[]
         tomtomMap.getUiSettings().getCurrentLocationView().hide();
         //end::hide_current_location[]
+
+        //tag::hide_panning_controls[]
+        tomtomMap.getUiSettings().getPanningControlsView().hide();
+        //end::hide_panning_controls[]
+
+        //tag::hide_zooming_controls[]
+        tomtomMap.getUiSettings().getZoomingControlsView().hide();
+        //end::hide_zooming_controls[]
     }
 
     public void customMapComponentIcons() {
@@ -92,6 +123,18 @@ public class CompassAndCurrentLocationPresenter extends BaseFunctionalExamplePre
 
         tomtomMap.getUiSettings().getCurrentLocationView().getView()
                 .setImageResource(R.drawable.ic_map_position);
+
+        //tag::set_custom_panning_controls[]
+        tomtomMap.getUiSettings().getPanningControlsView().getView().getArrowDownButton().setImageResource(R.drawable.btn_down_custom);
+        tomtomMap.getUiSettings().getPanningControlsView().getView().getArrowUpButton().setImageResource(R.drawable.btn_up_custom);
+        tomtomMap.getUiSettings().getPanningControlsView().getView().getArrowLeftButton().setImageResource(R.drawable.btn_left_custom);
+        tomtomMap.getUiSettings().getPanningControlsView().getView().getArrowRightButton().setImageResource(R.drawable.btn_right_custom);
+        //end::set_custom_panning_controls[]
+
+        //tag::set_custom_zooming_controls[]
+        tomtomMap.getUiSettings().getZoomingControlsView().getView().getZoomInButton().setImageResource(R.drawable.btn_zoom_in_custom);
+        tomtomMap.getUiSettings().getZoomingControlsView().getView().getZoomOutButton().setImageResource(R.drawable.btn_zoom_out_custom);
+        //end::set_custom_zooming_controls[]
     }
 
 

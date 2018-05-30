@@ -3,13 +3,12 @@ import java.text.SimpleDateFormat
 def releaseProps = new Properties()
 releaseProps.load(new FileInputStream("$rootProject.rootDir/release.properties"))
 
-
-
 ext {
     releaseBuild = false
     release_notify_group = "sampleapp_group_internal";
     buildNumber = getBuildNumber()
     proguardEnable = getProguardOn()
+    androidNdk = System.getenv("ANDROID_NDK_ROOT")
     currentDateTime = getDate()
     println "proguardEnable " + proguardEnable
     //When empty build all platforms
@@ -24,7 +23,7 @@ ext {
 
     androidBuildToolsVersion = '27.0.3'
     androidCompileSdkVersion = 27
-    androidTargetSdkVersion = 23
+    androidTargetSdkVersion = 26
     androidMinSdkVersion = 16
     buildVersionName = releaseProps.getProperty('mapsSdkVersion')
     buildVersionCode = releaseProps.getProperty("interLibVersion").replaceAll('-SNAPSHOT', '').replaceAll("\\.", '').toInteger()

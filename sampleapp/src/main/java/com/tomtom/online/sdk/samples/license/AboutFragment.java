@@ -94,10 +94,10 @@ public class AboutFragment extends Fragment implements FunctionalExampleFragment
                 Timber.d("module name loaded " + module);
                 modules.add(module);
             }
-            return ImmutableList.copyOf(modules);
+            return ImmutableList.<String>copyOf(modules);
         } catch (IOException e) {
             Timber.e(e);
-            return ImmutableList.of();
+            return ImmutableList.<String>of();
         }
     }
 

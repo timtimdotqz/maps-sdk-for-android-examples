@@ -12,6 +12,7 @@ package com.tomtom.online.sdk.samples.cases.search;
 
 import android.widget.ProgressBar;
 
+import com.google.common.collect.ImmutableList;
 import com.tomtom.online.sdk.common.util.Contextable;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResult;
 
@@ -31,7 +32,7 @@ public interface SearchView extends Contextable {
 
     void showSearchFailedMessage(String message);
 
-    void updateSearchResults(FuzzySearchResult[] results);
+    void updateSearchResults(ImmutableList<FuzzySearchResult> results);
 
     String getSearchFieldText();
 

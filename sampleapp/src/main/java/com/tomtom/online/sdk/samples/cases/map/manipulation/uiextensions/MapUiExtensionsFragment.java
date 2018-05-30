@@ -8,7 +8,7 @@
  * licensee then you are not authorised to use this software in any manner and should
  * immediately return it to TomTom N.V.
  */
-package com.tomtom.online.sdk.samples.cases.map.manipulation.compass;
+package com.tomtom.online.sdk.samples.cases.map.manipulation.uiextensions;
 
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.cases.ExampleFragment;
@@ -16,20 +16,20 @@ import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
 
 import timber.log.Timber;
 
-public class CompassAndCurrentLocationFragment extends ExampleFragment<CompassAndCurrentLocationPresenter> {
+public class MapUiExtensionsFragment extends ExampleFragment<MapUiExtensionsPresenter> {
 
     private static final int NUMBER_OF_ACTIONS = 3;
 
     @Override
-    protected CompassAndCurrentLocationPresenter createPresenter() {
-        return new CompassAndCurrentLocationPresenter();
+    protected MapUiExtensionsPresenter createPresenter() {
+        return new MapUiExtensionsPresenter();
     }
 
     @Override
     protected void onOptionsButtonsView(final OptionsButtonsView view) {
-        view.addOption(R.string.map_compass_and_current_location_default);
-        view.addOption(R.string.map_compass_and_current_location_custom);
-        view.addOption(R.string.map_compass_and_current_location_hide);
+        view.addOption(R.string.map_ui_extensions_default);
+        view.addOption(R.string.map_ui_extensions_custom);
+        view.addOption(R.string.map_ui_extensions_hide);
         optionsView.selectItem(0, true);
     }
 

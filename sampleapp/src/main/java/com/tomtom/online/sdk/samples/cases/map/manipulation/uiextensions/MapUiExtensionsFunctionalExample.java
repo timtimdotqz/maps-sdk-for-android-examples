@@ -8,16 +8,16 @@
  * licensee then you are not authorised to use this software in any manner and should
  * immediately return it to TomTom N.V.
  */
-package com.tomtom.online.sdk.samples.cases.map.manipulation.compass;
+package com.tomtom.online.sdk.samples.cases.map.manipulation.uiextensions;
 
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class CompassAndCurrentLocationFunctionalExample implements FunctionalExampleModel {
+public class MapUiExtensionsFunctionalExample implements FunctionalExampleModel {
 
     @Override
     public int getPlayableTitle() {
-        return R.string.map_compass_and_current_location_title;
+        return R.string.map_ui_extensions_title;
     }
 
     @Override

@@ -11,6 +11,7 @@
 package com.tomtom.online.sdk.samples.cases.map.markers;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.map.Icon.Factory;
@@ -147,10 +148,6 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
                 MapConstants.ORIENTATION_NORTH
         );
 
-    }
-
-    private Context getContext() {
-        return context;
     }
 
     @Override

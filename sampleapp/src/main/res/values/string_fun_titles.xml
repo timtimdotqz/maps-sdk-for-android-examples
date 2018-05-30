@@ -48,6 +48,7 @@
     <string name="route_supporting_points">Supporting points</string>
     <string name="markers_clustering_title">Markers clustering</string>
     <string name="route_reachable_range">Reachable range</string>
+    <string name="additional_data_provider_search">Additional data</string>
     <string name="empty" />
 
 </resources>

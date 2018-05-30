@@ -105,4 +105,21 @@
     </style>
     <!-- //end::current_location_style[] -->
 
+    <!-- //tag::panning_buttons_style[] -->
+    <style name="ArrowButton" parent="GenericControlButton" />
+
+    <style name="ArrowButtonsGroup" parent="GenericControlButtonsGroup">
+        <item name="android:layout_width">150dp</item>
+        <item name="android:layout_marginRight">80dp</item>
+    </style>
+    <!-- //end::panning_buttons_style[] -->
+
+    <!-- //tag::zooming_buttons_style[] -->
+    <style name="ZoomButton" parent="GenericControlButton" />
+
+    <style name="ZoomButtonsGroup" parent="GenericControlButtonsGroup">
+        <item name="android:layout_width">@dimen/control_button_default_size</item>
+    </style>
+    <!-- //end::zooming_buttons_style[] -->
+
 </resources>

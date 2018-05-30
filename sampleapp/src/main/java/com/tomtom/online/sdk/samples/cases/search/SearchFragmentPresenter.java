@@ -18,6 +18,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.google.common.collect.ImmutableList;
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.common.util.Contextable;
 import com.tomtom.online.sdk.location.LocationRequestsFactory;
@@ -33,6 +34,7 @@ import com.tomtom.online.sdk.search.extensions.SearchService;
 import com.tomtom.online.sdk.search.extensions.SearchServiceConnectionCallback;
 import com.tomtom.online.sdk.search.rx.RxContext;
 
+import java.util.List;
 import java.util.concurrent.Executors;
 
 import io.reactivex.Scheduler;
@@ -49,7 +51,7 @@ public class SearchFragmentPresenter implements SearchPresenter, LocationUpdateL
 
     protected SearchView searchView;
     protected SearchService searchService;
-    protected FuzzySearchResult[] lastSearchResult;
+    protected ImmutableList<FuzzySearchResult> lastSearchResult;
 
     protected LocationSource locationSource;
 
@@ -61,7 +63,7 @@ public class SearchFragmentPresenter implements SearchPresenter, LocationUpdateL
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            lastSearchResult = (FuzzySearchResult[]) savedInstanceState.getSerializable(LAST_SEARCH_QUERY_BUNDLE_KEY);
+            lastSearchResult = (ImmutableList) savedInstanceState.getSerializable(LAST_SEARCH_QUERY_BUNDLE_KEY);
             if (lastSearchResult != null) {
                 searchView.updateSearchResults(lastSearchResult);
             }
@@ -169,7 +171,7 @@ public class SearchFragmentPresenter implements SearchPresenter, LocationUpdateL
                     @Override
                     public void onError(Throwable throwable) {
                         searchView.showSearchFailedMessage(throwable.getMessage());
-                        searchView.updateSearchResults(new FuzzySearchResult[0]);
+                        searchView.updateSearchResults(ImmutableList.<FuzzySearchResult>of());
                         searchFinished();
                     }
                 });

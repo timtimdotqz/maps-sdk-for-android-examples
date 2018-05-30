@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableList;
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.utils.DistanceCalculator;
@@ -41,6 +42,8 @@ import com.tomtom.online.sdk.samples.utils.views.RadioModifierView;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResult;
 import com.tomtom.online.sdk.search.extensions.SearchServiceConnectionCallback;
 import com.tomtom.online.sdk.search.extensions.SearchServiceManager;
+
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -52,7 +55,7 @@ public class SearchFragment extends SearchFunctionalFragment implements SearchVi
     public static final String SEARCH_REQUEST_CODE_KEY = "SEARCH_REQUEST_CODE";
     public static final String ARE_LIST_ITEMS_CLICKABLE_KEY = "ARE_LIST_ITEMS_CLICKABLE";
 
-    protected FuzzySearchResult[] searchResults = new FuzzySearchResult[0];
+    protected ImmutableList<FuzzySearchResult> searchResults = ImmutableList.<FuzzySearchResult>of();
     protected SearchPresenter searchPresenter; //Available for category search
 
     protected EditText searchTextView;
@@ -229,7 +232,7 @@ public class SearchFragment extends SearchFunctionalFragment implements SearchVi
             if (!areListItemsClickable) {
                 return;
             }
-            FuzzySearchResult searchResult = searchResults[position];
+            FuzzySearchResult searchResult = searchResults.get(position);
             getActivity().getSupportFragmentManager().popBackStack();
         }
     };
@@ -314,7 +317,7 @@ public class SearchFragment extends SearchFunctionalFragment implements SearchVi
     }
 
     @Override
-    public void updateSearchResults(FuzzySearchResult[] results) {
+    public void updateSearchResults(ImmutableList<FuzzySearchResult> results) {
         searchResults = results;
         searchAdapter.refresh();
     }

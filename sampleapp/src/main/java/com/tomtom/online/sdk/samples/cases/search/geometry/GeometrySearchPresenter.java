@@ -154,7 +154,7 @@ public class GeometrySearchPresenter extends BaseFunctionalExamplePresenter {
         }
 
         boolean isResultEmpty(GeometrySearchResponse geometrySearchResponse) {
-            return geometrySearchResponse.getResults() == null || geometrySearchResponse.getResults().length == 0;
+            return geometrySearchResponse.getResults() == null || geometrySearchResponse.getResults().isEmpty();
         }
 
         @Override

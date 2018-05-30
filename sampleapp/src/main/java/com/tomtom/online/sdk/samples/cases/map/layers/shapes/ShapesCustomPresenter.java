@@ -125,11 +125,6 @@ public class ShapesCustomPresenter extends BaseFunctionalExamplePresenter {
         //end::doc_shape_circle[]
     }
 
-
-    public Context getContext() {
-        return view.getContext();
-    }
-
     private void centerMapOnLocation() {
         tomtomMap.centerOn(
                 Locations.AMSTERDAM_LOCATION.getLatitude(),

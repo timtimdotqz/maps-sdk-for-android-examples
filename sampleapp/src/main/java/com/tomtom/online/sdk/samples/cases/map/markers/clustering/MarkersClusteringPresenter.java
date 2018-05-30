@@ -58,7 +58,8 @@ public class MarkersClusteringPresenter extends BaseFunctionalExamplePresenter {
         return tomtomMap != null;
     }
 
-    private void confMapPadding() {
+    @Override
+    protected void confMapPadding() {
         int offsetBig = view.getContext().getResources().getDimensionPixelSize(R.dimen.offset_super_big);
 
         int actionBarHeight = view.getContext().getResources().getDimensionPixelSize(

@@ -12,6 +12,7 @@ package com.tomtom.online.sdk.samples.activities;
 
 import android.content.Context;
 
+import com.tomtom.online.sdk.common.util.Contextable;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
@@ -22,10 +23,11 @@ import java.util.concurrent.Executors;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
 
-public abstract class BaseFunctionalExamplePresenter implements FunctionalExamplePresenter {
+public abstract class BaseFunctionalExamplePresenter implements FunctionalExamplePresenter, Contextable {
 
     private static final int NETWORK_THREADS_NUMBER = 4;
     public static final float DEFAULT_ZOOM_TRAFFIC_LEVEL = 12.0f; //works from 11.1
+    protected static final int DEFAULT_MAP_PADDING = 0;
 
     protected TomtomMap tomtomMap;
     protected FunctionalExampleFragment view;
@@ -42,11 +44,14 @@ public abstract class BaseFunctionalExamplePresenter implements FunctionalExampl
         
         view.setActionBarTitle(getModel().getPlayableTitle());
         view.setActionBarSubtitle(getModel().getPlayableSubtitle());
+
+        confMapPadding();
     }
 
     @Override
     public void cleanup() {
         resetCompassButton(view, tomtomMap);
+        resetMapPadding();
     }
 
     public abstract FunctionalExampleModel getModel();
@@ -80,7 +85,27 @@ public abstract class BaseFunctionalExamplePresenter implements FunctionalExampl
     @Override
     public int getCurrentLocationBottomMarginDelta(FunctionalExampleFragment view) {
         return DimensionUtils.fromDpToPx(DEFAULT_CURRENT_LOCATION_BUTTON_BOTTOM_MARGIN,
-                view.getContext().getResources().getDisplayMetrics());
+                getContext().getResources().getDisplayMetrics());
     }
 
+    protected void confMapPadding() {
+        int offsetBig = getContext().getResources().getDimensionPixelSize(R.dimen.offset_extra_big);
+
+        int actionBarHeight = getContext().getResources().getDimensionPixelSize(
+                android.support.v7.appcompat.R.dimen.abc_action_bar_default_height_material);
+
+        int padding = actionBarHeight + offsetBig;
+
+        tomtomMap.setPadding(padding, offsetBig, padding, offsetBig);
+    }
+
+    protected void resetMapPadding(){
+        tomtomMap.setPadding(DEFAULT_MAP_PADDING, DEFAULT_MAP_PADDING,
+                DEFAULT_MAP_PADDING, DEFAULT_MAP_PADDING);
+    }
+
+    @Override
+    public Context getContext() {
+        return view.getContext();
+    }
 }

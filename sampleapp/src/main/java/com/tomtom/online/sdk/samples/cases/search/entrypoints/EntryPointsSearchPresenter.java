@@ -70,7 +70,8 @@ public class EntryPointsSearchPresenter extends BaseFunctionalExamplePresenter {
         );
     }
 
-    private void confMapPadding(){
+    @Override
+    protected void confMapPadding(){
 
         int offsetDefault = view.getContext().getResources().getDimensionPixelSize(R.dimen.offset_default);
 
@@ -101,7 +102,7 @@ public class EntryPointsSearchPresenter extends BaseFunctionalExamplePresenter {
                 fragment.enableOptionsView();
                 tomtomMap.clear();
 
-                if (response.getResults().length == 0) {
+                if (response.getResults().isEmpty()) {
                     view.showInfoText(R.string.entry_points_no_results, Toast.LENGTH_LONG);
                     return;
                 }
@@ -109,7 +110,7 @@ public class EntryPointsSearchPresenter extends BaseFunctionalExamplePresenter {
                 Icon icon = Icon.Factory.fromResources(
                         view.getContext(), R.drawable.ic_marker_entry_point);
 
-                FuzzySearchResult fuzzySearchResult = response.getResults()[0];
+                FuzzySearchResult fuzzySearchResult = response.getResults().get(0);
 
                 tomtomMap.addMarker(new MarkerBuilder(fuzzySearchResult.getPosition())
                         .markerBalloon(new SimpleMarkerBalloon(fuzzySearchResult.getPoi().getName()))

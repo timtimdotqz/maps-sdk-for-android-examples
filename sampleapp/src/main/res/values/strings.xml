@@ -174,11 +174,11 @@
     <string name="balloon_tomtom_hq">TomTom HQ</string>
     <string name="balloon_default_text">Welcome to TomTom</string>
 
-    <string name="map_compass_and_current_location">Compass and current location</string>
-    <string name="map_compass_and_current_location_title">Compass and current location</string>
-    <string name="map_compass_and_current_location_default">Default</string>
-    <string name="map_compass_and_current_location_hide">Hide</string>
-    <string name="map_compass_and_current_location_custom">Custom</string>
+    <string name="map_ui_extensions">Map UI extensions</string>
+    <string name="map_ui_extensions_title">Map UI extensions</string>
+    <string name="map_ui_extensions_default">Default</string>
+    <string name="map_ui_extensions_hide">Hide</string>
+    <string name="map_ui_extensions_custom">Custom</string>
     <string name="choose_module">Choose module</string>
     <string name="dialog_routing_in_progress_msg">Routing in progress...</string>
 
@@ -237,10 +237,14 @@
     <string name="electric_consumption">Consumption: %1$.2f kWh</string>
     <string name="combustion_consumption">Consumption: %1$.2f liters</string>
 
-
-
     <string name="supporting_points_subtitle">Choose min. deviation distance</string>
     <string name="btn_txt_0_m">0 m</string>
     <string name="btn_txt_10_km">10 km</string>
+
+    <string name="additional_data_provider_subtitle">Polygons for geographies</string>
+    <string name="btn_text_poland">Poland</string>
+    <string name="btn_text_amsterdam">Amsterdam</string>
+    <string name="btn_text_berlin">Berlin</string>
+
 
 </resources>

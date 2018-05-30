@@ -21,9 +21,9 @@ import com.tomtom.online.sdk.samples.cases.map.layers.tilestypes.MapTilesTypesFr
 import com.tomtom.online.sdk.samples.cases.map.layers.traffic.TrafficLayersFragment;
 import com.tomtom.online.sdk.samples.cases.map.layers.traffic.VectorTrafficLayersFragment;
 import com.tomtom.online.sdk.samples.cases.map.manipulation.centering.MapCenteringFragment;
-import com.tomtom.online.sdk.samples.cases.map.manipulation.compass.CompassAndCurrentLocationFragment;
 import com.tomtom.online.sdk.samples.cases.map.manipulation.events.MapManipulationEventsFragment;
 import com.tomtom.online.sdk.samples.cases.map.manipulation.perspective.MapViewPerspectiveFragment;
+import com.tomtom.online.sdk.samples.cases.map.manipulation.uiextensions.MapUiExtensionsFragment;
 import com.tomtom.online.sdk.samples.cases.map.markers.MarkerCustomFragment;
 import com.tomtom.online.sdk.samples.cases.map.markers.balloons.BalloonCustomFragment;
 import com.tomtom.online.sdk.samples.cases.map.markers.clustering.MarkersClusteringFragment;
@@ -44,6 +44,7 @@ import com.tomtom.online.sdk.samples.cases.search.ReverseGeocodingFragment;
 import com.tomtom.online.sdk.samples.cases.search.SearchAlongRouteFragment;
 import com.tomtom.online.sdk.samples.cases.search.SearchFragment;
 import com.tomtom.online.sdk.samples.cases.search.TypeAheadSearchFragment;
+import com.tomtom.online.sdk.samples.cases.search.adp.AdditionalDataSearchFragment;
 import com.tomtom.online.sdk.samples.cases.search.entrypoints.EntryPointsSearchFragment;
 import com.tomtom.online.sdk.samples.cases.search.geometry.GeometrySearchFragment;
 import com.tomtom.online.sdk.samples.fragments.CurrentLocationFragment;
@@ -125,8 +126,8 @@ public class FunctionalExamplesFactory {
             case R.id.reverse_geocoding:
                 return new ReverseGeocodingFragment();
 
-            case R.id.map_compass_and_current_location:
-                return new CompassAndCurrentLocationFragment();
+            case R.id.map_ui_extensions:
+                return new MapUiExtensionsFragment();
 
             case R.id.license:
                 return new AboutFragment();
@@ -157,6 +158,9 @@ public class FunctionalExamplesFactory {
 
             case R.id.markers_clustering:
                 return new MarkersClusteringFragment();
+
+            case R.id.additional_data:
+                return new AdditionalDataSearchFragment();
 
             default:
                 return new CurrentLocationFragment();

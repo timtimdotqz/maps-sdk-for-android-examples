@@ -59,10 +59,10 @@
                 android:title="@string/menu_events" />
 
             <item
-                android:id="@+id/map_compass_and_current_location"
+                android:id="@+id/map_ui_extensions"
                 android:checkableBehavior="single"
                 android:icon="@drawable/ic_menu_send"
-                android:title="@string/map_compass_and_current_location" />
+                android:title="@string/map_ui_extensions" />
         </menu>
     </item>
 
@@ -194,6 +194,11 @@
                 android:id="@+id/entry_points"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/entry_points" />
+
+            <item
+                android:id="@+id/additional_data"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/additional_data_provider_search" />
 
         </menu>
     </item>
