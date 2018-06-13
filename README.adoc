@@ -43,19 +43,19 @@ To develop your own application with Maps SDK, you need to make sure that the *p
 
 
 [[projects-access]]
-=== Add repositories to all projects to root/build.gradle: 
+=== Add repositories to all projects to root/build.gradle:
 
 [source,shell,indent=0]
 ----
-allprojects { 
+allprojects {
 
    repositories {
-      jcenter()
       google()
-      maven { 
+      jcenter()
+      maven {
          url 'https://maven.tomtom.com:8443/nexus/content/repositories/releases/'
       }
-   }    
+   }   
 }
 ----
 
@@ -84,26 +84,24 @@ Add service keys, taken from http://developer.tomtom.com, inside <application> t
 [source,shell,indent=0]
 ----
 //library required to display map
-compile("com.tomtom.online:sdk-maps:2.+@aar"){
+api("com.tomtom.online:sdk-maps:2.+@aar"){
     transitive = true;
 }
 
 //library required for search
-compile("com.tomtom.online:sdk-search:2.+@aar"){
+api("com.tomtom.online:sdk-search:2.+@aar"){
     transitive = true;
 }
 
 //library required for routing
-compile("com.tomtom.online:sdk-routing:2.+@aar"){
+api("com.tomtom.online:sdk-routing:2.+@aar"){
     transitive = true;
 }
 ----
 
 * Add MultiDex support if required, as described https://developer.android.com/studio/build/multidex.html[here]
 
-
-
-== License 
+== License
 
 Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
 
