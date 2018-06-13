@@ -202,6 +202,7 @@
     <string name="menu_lang_param">Map language</string>
     <string name="menu_geopolitical_view">Geopolitical view</string>
     <string name="menu_custom_style">Custom style</string>
+    <string name="menu_static_image">Static map image</string>
     <string name="english">English</string>
     <string name="russian">Russian</string>
     <string name="dutch">Dutch</string>

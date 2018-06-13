@@ -27,6 +27,7 @@ import com.tomtom.online.sdk.samples.cases.map.manipulation.uiextensions.MapUiEx
 import com.tomtom.online.sdk.samples.cases.map.markers.MarkerCustomFragment;
 import com.tomtom.online.sdk.samples.cases.map.markers.balloons.BalloonCustomFragment;
 import com.tomtom.online.sdk.samples.cases.map.markers.clustering.MarkersClusteringFragment;
+import com.tomtom.online.sdk.samples.cases.map.staticimage.StaticImageFragment;
 import com.tomtom.online.sdk.samples.cases.route.alternatives.RouteAlternativesFragment;
 import com.tomtom.online.sdk.samples.cases.route.avoid.RouteAvoidsFragment;
 import com.tomtom.online.sdk.samples.cases.route.consumption.RouteConsumptionModelFragment;
@@ -131,6 +132,8 @@ public class FunctionalExamplesFactory {
 
             case R.id.license:
                 return new AboutFragment();
+            case R.id.map_static_image:
+                return new StaticImageFragment();
 
             case R.id.route_waypoints:
                 return new RouteWaypointsFragment();

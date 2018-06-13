@@ -82,6 +82,10 @@ dependencies {
         api("com.tomtom.online:sdk-maps-ui-extensions:$rootProject.internalVersions.sdk@aar") {
             transitive = true
         }
+        //dependency for static maps extensions
+        api("com.tomtom.online:sdk-maps-static-image:$rootProject.internalVersions.sdk@aar") {
+            transitive = true
+        }
 
         //doc_dependencies_sample_app_stop
 

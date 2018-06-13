@@ -32,7 +32,7 @@ import com.tomtom.online.sdk.search.api.revgeo.RevGeoSearchResultListener;
 import com.tomtom.online.sdk.search.data.common.Address;
 import com.tomtom.online.sdk.search.data.reversegeocoder.ReverseGeocoderSearchQuery;
 import com.tomtom.online.sdk.search.data.reversegeocoder.ReverseGeocoderSearchQueryBuilder;
-import com.tomtom.online.sdk.search.data.reversegeocoder.ReverseGeocoderSearchResult;
+import com.tomtom.online.sdk.search.data.reversegeocoder.ReverseGeocoderSearchResponse;
 
 public class ReverseGeocodingPresenter extends BaseFunctionalExamplePresenter {
 
@@ -121,7 +121,7 @@ public class ReverseGeocodingPresenter extends BaseFunctionalExamplePresenter {
         return context.getString(R.string.reverse_geocoding_no_results);
     }
 
-    protected String getAddressFromResponse(ReverseGeocoderSearchResult response) {
+    protected String getAddressFromResponse(ReverseGeocoderSearchResponse response) {
 
         String result = getNoReverseGeocodingResultsMessage();
 
@@ -147,7 +147,7 @@ public class ReverseGeocodingPresenter extends BaseFunctionalExamplePresenter {
 
         searchAPI.reverseGeocoding(reverseGeocoderQuery, new RevGeoSearchResultListener() {
             @Override
-            public void onSearchResult(ReverseGeocoderSearchResult response) {
+            public void onSearchResult(ReverseGeocoderSearchResponse response) {
                 String address = getAddressFromResponse(response);
                 balloon.setText(address);
                 marker.select();

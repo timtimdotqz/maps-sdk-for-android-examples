@@ -20,6 +20,7 @@ import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
+import com.tomtom.online.sdk.samples.utils.formatter.LatLngFormatter;
 
 import java.util.List;
 
@@ -87,7 +88,7 @@ public class MarkersClusteringPresenter extends BaseFunctionalExamplePresenter {
             //tag::doc_add_marker_to_cluster[]
             MarkerBuilder markerBuilder = new MarkerBuilder(position)
                     .shouldCluster(true)
-                    .markerBalloon(new SimpleMarkerBalloon(position.toSimplerString()));
+                    .markerBalloon(new SimpleMarkerBalloon(LatLngFormatter.toSimpleString(position)));
             //end::doc_add_marker_to_cluster[]
             tomtomMap.addMarker(markerBuilder);
         }

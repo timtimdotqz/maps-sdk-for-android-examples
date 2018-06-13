@@ -28,6 +28,7 @@ import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
+import com.tomtom.online.sdk.samples.utils.formatter.LatLngFormatter;
 
 import java.util.List;
 
@@ -113,7 +114,7 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
         for (LatLng position : list) {
             //tag::doc_create_simple_marker[]
             MarkerBuilder markerBuilder = new MarkerBuilder(position)
-                    .markerBalloon(new SimpleMarkerBalloon(position.toSimplerString()));
+                    .markerBalloon(new SimpleMarkerBalloon(LatLngFormatter.toSimpleString(position)));
             tomtomMap.addMarker(markerBuilder);
             //end::doc_create_simple_marker[]
         }
@@ -131,8 +132,8 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
             //tag::doc_create_decal_marker[]
             MarkerBuilder markerBuilder = new MarkerBuilder(position)
                     .icon(Factory.fromResources(getContext(), R.drawable.ic_favourites))
-                    .markerBalloon(new SimpleMarkerBalloon(position.toSimplerString()))
-                    .tag("more informations in tag").iconAnchor(MarkerAnchor.Bottom)
+                    .markerBalloon(new SimpleMarkerBalloon(LatLngFormatter.toSimpleString(position)))
+                    .tag("more information in tag").iconAnchor(MarkerAnchor.Bottom)
                     .decal(true); //By default is false
             tomtomMap.addMarker(markerBuilder);
             //end::doc_create_decal_marker[]

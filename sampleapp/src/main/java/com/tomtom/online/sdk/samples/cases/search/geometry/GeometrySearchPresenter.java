@@ -30,12 +30,12 @@ import com.tomtom.online.sdk.search.OnlineSearchApi;
 import com.tomtom.online.sdk.search.SearchApi;
 import com.tomtom.online.sdk.search.api.SearchError;
 import com.tomtom.online.sdk.search.api.geometry.GeometrySearchResultListener;
+import com.tomtom.online.sdk.search.data.geometry.Geometry;
 import com.tomtom.online.sdk.search.data.geometry.GeometrySearchQuery;
 import com.tomtom.online.sdk.search.data.geometry.GeometrySearchQueryBuilder;
 import com.tomtom.online.sdk.search.data.geometry.GeometrySearchResponse;
 import com.tomtom.online.sdk.search.data.geometry.GeometrySearchResult;
 import com.tomtom.online.sdk.search.data.geometry.query.CircleGeometry;
-import com.tomtom.online.sdk.search.data.geometry.query.Geometry;
 import com.tomtom.online.sdk.search.data.geometry.query.PolygonGeometry;
 
 import java.util.ArrayList;

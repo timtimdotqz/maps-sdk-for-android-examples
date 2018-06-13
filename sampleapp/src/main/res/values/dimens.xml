@@ -54,5 +54,6 @@
     <dimen name="offset_no_offset">0dp</dimen>
     <dimen name="eta_panel_height">40dp</dimen>
     <dimen name="button_offset">15dp</dimen>
+    <dimen name="static_image_margin">1dp</dimen>
 
 </resources>

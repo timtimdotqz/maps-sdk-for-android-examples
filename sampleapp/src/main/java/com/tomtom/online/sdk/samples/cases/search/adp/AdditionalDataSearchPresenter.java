@@ -36,6 +36,7 @@ import com.tomtom.online.sdk.search.rx.RxContext;
 import io.reactivex.MaybeSource;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
@@ -47,6 +48,7 @@ public class AdditionalDataSearchPresenter extends BaseFunctionalExamplePresente
 
     protected Context context;
     protected FunctionalExampleFragment fragment;
+    private Disposable observableWork;
 
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
@@ -71,6 +73,14 @@ public class AdditionalDataSearchPresenter extends BaseFunctionalExamplePresente
         tomtomMap.clear();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (observableWork !=null) {
+            observableWork.dispose();
+        }
+    }
+
     public void centerOnDefaultLocation() {
         tomtomMap.centerOn(CameraPosition.builder(Locations.AMSTERDAM_CENTER_LOCATION)
                 .bearing(MapConstants.ORIENTATION_NORTH)
@@ -85,7 +95,6 @@ public class AdditionalDataSearchPresenter extends BaseFunctionalExamplePresente
         fragment.disableOptionsView();
 
         //tag::doc_adp_search_request[]
-
         //ADP Data is not available in all types (e.g. not in POI)
         //We restrict list of results only to Geo (Geographies) types
         //So that we are sure that we receive fields required by ADP
@@ -93,7 +102,7 @@ public class AdditionalDataSearchPresenter extends BaseFunctionalExamplePresente
         fuzzySearchQuery.withIdx("Geo");
 
         final SearchApi searchApi = OnlineSearchApi.create(view.getContext());
-        searchApi.search(fuzzySearchQuery)
+        observableWork = searchApi.search(fuzzySearchQuery)
                 .observeOn(getWorkingScheduler())
                 .filter(nonEmptyResponse())
                 .map(firstResultWithAdditionalData())

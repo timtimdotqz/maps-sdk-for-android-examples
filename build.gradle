@@ -19,14 +19,13 @@ ext {
 buildscript {
 
     repositories {
+        google()
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
         maven { url "https://plugins.gradle.org/m2/" }
-        maven { url 'https://maven.google.com' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-dev/' }
         maven { url 'https://jcenter.bintray.com'}
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-        google()
     }
 
     dependencies {
@@ -38,8 +37,8 @@ buildscript {
 //tag::doc_setup_main_build_gradle_repo[]
 allprojects {
     repositories {
+        google()
         jcenter()
-        maven { url 'https://maven.google.com' }
         maven { url 'https://jcenter.bintray.com'}
         maven { url 'https://maven.fabric.io/public' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-dev/' }

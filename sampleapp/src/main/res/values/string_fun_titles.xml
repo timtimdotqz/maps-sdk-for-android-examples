@@ -40,6 +40,8 @@
     <string name="reverse_geocoding_title">Reverse geocoding</string>
     <string name="reverse_geocoding_subtitle">Drop a pin</string>
     <string name="about_menu">About</string>
+    <string name="static_image_title">Static map image</string>
+    <string name="static_image_help">Press map image for details</string>
     <string name="route_alternatives_title">Alternative routes</string>
     <string name="search_along_route_title">Search along the route</string>
     <string name="geometry_search_title">Geometry search</string>

@@ -34,7 +34,7 @@ ext {
     androidVersions = [
             support     : '27.1.1',
             design      : '27.1.1',
-            playservices: '12.0.1',
+            playservices: '15.0.1',
             multidex    : '1.0.2',
             constraint_layout: '1.1.0',
             test        : [
