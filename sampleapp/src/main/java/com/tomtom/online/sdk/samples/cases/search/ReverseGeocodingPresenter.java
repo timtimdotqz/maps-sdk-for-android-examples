@@ -11,6 +11,7 @@
 package com.tomtom.online.sdk.samples.cases.search;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.google.common.base.Strings;
 import com.tomtom.online.sdk.common.location.LatLng;
@@ -43,7 +44,7 @@ public class ReverseGeocodingPresenter extends BaseFunctionalExamplePresenter {
     private TomtomMapCallback.OnMapLongClickListener onMapLongClickListener =
             new TomtomMapCallback.OnMapLongClickListener() {
                 @Override
-                public void onMapLongClick(LatLng latLng) {
+                public void onMapLongClick(@NonNull LatLng latLng) {
                     tomtomMap.removeMarkers();
                     createMarker(latLng.getLatitude(), latLng.getLongitude());
                     reverseGeocode(latLng.getLatitude(), latLng.getLongitude());
@@ -52,7 +53,7 @@ public class ReverseGeocodingPresenter extends BaseFunctionalExamplePresenter {
 
     private TomtomMapCallback.OnMarkerClickListener onMarkerClickListener = new TomtomMapCallback.OnMarkerClickListener() {
         @Override
-        public void onMarkerClick(Marker marker) {
+        public void onMarkerClick(@NonNull Marker marker) {
             tomtomMap.centerOn(marker.getPosition());
         }
     };

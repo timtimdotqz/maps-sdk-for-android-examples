@@ -12,6 +12,7 @@ package com.tomtom.online.sdk.samples.cases.map.layers.shapes;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.tomtom.online.sdk.common.location.LatLng;
@@ -171,21 +172,21 @@ public class ShapesCustomPresenter extends BaseFunctionalExamplePresenter {
 
     private TomtomMapCallback.OnPolylineClickListener onPolylineClickListener = new TomtomMapCallback.OnPolylineClickListener() {
         @Override
-        public void onPolylineClick(Polyline polyline) {
+        public void onPolylineClick(@NonNull Polyline polyline) {
             view.showInfoText(R.string.polyline_clicked, TOAST_DURATION);
         }
     };
 
     private TomtomMapCallback.OnPolygonClickListener onPolygonClickListener = new TomtomMapCallback.OnPolygonClickListener() {
         @Override
-        public void onPolygonClick(Polygon polygon) {
+        public void onPolygonClick(@NonNull Polygon polygon) {
             view.showInfoText(R.string.polygon_clicked, TOAST_DURATION);
         }
     };
 
     private TomtomMapCallback.OnCircleClickListener onCircleClickListener = new TomtomMapCallback.OnCircleClickListener() {
         @Override
-        public void onCircleClick(Circle circle) {
+        public void onCircleClick(@NonNull Circle circle) {
             view.showInfoText(R.string.circle_clicked, TOAST_DURATION);
         }
     };

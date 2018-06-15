@@ -10,6 +10,7 @@
  */
 package com.tomtom.online.sdk.samples.cases.route.alternatives;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
 import com.tomtom.online.sdk.map.Route;
@@ -76,7 +77,7 @@ public class RouteAlternativesPresenter extends RoutePlannerPresenter {
 
     private TomtomMapCallback.OnRouteClickListener onRouteClickListener = new TomtomMapCallback.OnRouteClickListener() {
         @Override
-        public void onRouteClick(Route route) {
+        public void onRouteClick(@NonNull Route route) {
             long routeId = route.getId();
             tomtomMap.getRouteSettings().setRoutesInactive();
             tomtomMap.getRouteSettings().setRouteActive(routeId);

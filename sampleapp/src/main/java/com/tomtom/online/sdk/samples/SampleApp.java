@@ -28,10 +28,11 @@ public class SampleApp extends MultiDexApplication {
             Timber.plant(new Timber.DebugTree());
         }
         //end::doc_log[]
-//        initStrictMode();
+        //initStrictMode();
         CrashSupporter.create(this);
     }
 
+    @SuppressWarnings("unused")
     private void initStrictMode() {
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()

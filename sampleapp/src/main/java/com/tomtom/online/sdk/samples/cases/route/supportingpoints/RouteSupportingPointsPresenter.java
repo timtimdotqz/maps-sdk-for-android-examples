@@ -10,6 +10,7 @@
  */
 package com.tomtom.online.sdk.samples.cases.route.supportingpoints;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
 import com.google.common.collect.ImmutableList;
@@ -99,7 +100,7 @@ public class RouteSupportingPointsPresenter extends RoutePlannerPresenter {
 
     private TomtomMapCallback.OnRouteClickListener onRouteClickListener = new TomtomMapCallback.OnRouteClickListener() {
         @Override
-        public void onRouteClick(Route route) {
+        public void onRouteClick(@NonNull Route route) {
             long routeId = route.getId();
             tomtomMap.getRouteSettings().setRoutesInactive();
             tomtomMap.getRouteSettings().setRouteActive(routeId);

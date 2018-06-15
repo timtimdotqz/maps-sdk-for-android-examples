@@ -11,6 +11,7 @@
 package com.tomtom.online.sdk.samples.cases.map.manipulation.events;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 
 import com.tomtom.core.maps.gestures.GesturesDetectionSettings;
@@ -44,7 +45,7 @@ public class MapManipulationEventsPresenter extends BaseFunctionalExamplePresent
     private TomtomMapCallback.OnMapClickListener onMapClickListener =
             new TomtomMapCallback.OnMapClickListener() {
                 @Override
-                public void onMapClick(LatLng latLng) {
+                public void onMapClick(@NonNull LatLng latLng) {
                     displayMessage(
                             R.string.menu_events_on_map_click,
                             latLng.getLatitude(),
@@ -55,7 +56,7 @@ public class MapManipulationEventsPresenter extends BaseFunctionalExamplePresent
     private TomtomMapCallback.OnMapLongClickListener onMapLongClickListener =
             new TomtomMapCallback.OnMapLongClickListener() {
                 @Override
-                public void onMapLongClick(LatLng latLng) {
+                public void onMapLongClick(@NonNull LatLng latLng) {
                     displayMessage(
                             R.string.menu_events_on_map_long_click,
                             latLng.getLatitude(),

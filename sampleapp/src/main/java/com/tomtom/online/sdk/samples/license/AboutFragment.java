@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.google.common.collect.ImmutableList;
 import com.tomtom.online.sdk.samples.R;
@@ -106,6 +107,14 @@ public class AboutFragment extends Fragment implements FunctionalExampleFragment
         final View view = inflater.inflate(R.layout.license_fragment, container, false);
         webView = view.findViewById(R.id.modules_list);
         webView.getSettings().setJavaScriptEnabled(true);
+        //https://stackoverflow.com/a/40753538
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
         return view;
     }
 

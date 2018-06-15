@@ -11,6 +11,7 @@
 package com.tomtom.online.sdk.samples.cases.map.markers;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 
 import com.tomtom.online.sdk.common.location.LatLng;
@@ -152,7 +153,7 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
     }
 
     @Override
-    public void onMarkerClick(Marker m) {
+    public void onMarkerClick(@NonNull Marker m) {
         Timber.d("marker selected " + m.getTag());
     }
 
