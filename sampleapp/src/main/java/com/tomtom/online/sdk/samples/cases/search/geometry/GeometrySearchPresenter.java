@@ -142,7 +142,7 @@ public class GeometrySearchPresenter extends BaseFunctionalExamplePresenter {
     private GeometrySearchResultListener searchResultListener = new GeometrySearchResultListener() {
         @Override
         public void onSearchResult(GeometrySearchResponse geometrySearchResponse) {
-            if (isResultEmpty(geometrySearchResponse)){
+            if (isResultEmpty(geometrySearchResponse)) {
                 onSearchError(new SearchError("No results"));
                 return;
             }

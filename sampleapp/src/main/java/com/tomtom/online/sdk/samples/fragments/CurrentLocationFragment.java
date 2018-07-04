@@ -122,7 +122,8 @@ public class CurrentLocationFragment extends Fragment implements FunctionalExamp
         int currentLocationButtonBottomMargin = context.getResources().getDimensionPixelSize(R.dimen.current_location_default_margin_bottom);
         int currentLocationButtonLeftMargin = context.getResources().getDimensionPixelSize(R.dimen.compass_default_margin_start);
 
-        tomtomMap.getUiSettings().getCurrentLocationView().setMargins(currentLocationButtonLeftMargin, 0, 0, currentLocationButtonBottomMargin);
+        tomtomMap.getUiSettings().getCurrentLocationView().setMargins(
+                currentLocationButtonLeftMargin, 0, 0, currentLocationButtonBottomMargin);
     }
 
     public void showMyPosition() {

@@ -96,7 +96,7 @@ public abstract class BaseFunctionalExamplePresenter implements FunctionalExampl
 
         int padding = actionBarHeight + offsetBig;
 
-        tomtomMap.setPadding(padding, offsetBig, padding, offsetBig);
+        tomtomMap.setPadding(padding, padding, padding, padding);
     }
 
     protected void resetMapPadding(){

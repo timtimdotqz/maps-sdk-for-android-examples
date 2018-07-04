@@ -55,6 +55,7 @@ android {
         resolutionStrategy.force "com.android.support:support-annotations:$rootProject.androidVersions.support"
         resolutionStrategy.force "com.android.support:support-v4:$rootProject.androidVersions.support"
         resolutionStrategy.force "com.android.support:appcompat-v7:$rootProject.androidVersions.support"
+        resolutionStrategy.force "android.arch.core:runtime:$rootProject.androidVersions.androidarch"
         exclude group: 'com.google.code.findbugs'
     }
 }
@@ -65,6 +66,12 @@ dependencies {
         api("com.tomtom.online:sdk-maps:$rootProject.internalVersions.sdk@aar") {
             transitive = true
         }
+
+        //dependency for traffic
+        api("com.tomtom.online:sdk-traffic:$rootProject.internalVersions.sdk@aar") {
+            transitive = true
+        }
+
         //dependency for search
         api("com.tomtom.online:sdk-search:$rootProject.internalVersions.sdk@aar") {
             transitive = true

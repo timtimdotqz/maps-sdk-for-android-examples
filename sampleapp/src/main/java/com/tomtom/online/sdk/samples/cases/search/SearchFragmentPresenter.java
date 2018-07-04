@@ -32,9 +32,8 @@ import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResponse;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResult;
 import com.tomtom.online.sdk.search.extensions.SearchService;
 import com.tomtom.online.sdk.search.extensions.SearchServiceConnectionCallback;
-import com.tomtom.online.sdk.search.rx.RxContext;
+import com.tomtom.online.sdk.common.rx.RxContext;
 
-import java.util.List;
 import java.util.concurrent.Executors;
 
 import io.reactivex.Scheduler;

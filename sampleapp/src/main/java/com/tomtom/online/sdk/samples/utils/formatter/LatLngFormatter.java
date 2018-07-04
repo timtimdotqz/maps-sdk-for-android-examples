@@ -16,17 +16,18 @@ import com.tomtom.online.sdk.common.location.LatLng;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 
 public class LatLngFormatter {
 
-    private static final MathContext COORDINATE_SIMPLE_ROUNDING_POLICY = MathContext.DECIMAL32;
+    public static final int SCALE = 6;
 
     @NonNull
     public static String toSimpleString(LatLng latLng) {
         StringBuilder str = new StringBuilder();
 
-        BigDecimal lat = new BigDecimal(latLng.getLatitude(), COORDINATE_SIMPLE_ROUNDING_POLICY).stripTrailingZeros();
-        BigDecimal lon = new BigDecimal(latLng.getLongitude(), COORDINATE_SIMPLE_ROUNDING_POLICY).stripTrailingZeros();
+        BigDecimal lat = BigDecimal.valueOf(latLng.getLatitude()).setScale(SCALE, RoundingMode.CEILING).stripTrailingZeros();
+        BigDecimal lon = BigDecimal.valueOf(latLng.getLongitude()).setScale(SCALE,RoundingMode.CEILING).stripTrailingZeros();
         str.append(lat.toPlainString()).append(',').append(lon.toPlainString());
 
         return str.toString();

@@ -71,7 +71,7 @@ public class EntryPointsSearchPresenter extends BaseFunctionalExamplePresenter {
     }
 
     @Override
-    protected void confMapPadding(){
+    protected void confMapPadding() {
 
         int offsetDefault = view.getContext().getResources().getDimensionPixelSize(R.dimen.offset_default);
 

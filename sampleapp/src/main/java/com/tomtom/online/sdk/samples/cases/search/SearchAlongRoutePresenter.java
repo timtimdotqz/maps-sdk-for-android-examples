@@ -14,6 +14,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.tomtom.online.sdk.common.location.LatLng;
+import com.tomtom.online.sdk.map.BaseMarkerBalloon;
 import com.tomtom.online.sdk.map.MarkerBuilder;
 import com.tomtom.online.sdk.map.SimpleMarkerBalloon;
 import com.tomtom.online.sdk.map.TomtomMap;
@@ -89,7 +90,7 @@ public class SearchAlongRoutePresenter extends RoutePlannerPresenter {
 
         fragment.disableOptionsView();
 
-        if(routesMap.size() == 0){
+        if (routesMap.isEmpty()) {
             Timber.d("performSearch(): no routes available");
             return;
         }

@@ -10,12 +10,16 @@
  */
 package com.tomtom.online.sdk.samples.utils.formatter;
 
+import android.annotation.SuppressLint;
+import android.support.annotation.VisibleForTesting;
+
 import java.util.Locale;
 
 public final class DistanceFormatter {
 
     private static final double METERS_IN_ONE_KM = 1000;
-    private static final double METERS_IN_ONE_MILE = 1609.0;
+    private static final double YARDS_IN_ONE_MILE = 1760.0;
+    private static final double YARDS_IN_ONE_M = 1.0936133;
 
     private DistanceFormatter() {
 
@@ -34,14 +38,34 @@ public final class DistanceFormatter {
         return locale.equals(Locale.US) || locale.equals(Locale.UK);
     }
 
-    private static String formatKilometers(int distanceInMeters) {
+    @SuppressLint("DefaultLocale")
+    @VisibleForTesting
+    static String formatKilometers(int distanceInMeters) {
+
+        if (distanceInMeters < METERS_IN_ONE_KM) {
+            return String.format("%d m", distanceInMeters);
+        }
+
         int distanceInKilometers = (int) (distanceInMeters / METERS_IN_ONE_KM);
-        return String.format("%d km", distanceInKilometers);
+        int remMeters = (int) (distanceInMeters % METERS_IN_ONE_KM);
+
+        return String.format("%d km %d m", distanceInKilometers, remMeters);
     }
 
-    private static String formatMiles(int distanceInMeters) {
-        int distanceInMiles = (int) (distanceInMeters / METERS_IN_ONE_MILE);
-        return String.format(Locale.getDefault(), "%d mi", distanceInMiles);
+    @SuppressLint("DefaultLocale")
+    @VisibleForTesting
+    static String formatMiles(int distanceInMeters) {
+
+        double yards = distanceInMeters * YARDS_IN_ONE_M;
+
+        if (yards < YARDS_IN_ONE_MILE) {
+            return String.format("%d yd", (int) yards);
+        }
+
+        int distanceInMiles = (int) (yards / YARDS_IN_ONE_MILE);
+        int remYard = (int) (yards % YARDS_IN_ONE_MILE);
+
+        return String.format(Locale.getDefault(), "%d mi %d yd", distanceInMiles, remYard);
     }
 
 }

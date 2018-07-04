@@ -8,31 +8,36 @@
  * licensee then you are not authorised to use this software in any manner and should
  * immediately return it to TomTom N.V.
  */
-package com.tomtom.online.sdk.samples.cases.map.markers.balloons;
+package com.tomtom.online.sdk.samples.cases.search.batch;
+
+import android.widget.Toast;
 
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.cases.ExampleFragment;
 import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
 
-public class BalloonCustomFragment extends ExampleFragment<BalloonCustomPresenter> {
+public class BatchSearchFragment extends ExampleFragment<BatchSearchPresenter> {
 
     @Override
-    protected BalloonCustomPresenter createPresenter() {
-        return new BalloonCustomPresenter();
+    protected BatchSearchPresenter createPresenter() {
+        return new BatchSearchPresenter();
     }
 
     @Override
     protected void onOptionsButtonsView(OptionsButtonsView view) {
-        view.addOption(R.string.menu_markers_balloon_simple);
-        view.addOption(R.string.menu_markers_balloon_custom);
+        view.addOption(R.string.btn_text_parking);
+        view.addOption(R.string.btn_text_gas);
+        view.addOption(R.string.btn_text_bar);
     }
 
     @Override
     public void onChange(boolean[] oldValues, boolean[] newValues) {
-        if(newValues[0]) {
-            presenter.createSimpleBalloon();
-        } else if(newValues[1]) {
-            presenter.createCustomBalloon();
+        if (newValues[0]) {
+            presenter.performSearch("Parking");
+        } else if (newValues[1]) {
+            presenter.performSearch("Gas");
+        } else if (newValues[2]) {
+            presenter.performSearch("Bar");
         }
     }
 
@@ -42,9 +47,15 @@ public class BalloonCustomFragment extends ExampleFragment<BalloonCustomPresente
         final boolean[] previousState = new boolean[] {
                 optionsView.isSelected(0),
                 optionsView.isSelected(1),
+                optionsView.isSelected(2)
         };
         onChange(previousState, previousState);
         return super.isMapRestored();
+    }
+
+    public void showErrorMsg(String error){
+        String msg = getString(R.string.batch_error, error);
+        Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
     }
 
 }

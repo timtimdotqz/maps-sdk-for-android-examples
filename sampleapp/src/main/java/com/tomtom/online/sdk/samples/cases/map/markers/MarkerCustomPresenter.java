@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 
 import com.tomtom.online.sdk.common.location.LatLng;
+import com.tomtom.online.sdk.map.BaseMarkerBalloon;
 import com.tomtom.online.sdk.map.Icon.Factory;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.Marker;
@@ -27,6 +28,7 @@ import com.tomtom.online.sdk.map.rx.RxTomtomMap;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
+import com.tomtom.online.sdk.samples.cases.map.markers.balloons.TypedBalloonViewAdapter;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
 import com.tomtom.online.sdk.samples.utils.formatter.LatLngFormatter;
@@ -46,6 +48,7 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
         super.bind(view, map);
+        tomtomMap.getMarkerSettings().setMarkerBalloonViewAdapter(new TypedBalloonViewAdapter());
         context = checkNotNull(view.getContext());
 
         //tag::doc_register_marker_listener[]

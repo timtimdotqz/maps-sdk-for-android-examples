@@ -11,13 +11,14 @@
 package com.tomtom.online.sdk.samples.cases.map.markers.clustering;
 
 import com.tomtom.online.sdk.common.location.LatLng;
-import com.tomtom.online.sdk.map.MapConstants;
+import com.tomtom.online.sdk.map.BaseMarkerBalloon;
 import com.tomtom.online.sdk.map.MarkerBuilder;
 import com.tomtom.online.sdk.map.SimpleMarkerBalloon;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
+import com.tomtom.online.sdk.samples.cases.map.markers.balloons.TypedBalloonViewAdapter;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
 import com.tomtom.online.sdk.samples.utils.formatter.LatLngFormatter;

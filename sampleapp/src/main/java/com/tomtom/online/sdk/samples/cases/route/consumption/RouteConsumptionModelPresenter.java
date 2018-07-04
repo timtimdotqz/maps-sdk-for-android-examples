@@ -13,6 +13,7 @@ package com.tomtom.online.sdk.samples.cases.route.consumption;
 import android.support.annotation.NonNull;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMap;
 import com.tomtom.online.sdk.map.Route;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.TomtomMapCallback;
@@ -82,15 +83,16 @@ public class RouteConsumptionModelPresenter extends RoutePlannerPresenter {
                 .withUphillEfficiency(0.33f) //e.g. PotentialEnergyGained/ChemicalEnergyConsumed
                 .withDownhillEfficiency(0.33f) //e.g. ChemicalEnergySaved/PotentialEnergyLost
                 .withVehicleEngineType(VehicleEngineType.ELECTRIC)
-                .withConstantSpeedConsumptionInkWh(new HashMap<Integer, Double>() {{
+                .withConstantSpeedConsumptionInkWh(ImmutableMap.<Integer, Double>builder()
                     //vehicle specific consumption model <speed, consumption in kWh>
-                    put(10, 5.0);
-                    put(30, 10.0);
-                    put(50, 15.0);
-                    put(70, 20.0);
-                    put(90, 25.0);
-                    put(120, 30.0);
-                }});
+                    .put(10, 5.0)
+                    .put(30, 10.0)
+                    .put(50, 15.0)
+                    .put(70, 20.0)
+                    .put(90, 25.0)
+                    .put(120, 30.0)
+                    .build()
+                );
         //end::doc_consumption_model_electric[]
         return queryBuilder;
     }
@@ -109,16 +111,17 @@ public class RouteConsumptionModelPresenter extends RoutePlannerPresenter {
                 .withUphillEfficiency(0.33f) //e.g. PotentialEnergyGained/ChemicalEnergyConsumed
                 .withDownhillEfficiency(0.33f) //e.g. ChemicalEnergySaved/PotentialEnergyLost
                 .withVehicleEngineType(VehicleEngineType.COMBUSTION)
-                .withConstantSpeedConsumptionInLiters(new HashMap<Integer, Double>() {{
-                    //vehicle specific consumption model <speed, consumption in liters>
-                    put(10, 6.5);
-                    put(30, 7.0);
-                    put(50, 8.0);
-                    put(70, 8.4);
-                    put(90, 7.7);
-                    put(120, 7.5);
-                    put(150, 9.0);
-                }});
+                .withConstantSpeedConsumptionInLiters(ImmutableMap.<Integer, Double>builder()
+                        //vehicle specific consumption model <speed, consumption in liters>
+                        .put(10, 6.5)
+                        .put(30, 7.0)
+                        .put(50, 8.0)
+                        .put(70, 8.4)
+                        .put(90, 7.7)
+                        .put(120, 7.5)
+                        .put(150, 9.0)
+                        .build()
+                );
         //end::doc_consumption_model_combustion[]
         return queryBuilder;
     }

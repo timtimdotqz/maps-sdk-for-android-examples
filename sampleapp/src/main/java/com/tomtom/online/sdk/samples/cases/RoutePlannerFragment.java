@@ -97,7 +97,7 @@ public abstract class RoutePlannerFragment<T extends RoutePlannerPresenter> exte
         getInfoBarView().setRightText(DistanceFormatter.format(distance));
 
         String arrivalTime = timeFormat.format(routeSummary.getArrivalTime());
-        getInfoBarView().setLeftText(arrivalTime);
+        getInfoBarView().setLeftText(arrivalTime + " " + (route.getTag() == null ? " " : route.getTag()));
 
         routeInProgress = false;
     }

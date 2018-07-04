@@ -32,6 +32,7 @@ public final class Locations {
     public static final LatLng LODZ_LOCATION = new LatLng(51.759434, 19.449011);
     public static final LatLng AMSTERDAM_HAARLEM = new LatLng(52.381222, 4.637558);
     public static final LatLng UTRECHT_LOCATION = new LatLng(52.09179,5.11457);
+    public static final LatLng HOOFDDORP_LOCATION = new LatLng(52.3058782,4.6483191);
 
     static Random r = new Random(System.currentTimeMillis());
 

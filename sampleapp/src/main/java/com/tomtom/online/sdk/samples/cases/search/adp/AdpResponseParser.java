@@ -49,6 +49,7 @@ class AdpResponseParser {
                     }
                 });
     }
+
     public void parseAdpResult(AdditionalDataSearchResult adpResult) {
         adpResult.accept(new AdditionalDataSearchResultVisitor() {
             @Override

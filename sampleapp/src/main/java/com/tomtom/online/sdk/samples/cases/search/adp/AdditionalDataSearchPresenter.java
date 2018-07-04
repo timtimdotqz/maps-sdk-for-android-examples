@@ -31,7 +31,7 @@ import com.tomtom.online.sdk.search.data.common.additionaldata.GeometryDataSourc
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQueryBuilder;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResponse;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResult;
-import com.tomtom.online.sdk.search.rx.RxContext;
+import com.tomtom.online.sdk.common.rx.RxContext;
 
 import io.reactivex.MaybeSource;
 import io.reactivex.Scheduler;

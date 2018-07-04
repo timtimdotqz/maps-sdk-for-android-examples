@@ -98,6 +98,17 @@
         </menu>
     </item>
 
+    <item android:title="@string/menu_traffic">
+        <menu>
+            <item
+                    android:id="@+id/traffic_incident"
+                    android:icon="@drawable/ic_menu_send"
+                    android:title="@string/traffic_incident_list_title" />
+
+        </menu>
+    </item>
+
+
     <item android:title="@string/menu_route_planner">
         <menu>
             <item
@@ -149,6 +160,12 @@
                 android:id="@+id/route_reachable_range"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/route_reachable_range" />
+            <!-- enable or delete after aceptation
+            <item
+                android:id="@+id/batch_routing"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/batch_routing" />
+                -->
         </menu>
     </item>
 
@@ -205,6 +222,11 @@
                 android:id="@+id/additional_data"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/additional_data_provider_search" />
+
+            <item
+                android:id="@+id/batch_search"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/batch_search" />
 
         </menu>
     </item>

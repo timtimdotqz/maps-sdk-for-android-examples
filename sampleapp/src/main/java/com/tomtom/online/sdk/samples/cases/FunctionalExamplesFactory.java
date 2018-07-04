@@ -28,8 +28,10 @@ import com.tomtom.online.sdk.samples.cases.map.markers.MarkerCustomFragment;
 import com.tomtom.online.sdk.samples.cases.map.markers.balloons.BalloonCustomFragment;
 import com.tomtom.online.sdk.samples.cases.map.markers.clustering.MarkersClusteringFragment;
 import com.tomtom.online.sdk.samples.cases.map.staticimage.StaticImageFragment;
+import com.tomtom.online.sdk.samples.cases.map.traffic.incident.TrafficIncidentListFragment;
 import com.tomtom.online.sdk.samples.cases.route.alternatives.RouteAlternativesFragment;
 import com.tomtom.online.sdk.samples.cases.route.avoid.RouteAvoidsFragment;
+import com.tomtom.online.sdk.samples.cases.route.batch.BatchRouteFragment;
 import com.tomtom.online.sdk.samples.cases.route.consumption.RouteConsumptionModelFragment;
 import com.tomtom.online.sdk.samples.cases.route.departureandarrivaltime.DepartureAndArrivalTimeFragment;
 import com.tomtom.online.sdk.samples.cases.route.maneuvers.ManeuversFragment;
@@ -46,6 +48,7 @@ import com.tomtom.online.sdk.samples.cases.search.SearchAlongRouteFragment;
 import com.tomtom.online.sdk.samples.cases.search.SearchFragment;
 import com.tomtom.online.sdk.samples.cases.search.TypeAheadSearchFragment;
 import com.tomtom.online.sdk.samples.cases.search.adp.AdditionalDataSearchFragment;
+import com.tomtom.online.sdk.samples.cases.search.batch.BatchSearchFragment;
 import com.tomtom.online.sdk.samples.cases.search.entrypoints.EntryPointsSearchFragment;
 import com.tomtom.online.sdk.samples.cases.search.geometry.GeometrySearchFragment;
 import com.tomtom.online.sdk.samples.fragments.CurrentLocationFragment;
@@ -164,6 +167,13 @@ public class FunctionalExamplesFactory {
 
             case R.id.additional_data:
                 return new AdditionalDataSearchFragment();
+            case R.id.traffic_incident:
+                return new TrafficIncidentListFragment();
+
+            case R.id.batch_search:
+                return new BatchSearchFragment();
+//            case R.id.batch_routing:
+//                return new BatchRouteFragment();
 
             default:
                 return new CurrentLocationFragment();

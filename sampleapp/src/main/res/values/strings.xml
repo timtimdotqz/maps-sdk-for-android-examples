@@ -90,6 +90,8 @@
     <string name="my_location_on">Chevron on</string>
     <string name="my_location_off">Chevron off</string>
 
+    <string name="batch_routing_title">Batch routing</string>
+    <string name="batch_routing_subtitle">Routing depends on:</string>
 
     <string name="search_btn_text">Go</string>
     <string name="add_waypoint_btn_text">Add waypoint</string>
@@ -161,6 +163,7 @@
     <string name="btn_text_eco">Eco</string>
     <string name="berlin_amsterdam_route_title">Berlin - Amsterdam</string>
     <string name="menu_route_planner">ROUTING</string>
+    <string name="menu_traffic">TRAFFIC</string>
     <string name="fuzzy_max_first_label">MAX 1</string>
     <string name="fuzzy_max_second_label">MAX 2</string>
     <string name="fuzzy_max_third_label">MAX 3</string>
@@ -193,6 +196,10 @@
     <string name="btn_text_one">1</string>
     <string name="btn_text_three">3</string>
     <string name="btn_text_five">5</string>
+
+    <string name="btn_batch_depends_on_travel_mode">Travel mode</string>
+    <string name="btn_batch_depends_on_route_type">Route type</string>
+    <string name="btn_batch_depends_on_avoids">Avoids</string>
 
     <string name="distance_km">%1$d km</string>
     <string name="distance_m">%1$d m</string>
@@ -246,6 +253,23 @@
     <string name="btn_text_poland">Poland</string>
     <string name="btn_text_amsterdam">Amsterdam</string>
     <string name="btn_text_berlin">Berlin</string>
+    <string name="traffic_incident_list_header_desc">Description</string>
+    <string name="traffic_incident_list_header_delay">Delay</string>
+    <string name="traffic_incident_list_header_length">Length</string>
+    <string name="traffic_incident_list_header_category">Category</string>
 
+    <string name="batch_search">Batch search</string>
+    <string name="batch_routing">Batch routing</string>
+    <string name="batch_search_subtitle">Search for categories in different locations</string>
+    <string name="btn_text_gas">Gas</string>
+    <string name="btn_text_bar">Bar</string>
+    <string name="batch_error">Batch error: %1$s</string>
+    <string name="traffic_incident_cluster_description">Multiple incidents</string>
+    <string name="batch_travel_mode_car_text">Travel by car</string>
+    <string name="batch_travel_mode_pedestrian_text">Travel as pedestrian</string>
+    <string name="batch_route_type_fastest">Fastest route</string>
+    <string name="batch_route_type_shortest">Shortest route</string>
+    <string name="batch_avoid_motorways">Avoid motorways</string>
+    <string name="batch_avoid_ferries">Avoid ferries</string>
 
 </resources>

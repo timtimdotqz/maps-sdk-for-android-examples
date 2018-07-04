@@ -37,6 +37,7 @@ import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
 import com.tomtom.online.sdk.samples.utils.CheckedButtonCleaner;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,8 +57,8 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
 
     protected RoutingApi routePlannerAPI;
 
-    protected Map<Long, FullRoute> routesMap = new HashMap<>();
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    protected Map<Long, FullRoute> routesMap = new LinkedHashMap<>();
+    protected CompositeDisposable compositeDisposable = new CompositeDisposable();
     private Icon startIcon;
     private Icon endIcon;
 
@@ -177,6 +178,12 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
 
         routesMap.clear();
 
+        displayFullRoutes(routeResult);
+
+        tomtomMap.displayRoutesOverview();
+    }
+
+    protected void displayFullRoutes(RouteResult routeResult) {
         List<FullRoute> routes = routeResult.getRoutes();
         Optional<FullRoute> activeRoute = getActiveRoute(routes);
 
@@ -191,14 +198,11 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
                     .startIcon(startIcon);
             final Route mapRoute = tomtomMap.addRoute(routeBuilder);
             //end::doc_display_route[]
-
             routesMap.put(mapRoute.getId(), route);
             if (isActiveRoute) {
                 displayInfoAboutRoute(route);
             }
         }
-
-        tomtomMap.displayRoutesOverview();
     }
 
     protected void displayInfoAboutRoute(FullRoute routeResult) {

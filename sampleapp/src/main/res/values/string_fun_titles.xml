@@ -14,6 +14,7 @@
 <resources>
 
     <string name="traffic_layers_title">Raster map and traffic</string>
+    <string name="traffic_incident_list_title">Traffic incident list</string>
     <string name="traffic_vector_layers_title">Vector map and traffic</string>
     <string name="simple_simulation_title">Sample simulation</string>
     <string name="route_avoids_title">Route avoids</string>
