@@ -10,7 +10,6 @@
  */
 package com.tomtom.online.sdk.samples.cases.route.batch;
 
-import com.tomtom.online.sdk.routing.data.FullRoute;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.cases.RoutePlannerFragment;
 import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;

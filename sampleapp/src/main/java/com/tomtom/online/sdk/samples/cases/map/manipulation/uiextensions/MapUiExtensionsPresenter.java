@@ -10,8 +10,17 @@
  */
 package com.tomtom.online.sdk.samples.cases.map.manipulation.uiextensions;
 
+import android.view.View;
+import android.widget.ImageView;
+
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.TomtomMap;
+import com.tomtom.online.sdk.map.ui.arrowbuttons.ArrowButtonsGroup;
+import com.tomtom.online.sdk.map.ui.compass.BasicCompassView;
+import com.tomtom.online.sdk.map.ui.compass.CompassView;
+import com.tomtom.online.sdk.map.ui.currentlocation.BasicCurrentLocationView;
+import com.tomtom.online.sdk.map.ui.currentlocation.CurrentLocationView;
+import com.tomtom.online.sdk.map.ui.zoom.ZoomButtonsGroup;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
@@ -62,19 +71,23 @@ public class MapUiExtensionsPresenter extends BaseFunctionalExamplePresenter {
     }
 
     public void defaultMapComponentIcons() {
-        tomtomMap.getUiSettings().getCompassView().getView().setImageResource(R.drawable.btn_compass);
-        tomtomMap.getUiSettings().getCurrentLocationView().getView().setImageResource(R.drawable.btn_current_location);
+        ImageView compassView = tomtomMap.getUiSettings().getCompassView().getView();
+        compassView.setImageResource(R.drawable.btn_compass);
+        ImageView currentLocationView = tomtomMap.getUiSettings().getCurrentLocationView().getView();
+        currentLocationView.setImageResource(R.drawable.btn_current_location);
 
         //tag::set_default_panning_controls[]
-        tomtomMap.getUiSettings().getPanningControlsView().getView().getArrowDownButton().setImageResource(R.drawable.btn_down);
-        tomtomMap.getUiSettings().getPanningControlsView().getView().getArrowUpButton().setImageResource(R.drawable.btn_up);
-        tomtomMap.getUiSettings().getPanningControlsView().getView().getArrowLeftButton().setImageResource(R.drawable.btn_left);
-        tomtomMap.getUiSettings().getPanningControlsView().getView().getArrowRightButton().setImageResource(R.drawable.btn_right);
+        ArrowButtonsGroup arrowButton = tomtomMap.getUiSettings().getPanningControlsView().getView();
+        arrowButton.getArrowDownButton().setImageResource(R.drawable.btn_down);
+        arrowButton.getArrowUpButton().setImageResource(R.drawable.btn_up);
+        arrowButton.getArrowLeftButton().setImageResource(R.drawable.btn_left);
+        arrowButton.getArrowRightButton().setImageResource(R.drawable.btn_right);
         //end::set_default_panning_controls[]
 
         //tag::set_default_zooming_controls[]
-        tomtomMap.getUiSettings().getZoomingControlsView().getView().getZoomInButton().setImageResource(R.drawable.btn_zoom_in);
-        tomtomMap.getUiSettings().getZoomingControlsView().getView().getZoomOutButton().setImageResource(R.drawable.btn_zoom_out);
+        ZoomButtonsGroup zoomButtons = tomtomMap.getUiSettings().getZoomingControlsView().getView();
+        zoomButtons.getZoomInButton().setImageResource(R.drawable.btn_zoom_in);
+        zoomButtons.getZoomOutButton().setImageResource(R.drawable.btn_zoom_out);
         //end::set_default_zooming_controls[]
     }
 
@@ -118,22 +131,26 @@ public class MapUiExtensionsPresenter extends BaseFunctionalExamplePresenter {
 
     public void customMapComponentIcons() {
         centerOnAmsterdam();
-        tomtomMap.getUiSettings().getCompassView().getView()
+        ImageView compasView = tomtomMap.getUiSettings().getCompassView().getView();
+        compasView
                 .setImageResource(R.drawable.ic_custom_compass);
 
-        tomtomMap.getUiSettings().getCurrentLocationView().getView()
+        ImageView currentLocationButton = tomtomMap.getUiSettings().getCurrentLocationView().getView();
+        currentLocationButton
                 .setImageResource(R.drawable.ic_map_position);
 
         //tag::set_custom_panning_controls[]
-        tomtomMap.getUiSettings().getPanningControlsView().getView().getArrowDownButton().setImageResource(R.drawable.btn_down_custom);
-        tomtomMap.getUiSettings().getPanningControlsView().getView().getArrowUpButton().setImageResource(R.drawable.btn_up_custom);
-        tomtomMap.getUiSettings().getPanningControlsView().getView().getArrowLeftButton().setImageResource(R.drawable.btn_left_custom);
-        tomtomMap.getUiSettings().getPanningControlsView().getView().getArrowRightButton().setImageResource(R.drawable.btn_right_custom);
+        ArrowButtonsGroup arrowButtons = tomtomMap.getUiSettings().getPanningControlsView().getView();
+        arrowButtons.getArrowDownButton().setImageResource(R.drawable.btn_down_custom);
+        arrowButtons.getArrowUpButton().setImageResource(R.drawable.btn_up_custom);
+        arrowButtons.getArrowLeftButton().setImageResource(R.drawable.btn_left_custom);
+        arrowButtons.getArrowRightButton().setImageResource(R.drawable.btn_right_custom);
         //end::set_custom_panning_controls[]
 
         //tag::set_custom_zooming_controls[]
-        tomtomMap.getUiSettings().getZoomingControlsView().getView().getZoomInButton().setImageResource(R.drawable.btn_zoom_in_custom);
-        tomtomMap.getUiSettings().getZoomingControlsView().getView().getZoomOutButton().setImageResource(R.drawable.btn_zoom_out_custom);
+        ZoomButtonsGroup zoomButtons = tomtomMap.getUiSettings().getZoomingControlsView().getView();
+        zoomButtons.getZoomInButton().setImageResource(R.drawable.btn_zoom_in_custom);
+        zoomButtons.getZoomOutButton().setImageResource(R.drawable.btn_zoom_out_custom);
         //end::set_custom_zooming_controls[]
     }
 

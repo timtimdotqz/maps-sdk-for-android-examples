@@ -16,6 +16,7 @@ import android.support.annotation.NonNull;
 import com.tomtom.online.sdk.common.func.Block;
 import com.tomtom.online.sdk.common.func.FuncUtils;
 import com.tomtom.online.sdk.common.geojson.Feature;
+import com.tomtom.online.sdk.common.geojson.GeoJsonObjectVisitorAdapter;
 import com.tomtom.online.sdk.common.geojson.geometry.Geometry;
 import com.tomtom.online.sdk.common.geojson.geometry.MultiPolygon;
 import com.tomtom.online.sdk.common.geojson.geometry.Polygon;

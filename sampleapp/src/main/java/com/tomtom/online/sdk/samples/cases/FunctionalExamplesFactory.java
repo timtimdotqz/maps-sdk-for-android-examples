@@ -35,6 +35,7 @@ import com.tomtom.online.sdk.samples.cases.route.batch.BatchRouteFragment;
 import com.tomtom.online.sdk.samples.cases.route.consumption.RouteConsumptionModelFragment;
 import com.tomtom.online.sdk.samples.cases.route.departureandarrivaltime.DepartureAndArrivalTimeFragment;
 import com.tomtom.online.sdk.samples.cases.route.maneuvers.ManeuversFragment;
+import com.tomtom.online.sdk.samples.cases.route.matrix.MatrixRouteFragment;
 import com.tomtom.online.sdk.samples.cases.route.modes.RouteTravelModesFragment;
 import com.tomtom.online.sdk.samples.cases.route.reachablerange.ReachableRangeFragment;
 import com.tomtom.online.sdk.samples.cases.route.supportingpoints.RouteSupportingPointsFragment;
@@ -135,6 +136,7 @@ public class FunctionalExamplesFactory {
 
             case R.id.license:
                 return new AboutFragment();
+
             case R.id.map_static_image:
                 return new StaticImageFragment();
 
@@ -172,8 +174,12 @@ public class FunctionalExamplesFactory {
 
             case R.id.batch_search:
                 return new BatchSearchFragment();
-//            case R.id.batch_routing:
-//                return new BatchRouteFragment();
+
+            case R.id.batch_routing:
+                return new BatchRouteFragment();
+
+            case R.id.matrix_routing:
+                return new MatrixRouteFragment();
 
             default:
                 return new CurrentLocationFragment();

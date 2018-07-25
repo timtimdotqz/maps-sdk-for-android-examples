@@ -97,5 +97,8 @@ dependencies {
         //doc_dependencies_sample_app_stop
 
     implementation "com.github.florent37:singledateandtimepicker:$rootProject.libVersions.singledateandtimepicker"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.androidVersions.constraint_layout"
+    implementation "android.arch.lifecycle:viewmodel:$rootProject.androidVersions.androidarch"
+    implementation "android.arch.lifecycle:extensions:$rootProject.androidVersions.androidarch"
 }
 

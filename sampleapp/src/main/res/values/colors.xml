@@ -12,9 +12,9 @@
 
 -->
 <resources>
-    <color name="forest">#7AA920</color>
-    <color name="tt_green">#BDD731</color>
-    <color name="black">#000</color>
+    <color name="forest">#7aa920</color>
+    <color name="tt_green">#bdd731</color>
+    <color name="black">#000000</color>
     <color name="white">#fff</color>
     <color name="light">#F2F2F2</color>
     <color name="silver">#E3E3E3</color>

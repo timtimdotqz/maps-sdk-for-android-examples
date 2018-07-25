@@ -8,17 +8,20 @@
  * licensee then you are not authorised to use this software in any manner and should
  * immediately return it to TomTom N.V.
  */
-package com.tomtom.online.sdk.samples.cases.map.layers.mylocation;
+package com.tomtom.online.sdk.samples.cases.route.matrix;
 
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class MyLocationLayerFunctionalExample implements FunctionalExampleModel {
+public class MatrixRouteFunctionalExample implements FunctionalExampleModel {
+
+    @Override
     public int getPlayableTitle() {
-        return R.string.my_location;
+        return R.string.matrix_routing_title;
     }
 
+    @Override
     public int getPlayableSubtitle() {
-        return R.string.chevron_on_off;
+        return R.string.amsterdam_city_name;
     }
 }

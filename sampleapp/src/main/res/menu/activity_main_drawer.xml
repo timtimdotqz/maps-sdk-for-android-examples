@@ -160,12 +160,15 @@
                 android:id="@+id/route_reachable_range"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/route_reachable_range" />
-            <!-- enable or delete after aceptation
             <item
                 android:id="@+id/batch_routing"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/batch_routing" />
-                -->
+
+            <item
+                android:id="@+id/matrix_routing"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/matrix_routing_title" />
         </menu>
     </item>
 

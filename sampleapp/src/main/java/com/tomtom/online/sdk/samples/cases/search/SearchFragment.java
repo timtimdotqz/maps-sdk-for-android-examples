@@ -34,16 +34,14 @@ import android.widget.Toast;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.tomtom.online.sdk.common.location.LatLng;
+import com.tomtom.online.sdk.common.util.DistanceCalculator;
 import com.tomtom.online.sdk.samples.R;
-import com.tomtom.online.sdk.samples.utils.DistanceCalculator;
 import com.tomtom.online.sdk.samples.utils.formatter.SearchResultFormatter;
 import com.tomtom.online.sdk.samples.utils.formatter.SearchResultGuavaFormatter;
 import com.tomtom.online.sdk.samples.utils.views.RadioModifierView;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResult;
 import com.tomtom.online.sdk.search.extensions.SearchServiceConnectionCallback;
 import com.tomtom.online.sdk.search.extensions.SearchServiceManager;
-
-import java.util.List;
 
 import timber.log.Timber;
 

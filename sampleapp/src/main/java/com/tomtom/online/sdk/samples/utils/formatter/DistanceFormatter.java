@@ -18,8 +18,7 @@ import java.util.Locale;
 public final class DistanceFormatter {
 
     private static final double METERS_IN_ONE_KM = 1000;
-    private static final double YARDS_IN_ONE_MILE = 1760.0;
-    private static final double YARDS_IN_ONE_M = 1.0936133;
+    private static final double METERS_IN_ONE_MILE = 1609.0;
 
     private DistanceFormatter() {
 
@@ -41,31 +40,14 @@ public final class DistanceFormatter {
     @SuppressLint("DefaultLocale")
     @VisibleForTesting
     static String formatKilometers(int distanceInMeters) {
-
-        if (distanceInMeters < METERS_IN_ONE_KM) {
-            return String.format("%d m", distanceInMeters);
-        }
-
-        int distanceInKilometers = (int) (distanceInMeters / METERS_IN_ONE_KM);
-        int remMeters = (int) (distanceInMeters % METERS_IN_ONE_KM);
-
-        return String.format("%d km %d m", distanceInKilometers, remMeters);
+        double distanceInKilometers = distanceInMeters / METERS_IN_ONE_KM;
+        return String.format("%1$,.2f km", distanceInKilometers);
     }
 
-    @SuppressLint("DefaultLocale")
     @VisibleForTesting
     static String formatMiles(int distanceInMeters) {
-
-        double yards = distanceInMeters * YARDS_IN_ONE_M;
-
-        if (yards < YARDS_IN_ONE_MILE) {
-            return String.format("%d yd", (int) yards);
-        }
-
-        int distanceInMiles = (int) (yards / YARDS_IN_ONE_MILE);
-        int remYard = (int) (yards % YARDS_IN_ONE_MILE);
-
-        return String.format(Locale.getDefault(), "%d mi %d yd", distanceInMiles, remYard);
+        double distanceInMiles = distanceInMeters / METERS_IN_ONE_MILE;
+        return String.format(Locale.getDefault(), "%1$,.2f mi", distanceInMiles);
     }
 
 }

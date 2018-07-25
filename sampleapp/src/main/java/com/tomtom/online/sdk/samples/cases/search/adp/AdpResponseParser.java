@@ -18,6 +18,7 @@ import com.tomtom.online.sdk.common.func.FuncUtils;
 import com.tomtom.online.sdk.common.geojson.Feature;
 import com.tomtom.online.sdk.common.geojson.FeatureCollection;
 import com.tomtom.online.sdk.common.geojson.GeoJsonObject;
+import com.tomtom.online.sdk.common.geojson.GeoJsonObjectVisitorAdapter;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.search.data.additionaldata.AdditionalDataSearchResponse;
 import com.tomtom.online.sdk.search.data.additionaldata.AdditionalDataSearchResultVisitor;

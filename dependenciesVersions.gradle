@@ -69,7 +69,7 @@ ext {
             retrofitrxjava          : '1.0.0',
             okhttp                  : '3.9.1',
             kotlin                  : '1.2.40-eap-61',
-            jdoocsoup               : '0.1.5',
+            jdoocsoup               : '0.1.8',
             jodatime                : '2.9.9',
             singledateandtimepicker : '1.2.2',
             anko_version            : '0.10.4',

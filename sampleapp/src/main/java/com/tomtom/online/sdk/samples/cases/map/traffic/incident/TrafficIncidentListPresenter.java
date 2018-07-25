@@ -13,6 +13,7 @@ package com.tomtom.online.sdk.samples.cases.map.traffic.incident;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import com.tomtom.online.sdk.common.location.BoundingBox;
@@ -103,18 +104,20 @@ public class TrafficIncidentListPresenter implements LifecycleObserver {
             Toast.makeText(view.getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };
+
     //end::doc_traffic_result_listener[]
     private void proceedWithIncident(TrafficIncident incident, List<TrafficIncidentItem> items) {
-        items.add(new TrafficIncidentItem(view.getResources()
-                .getDrawable(TrafficIncidentDescription.getIconDrawableByCategory(incident.getIconCategory())),
+        items.add(new TrafficIncidentItem(ContextCompat.getDrawable(view.getContext(),
+                TrafficIncidentDescription.getIconDrawableByCategory(incident.getIconCategory())),
                 String.format(INCIDENT_DESCRIPTION_FORMAT, incident.getFrom(), incident.getTo()),
                 incident.getDelay().or(0),
                 incident.getLengthMeters()));
     }
 
     private void proceedWithCluster(TrafficIncidentCluster cluster, List<TrafficIncidentItem> items) {
-        items.add(new TrafficIncidentItem(view.getResources()
-                .getDrawable(TrafficIncidentDescription.getIconDrawableByCategory(cluster.getIconCategory())),
+        items.add(new TrafficIncidentItem(
+                ContextCompat.getDrawable(view.getContext(),
+                        TrafficIncidentDescription.getIconDrawableByCategory(cluster.getIconCategory())),
                 view.getString(R.string.traffic_incident_cluster_description),
                 0,
                 cluster.getLengthMeters(), cluster.getIncidents().size(), true));

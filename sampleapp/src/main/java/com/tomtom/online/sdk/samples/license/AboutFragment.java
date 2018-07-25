@@ -109,7 +109,9 @@ public class AboutFragment extends Fragment implements FunctionalExampleFragment
         webView.getSettings().setJavaScriptEnabled(true);
         //https://stackoverflow.com/a/40753538
         webView.setWebViewClient(new WebViewClient(){
+
             @Override
+            @SuppressWarnings("deprecation")
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;

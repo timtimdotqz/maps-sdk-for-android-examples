@@ -46,8 +46,8 @@ public class ReachableRangeQueryFactory {
 
         return new CommonParamsBuilder()
                 .withVehicleWeightInKg(1600)
-                .withCurrentChargeInKWh(43)
-                .withMaxChargeInKWh(85)
+                .withCurrentChargeInKWh(43.0)
+                .withMaxChargeInKWh(85.0)
                 .withAuxiliaryPowerInKW(1.7)
                 .withAccelerationEfficiency(0.33)
                 .withDecelerationEfficiency(0.33)
@@ -75,7 +75,7 @@ public class ReachableRangeQueryFactory {
 
         return new CommonParamsBuilder()
                 .withVehicleWeightInKg(1600)
-                .withCurrentFuelInLiters(43)
+                .withCurrentFuelInLiters(43.0)
                 .withFuelEnergyDensityInMJoulesPerLiter(34.2)
                 .withAuxiliaryPowerInLitersPerHour(1.7)
                 .withAccelerationEfficiency(0.33)

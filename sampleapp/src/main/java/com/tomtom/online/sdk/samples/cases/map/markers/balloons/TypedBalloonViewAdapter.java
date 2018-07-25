@@ -22,7 +22,7 @@ import com.tomtom.online.sdk.samples.R;
  * Adapter for SampleApp which support two balloons types.
  * One is {@link com.tomtom.online.sdk.map.SimpleMarkerBalloon} second is a custom marker balloon.
  */
-public class TypedBalloonViewAdapter extends BaseBalloonViewAdapter {
+public class TypedBalloonViewAdapter extends BaseBalloonViewAdapter<BaseMarkerBalloon> {
     /**
      * Taking layout from balloon view model.
      * @param marker to be inflated.

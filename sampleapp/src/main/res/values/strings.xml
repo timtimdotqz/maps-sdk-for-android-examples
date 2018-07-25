@@ -92,6 +92,7 @@
 
     <string name="batch_routing_title">Batch routing</string>
     <string name="batch_routing_subtitle">Routing depends on:</string>
+    <string name="matrix_routing_title">Matrix routing</string>
 
     <string name="search_btn_text">Go</string>
     <string name="add_waypoint_btn_text">Add waypoint</string>
@@ -265,11 +266,36 @@
     <string name="btn_text_bar">Bar</string>
     <string name="batch_error">Batch error: %1$s</string>
     <string name="traffic_incident_cluster_description">Multiple incidents</string>
+    <string name="batch_travel_mode_truck_text">Travel by truck</string>
     <string name="batch_travel_mode_car_text">Travel by car</string>
     <string name="batch_travel_mode_pedestrian_text">Travel as pedestrian</string>
     <string name="batch_route_type_fastest">Fastest route</string>
     <string name="batch_route_type_shortest">Shortest route</string>
+    <string name="batch_route_type_eco">Eco route</string>
     <string name="batch_avoid_motorways">Avoid motorways</string>
+    <string name="batch_avoid_toll_roads">Avoid toll roads</string>
     <string name="batch_avoid_ferries">Avoid ferries</string>
+    <string name="restaurant_wagamama">Wagamama</string>
+    <string name="restaurant_bridges">Bridges</string>
+    <string name="restaurant_greetje">Restaurant Greetje</string>
+    <string name="restaurant_la_rive">Restaurant La Rive</string>
+    <string name="pasenger_one">One</string>
+    <string name="passenger_two">Two</string>
+    <string name="taxi_one">A</string>
+    <string name="taxi_two">B</string>
+    <string name="label_matrix_table_header_no">Route</string>
+    <string name="label_matrix_table_header_origin">Origin</string>
+    <string name="label_matrix_table_header_destination">Destination</string>
+    <string name="label_matrix_table_header_distance">Distance</string>
+    <string name="label_matrix_table_header_eta">ETA</string>
+    <string name="matrix_routing_action_btn_one_to_many">One to Many</string>
+    <string name="matrix_routing_action_btn_many_to_many">Many to Many</string>
+    <string name="matrix_routing_error_message">Error occurred during matrix routes calculation.</string>
+    <string name="label_matrix_header_pick_up">Pick up</string>
+    <string name="label_matrix_header_passenger">Passenger</string>
+    <string name="label_matrix_header_taxi">Taxi</string>
+    <string name="passenger_ballon_prefix">Passenger</string>
+    <string name="taxi_ballon_prefix">Taxi</string>
+    <string name="restaurant_envy">Envy</string>
 
 </resources>

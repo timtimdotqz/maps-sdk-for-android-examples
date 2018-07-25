@@ -57,6 +57,9 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
 
     protected RoutingApi routePlannerAPI;
 
+    /**
+     * Choose map which keep orders. To match queries with the order.
+     */
     protected Map<Long, FullRoute> routesMap = new LinkedHashMap<>();
     protected CompositeDisposable compositeDisposable = new CompositeDisposable();
     private Icon startIcon;
@@ -168,7 +171,7 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
     }
 
     protected Optional<FullRoute> getActiveRoute(List<FullRoute> fullRoutes) {
-        if (fullRoutes != null && fullRoutes.size() > 0) {
+        if (fullRoutes != null && !fullRoutes.isEmpty()) {
             return Optional.of(fullRoutes.get(0));
         }
         return Optional.absent();

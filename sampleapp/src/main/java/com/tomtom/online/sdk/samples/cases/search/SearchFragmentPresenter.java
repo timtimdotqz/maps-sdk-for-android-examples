@@ -34,6 +34,7 @@ import com.tomtom.online.sdk.search.extensions.SearchService;
 import com.tomtom.online.sdk.search.extensions.SearchServiceConnectionCallback;
 import com.tomtom.online.sdk.common.rx.RxContext;
 
+import java.util.ArrayList;
 import java.util.concurrent.Executors;
 
 import io.reactivex.Scheduler;
@@ -62,7 +63,7 @@ public class SearchFragmentPresenter implements SearchPresenter, LocationUpdateL
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            lastSearchResult = (ImmutableList) savedInstanceState.getSerializable(LAST_SEARCH_QUERY_BUNDLE_KEY);
+            lastSearchResult =  (ImmutableList<FuzzySearchResult>) savedInstanceState.getSerializable(LAST_SEARCH_QUERY_BUNDLE_KEY);
             if (lastSearchResult != null) {
                 searchView.updateSearchResults(lastSearchResult);
             }

@@ -54,6 +54,6 @@ public class CustomMapStylePresenter extends BaseFunctionalExamplePresenter {
     }
 
     public void showBaseStyle() {
-        tomtomMap.getUiSettings().setStyleUrl("asset://styles/basic_main-michi.json");
+        tomtomMap.getUiSettings().setStyleUrl("asset://styles/mapssdk-default-style.json");
     }
 }

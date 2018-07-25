@@ -19,6 +19,8 @@ import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.TomtomMapCallback;
 import com.tomtom.online.sdk.routing.data.Avoid;
 import com.tomtom.online.sdk.routing.data.FullRoute;
+import com.tomtom.online.sdk.routing.data.InstructionsType;
+import com.tomtom.online.sdk.routing.data.Report;
 import com.tomtom.online.sdk.routing.data.RouteQueryBuilder;
 import com.tomtom.online.sdk.routing.data.RouteResult;
 import com.tomtom.online.sdk.routing.data.RouteType;
@@ -31,6 +33,7 @@ import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.RoutePlannerPresenter;
 import com.tomtom.online.sdk.samples.cases.RoutingUiListener;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
+import com.tomtom.online.sdk.samples.routes.AmsterdamToOsloRouteConfig;
 import com.tomtom.online.sdk.samples.routes.AmsterdamToRotterdamRouteConfig;
 import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
 
@@ -80,9 +83,9 @@ public class BatchRoutePresenter extends RoutePlannerPresenter {
     private void planRoute(BatchRoutingQuery query) {
         clearRouteSelection();
         viewModel.showRoutingInProgressDialog();
-
+        //tag::doc_execute_batch_routing[]
         Disposable subscribe = routePlannerAPI.planBatchRoute(query)
-
+        //end::doc_execute_batch_routing[]
                 .subscribeOn(getWorkingScheduler())
                 .observeOn(getResultScheduler())
                 .subscribe(new Consumer<BatchRoutingResponse>() {
@@ -96,7 +99,7 @@ public class BatchRoutePresenter extends RoutePlannerPresenter {
                         proceedWithError(throwable.getMessage());
                     }
                 });
-        //end::doc_execute_routing[]
+
         compositeDisposable.add(subscribe);
     }
 
@@ -121,7 +124,8 @@ public class BatchRoutePresenter extends RoutePlannerPresenter {
     boolean activeRouteSet = false;
 
     /**
-     * Choose first route as a active.
+     * Override base method. Base method return active route from one request. Here first route
+     * from few requests is marked as a active.
      * @param fullRoutes
      * @return
      */
@@ -137,29 +141,67 @@ public class BatchRoutePresenter extends RoutePlannerPresenter {
 
     @VisibleForTesting
     protected BatchRoutingQuery getTravelModeBatchRouteQuery() {
-        routesDescription = new int[]{R.string.batch_travel_mode_car_text, R.string.batch_travel_mode_pedestrian_text};
+        routesDescription = new int[]{R.string.batch_travel_mode_car_text, R.string.batch_travel_mode_truck_text,R.string.batch_travel_mode_pedestrian_text};
+        //tag::doc_batch_query[]
         return new BatchRoutingQueryBuilder()
-                .withRouteQuery(new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination()).withTravelMode(TravelMode.CAR))
-                .withRouteQuery(new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination()).withTravelMode(TravelMode.PEDESTRIAN))
-                ;
+                .withRouteQuery(getTravleModeQuery(TravelMode.CAR))
+                .withRouteQuery(getTravleModeQuery(TravelMode.TRUCK))
+                .withRouteQuery(getTravleModeQuery(TravelMode.PEDESTRIAN));
+        //end::doc_batch_query[]
+    }
+
+    @NonNull
+    private RouteQueryBuilder getTravleModeQuery(TravelMode travelMode) {
+        //tag::doc_common_params_for_travel_mode[]
+        return new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
+                .withTravelMode(travelMode).withMaxAlternatives(0)
+                .withReport(Report.EFFECTIVE_SETTINGS)
+                .withInstructionsType(InstructionsType.TEXT)
+                .withTraffic(false);
+        //end::doc_common_params_for_travel_mode[]
     }
 
     @VisibleForTesting
     protected BatchRoutingQuery getRouteTypeBatchRouteQuery() {
-        routesDescription = new int[]{R.string.batch_route_type_fastest, R.string.batch_route_type_shortest};
+        routesDescription = new int[]{R.string.batch_route_type_fastest, R.string.batch_route_type_shortest, R.string.batch_route_type_eco};
         return new BatchRoutingQueryBuilder()
-                .withRouteQuery(new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination()).withRouteType(RouteType.FASTEST))
-                .withRouteQuery(new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination()).withRouteType(RouteType.SHORTEST))
+                .withRouteQuery(getRouteTypeQuery(RouteType.FASTEST))
+                .withRouteQuery(getRouteTypeQuery(RouteType.SHORTEST))
+                .withRouteQuery(getRouteTypeQuery(RouteType.ECO))
                 ;
+    }
+
+    @NonNull
+    private RouteQueryBuilder getRouteTypeQuery(RouteType type) {
+        return new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination()).withRouteType(type)
+                .withMaxAlternatives(0)
+                .withReport(Report.EFFECTIVE_SETTINGS)
+                .withInstructionsType(InstructionsType.TEXT)
+                .withTraffic(false);
     }
 
     @VisibleForTesting
     protected BatchRoutingQuery getAvoidsBatchRouteQuery() {
-        routesDescription = new int[]{R.string.batch_avoid_motorways, R.string.batch_avoid_ferries};
+        routesDescription = new int[]{R.string.batch_avoid_motorways,R.string.batch_avoid_toll_roads, R.string.batch_avoid_ferries};
         return new BatchRoutingQueryBuilder()
-                .withRouteQuery(new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination()).withAvoidType(Avoid.MOTORWAYS))
-                .withRouteQuery(new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination()).withAvoidType(Avoid.FERRIES))
+                .withRouteQuery(getAvoidRouteQuery(Avoid.MOTORWAYS))
+                .withRouteQuery(getAvoidRouteQuery(Avoid.TOLL_ROADS))
+                .withRouteQuery(getAvoidRouteQuery(Avoid.FERRIES))
                 ;
+    }
+
+    @NonNull
+    private RouteQueryBuilder getAvoidRouteQuery(Avoid avoidType) {
+        return new RouteQueryBuilder(getRouteOsloConfig().getOrigin(), getRouteOsloConfig().getDestination())
+                .withAvoidType(avoidType)
+                .withMaxAlternatives(0)
+                .withReport(Report.NONE)
+                .withInstructionsType(InstructionsType.NONE)
+                .withTraffic(false);
+    }
+
+    public RouteConfigExample getRouteOsloConfig(){
+        return new AmsterdamToOsloRouteConfig();
     }
 
     @Override
