@@ -22,6 +22,8 @@ public class MarkerCustomFragment extends ExampleFragment<MarkerCustomPresenter>
             presenter.createSimpleMarker();
         } else if (newValues[1]) {
             presenter.createDecalMarker();
+        } else if (newValues[2]) {
+            presenter.createSimpleDraggableMarkers();
         }
     }
 
@@ -34,6 +36,7 @@ public class MarkerCustomFragment extends ExampleFragment<MarkerCustomPresenter>
     protected void onOptionsButtonsView(OptionsButtonsView view) {
         view.addOption(R.string.menu_markers_simple);
         view.addOption(R.string.menu_markers_decal);
+        view.addOption(R.string.menu_markers_simple_draggable);
     }
 
 }

@@ -12,10 +12,9 @@ package com.tomtom.online.sdk.samples.cases.map.markers;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+import android.support.annotation.StringRes;
 
 import com.tomtom.online.sdk.common.location.LatLng;
-import com.tomtom.online.sdk.map.BaseMarkerBalloon;
 import com.tomtom.online.sdk.map.Icon.Factory;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.Marker;
@@ -38,18 +37,18 @@ import java.util.List;
 import io.reactivex.functions.Consumer;
 import timber.log.Timber;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static com.tomtom.online.sdk.map.MapConstants.ORIENTATION_SOUTH;
 
 public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implements TomtomMapCallback.OnMarkerClickListener {
 
-    private Context context;
+    private static final String TOAST_MESSAGE = "%s : %f, %f";
+    private static final int TOAST_DURATION_MS = 2000; //milliseconds
+
 
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
         super.bind(view, map);
         tomtomMap.getMarkerSettings().setMarkerBalloonViewAdapter(new TypedBalloonViewAdapter());
-        context = checkNotNull(view.getContext());
 
         //tag::doc_register_marker_listener[]
         tomtomMap.addOnMarkerClickListener(this);
@@ -64,6 +63,11 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
             }
         });
         //end::doc_register_marker_observable[]
+
+        //tag::doc_register_draggable_marker_listener[]
+        tomtomMap.getMarkerSettings().addOnMarkerDragListener(onMarkerDragListener);
+        //end::doc_register_draggable_marker_listener[]
+
 
         if (!view.isMapRestored()) {
             centerMapOnLocation();
@@ -85,7 +89,6 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
 
     @Override
     public void onResume(Context context) {
-
     }
 
     @Override
@@ -94,6 +97,7 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
             return;
         }
         tomtomMap.removeOnMarkerClickListeners();
+        tomtomMap.removeOnMarkerDragListeners();
     }
 
     private boolean isMapReady() {
@@ -118,7 +122,7 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
         for (LatLng position : list) {
             //tag::doc_create_simple_marker[]
             MarkerBuilder markerBuilder = new MarkerBuilder(position)
-                    .markerBalloon(new SimpleMarkerBalloon(LatLngFormatter.toSimpleString(position)));
+                    .markerBalloon(new SimpleMarkerBalloon(positionToText(position)));
             tomtomMap.addMarker(markerBuilder);
             //end::doc_create_simple_marker[]
         }
@@ -136,7 +140,7 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
             //tag::doc_create_decal_marker[]
             MarkerBuilder markerBuilder = new MarkerBuilder(position)
                     .icon(Factory.fromResources(getContext(), R.drawable.ic_favourites))
-                    .markerBalloon(new SimpleMarkerBalloon(LatLngFormatter.toSimpleString(position)))
+                    .markerBalloon(new SimpleMarkerBalloon(positionToText(position)))
                     .tag("more information in tag").iconAnchor(MarkerAnchor.Bottom)
                     .decal(true); //By default is false
             tomtomMap.addMarker(markerBuilder);
@@ -144,6 +148,8 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
         }
 
     }
+
+
 
     public void centerMapOnLocation() {
         tomtomMap.centerOn(
@@ -158,6 +164,62 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
     @Override
     public void onMarkerClick(@NonNull Marker m) {
         Timber.d("marker selected " + m.getTag());
+    }
+
+    public void createSimpleDraggableMarkers() {
+
+        centerMapOnLocation();
+
+        tomtomMap.removeMarkers();
+
+        List<LatLng> list = Locations.randomLocation(Locations.AMSTERDAM_LOCATION, 5, 0.2f);
+        for (LatLng position : list) {
+            //tag::doc_create_simple_draggable_marker[]
+            MarkerBuilder markerBuilder = new MarkerBuilder(position)
+                    .markerBalloon(new SimpleMarkerBalloon(positionToText(position)))
+                    .draggable(true);
+            tomtomMap.addMarker(markerBuilder);
+            //end::doc_create_simple_draggable_marker[]
+        }
+    }
+
+    //tag::doc_create_draggable_marker_listener[]
+    TomtomMapCallback.OnMarkerDragListener onMarkerDragListener = new TomtomMapCallback.OnMarkerDragListener() {
+        @Override
+        public void onStartDragging(@NonNull Marker marker) {
+            Timber.d("onMarkerDragStart(): " + marker.toString());
+            displayMessage(R.string.marker_dragging_start_message, marker.getPosition().getLatitude(), marker.getPosition().getLongitude());
+        }
+
+        @Override
+        public void onStopDragging(@NonNull Marker marker) {
+            Timber.d("onMarkerDragEnd(): " + marker.toString());
+            displayMessage(R.string.marker_dragging_end_message, marker.getPosition().getLatitude(), marker.getPosition().getLongitude());
+        }
+
+        @Override
+        public void onDragging(@NonNull Marker marker) {
+            Timber.d("onMarkerDragging(): " + marker.toString());
+        }
+    };
+    //end::doc_create_draggable_marker_listener[]
+
+
+    @NonNull
+    private String positionToText(LatLng position) {
+        return LatLngFormatter.toSimpleString(position);
+    }
+
+    private void displayMessage(@StringRes int titleId, double lat, double lon) {
+        String title = view.getContext().getString(titleId);
+        Timber.d("Functional Example on %s", title);
+        String message = String.format(java.util.Locale.getDefault(),
+                TOAST_MESSAGE,
+                title,
+                lat,
+                lon);
+
+        view.showInfoText(message, TOAST_DURATION_MS);
     }
 
 }

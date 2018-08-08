@@ -42,6 +42,7 @@
 
     <string name="menu_markers_simple">Simple</string>
     <string name="menu_markers_decal">Decal</string>
+    <string name="menu_markers_simple_draggable">Draggable</string>
     <string name="menu_markers_custom_view">Custom View</string>
 
     <string name="menu_markers_custom">Markers</string>
@@ -297,5 +298,7 @@
     <string name="passenger_ballon_prefix">Passenger</string>
     <string name="taxi_ballon_prefix">Taxi</string>
     <string name="restaurant_envy">Envy</string>
+    <string name="marker_dragging_end_message">Marker was dragged to</string>
+    <string name="marker_dragging_start_message">Marker dragged from</string>
 
 </resources>

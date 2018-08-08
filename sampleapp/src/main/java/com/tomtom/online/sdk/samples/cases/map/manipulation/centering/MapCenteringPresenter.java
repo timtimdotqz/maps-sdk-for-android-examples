@@ -10,6 +10,8 @@
  */
 package com.tomtom.online.sdk.samples.cases.map.manipulation.centering;
 
+import android.location.Location;
+
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.map.CameraPosition;
 import com.tomtom.online.sdk.map.MapConstants;
@@ -90,6 +92,20 @@ public class MapCenteringPresenter extends BaseFunctionalExamplePresenter {
                 .build();
         tomtomMap.centerOn(cameraPosition);
         //end::doc_map_center_on_london[]
+    }
+
+    @SuppressWarnings("unused")
+    public void turnOnMyLocation(){
+        //tag::doc_my_location_enabled[]
+        tomtomMap.setMyLocationEnabled(true);
+        //end::doc_my_location_enabled[]
+    }
+    @SuppressWarnings("unused")
+    public Location getCurrentLocation(){
+        //tag::doc_get_current_location[]
+        Location location = tomtomMap.getUserLocation();
+        //end::doc_get_current_location[]
+        return location;
     }
 
 

@@ -99,6 +99,11 @@ api("com.tomtom.online:sdk-search:2.+@aar"){
 api("com.tomtom.online:sdk-routing:2.+@aar"){
     transitive = true;
 }
+
+//library required for traffic
+api("com.tomtom.online:sdk-traffic:2.+@aar"){
+    transitive = true;
+}
 ----
 
 * Add MultiDex support if required, as described https://developer.android.com/studio/build/multidex.html[here]

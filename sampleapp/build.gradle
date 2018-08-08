@@ -93,7 +93,6 @@ dependencies {
         api("com.tomtom.online:sdk-maps-static-image:$rootProject.internalVersions.sdk@aar") {
             transitive = true
         }
-
         //doc_dependencies_sample_app_stop
 
     implementation "com.github.florent37:singledateandtimepicker:$rootProject.libVersions.singledateandtimepicker"

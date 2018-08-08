@@ -10,6 +10,8 @@
  */
 package com.tomtom.online.sdk.samples.cases.map.markers.clustering;
 
+import android.support.annotation.NonNull;
+
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.map.BaseMarkerBalloon;
 import com.tomtom.online.sdk.map.MarkerBuilder;
@@ -89,10 +91,15 @@ public class MarkersClusteringPresenter extends BaseFunctionalExamplePresenter {
             //tag::doc_add_marker_to_cluster[]
             MarkerBuilder markerBuilder = new MarkerBuilder(position)
                     .shouldCluster(true)
-                    .markerBalloon(new SimpleMarkerBalloon(LatLngFormatter.toSimpleString(position)));
+                    .markerBalloon(new SimpleMarkerBalloon(positionToText(position)));
             //end::doc_add_marker_to_cluster[]
             tomtomMap.addMarker(markerBuilder);
         }
+    }
+
+    @NonNull
+    private String positionToText(LatLng position) {
+        return LatLngFormatter.toSimpleString(position);
     }
 
     public void centerOnMarkers() {
