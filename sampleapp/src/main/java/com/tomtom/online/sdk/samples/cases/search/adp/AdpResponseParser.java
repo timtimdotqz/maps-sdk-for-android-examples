@@ -12,6 +12,8 @@ package com.tomtom.online.sdk.samples.cases.search.adp;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.tomtom.online.sdk.common.func.Block;
 import com.tomtom.online.sdk.common.func.FuncUtils;
@@ -29,6 +31,7 @@ import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
+import timber.log.Timber;
 
 class AdpResponseParser {
 
@@ -47,6 +50,11 @@ class AdpResponseParser {
                     @Override
                     public void accept(AdditionalDataSearchResult adpResult) throws Exception {
                         parseAdpResult(adpResult);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Timber.e(throwable, "Error when adp processed");
                     }
                 });
     }

@@ -10,6 +10,7 @@
  */
 package com.tomtom.online.sdk.samples.cases.map.markers;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -45,6 +46,7 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
     private static final int TOAST_DURATION_MS = 2000; //milliseconds
 
 
+    @SuppressLint("CheckResult")
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
         super.bind(view, map);
@@ -58,7 +60,7 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
         RxTomtomMap rxTomtomMap = new RxTomtomMap(tomtomMap);
         rxTomtomMap.getOnMarkerClickObservable().subscribe(new Consumer<Marker>() {
             @Override
-            public void accept(Marker marker) throws Exception {
+            public void accept(Marker marker) {
                 //Your code goes here
             }
         });
@@ -148,8 +150,6 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
         }
 
     }
-
-
 
     public void centerMapOnLocation() {
         tomtomMap.centerOn(

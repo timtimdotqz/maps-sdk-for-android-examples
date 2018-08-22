@@ -13,6 +13,14 @@
 -->
 <resources>
 
+    <style name="TomTomTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="buttonStyle">@style/NonCapsButton</item>
+    </style>
+
+    <style name="NonCapsButton" parent="Widget.AppCompat.Button">
+        <item name="android:textAllCaps">false</item>
+    </style>
+
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />

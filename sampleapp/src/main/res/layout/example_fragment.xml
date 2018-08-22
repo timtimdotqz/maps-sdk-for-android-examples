@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/control_bottom_panel_height"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/offset_small"
+        android:layout_marginBottom="@dimen/offset_options_buttons"
         android:gravity="center_horizontal" />
 
     <TextView

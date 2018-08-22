@@ -73,6 +73,8 @@ ext {
             jodatime                : '2.9.9',
             singledateandtimepicker : '1.2.2',
             anko_version            : '0.10.4',
+            glide                   : '4.7.1',
+            androidgifdrawable      : '1.2.15',
             test                    : [
                     junit              : '4.12',
                     robospock          : '1.0.1',

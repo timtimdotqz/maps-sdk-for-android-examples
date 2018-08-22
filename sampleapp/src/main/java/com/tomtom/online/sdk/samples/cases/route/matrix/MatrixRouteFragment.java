@@ -23,7 +23,6 @@ import android.widget.RadioButton;
 
 import com.tomtom.online.sdk.map.MapFragment;
 import com.tomtom.online.sdk.map.OnMapReadyCallback;
-import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.routing.data.matrix.MatrixRoutingResponse;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.ActionBarModel;

@@ -24,9 +24,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import com.google.common.base.Optional;
-import com.tomtom.online.sdk.common.func.Block;
-import com.tomtom.online.sdk.common.func.FuncUtils;
 import com.tomtom.online.sdk.map.MapFragment;
 import com.tomtom.online.sdk.map.OnMapReadyCallback;
 import com.tomtom.online.sdk.map.TomtomMap;

@@ -42,6 +42,7 @@ import com.tomtom.online.sdk.routing.data.matrix.MatrixRoutingResultKey;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.route.matrix.data.AmsterdamPoi;
+import com.tomtom.online.sdk.samples.utils.DimensionUtils;
 import com.tomtom.online.sdk.samples.utils.Locations;
 
 import org.joda.time.DateTime;
@@ -57,11 +58,13 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 import static com.tomtom.online.sdk.map.MapConstants.ORIENTATION_SOUTH;
 
 public class MatrixRoutePresenter implements LifecycleObserver, RxContext {
 
+    private final static int DEFAULT_CURRENT_LOCATION_BUTTON_BOTTOM_MARGIN = 40;
     private final static double DEFAULT_ZOOM_LEVEL_FOR_EXAMPLE = 12.0;
     private final static int NUMBER_OF_NETWORKING_THREADS = 4;
     private final static int DEFAULT_MAP_PADDING = 0;
@@ -111,6 +114,7 @@ public class MatrixRoutePresenter implements LifecycleObserver, RxContext {
         view.runOnTomtomMap(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull TomtomMap tomtomMap) {
+                confCurrentLocationButton(tomtomMap);
                 tomtomMap.centerOn(
                         Locations.AMSTERDAM_CENTER_LOCATION.getLatitude(),
                         Locations.AMSTERDAM_CENTER_LOCATION.getLongitude(),
@@ -186,6 +190,7 @@ public class MatrixRoutePresenter implements LifecycleObserver, RxContext {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) {
+                        Timber.e(throwable, throwable.getMessage());
                         Toast.makeText(context, R.string.matrix_routing_error_message, Toast.LENGTH_LONG).show();
                     }
                 });
@@ -307,10 +312,11 @@ public class MatrixRoutePresenter implements LifecycleObserver, RxContext {
         for (MatrixRoutingResultKey key : matrixRoutingResponse.getResults().keySet()) {
             if (key.getOrigin().equals(matrixRoutingResultKey.getOrigin())) {
                 final MatrixRoutingResult result = matrixRoutingResponse.getResults().get(key);
-                final DateTime arrivalTime = new DateTime(result.getSummary().getArrivalTime());
-
-                if (arrivalTime.isBefore(minEta)) {
-                    minEta = arrivalTime;
+                if (result.getSummary() != null) {
+                    final DateTime arrivalTime = new DateTime(result.getSummary().getArrivalTime());
+                    if (arrivalTime.isBefore(minEta)) {
+                        minEta = arrivalTime;
+                    }
                 }
             }
         }
@@ -325,6 +331,21 @@ public class MatrixRoutePresenter implements LifecycleObserver, RxContext {
 
         tomtomMap.setPadding(offsetTop, offsetDefault, offsetBottom, offsetDefault);
     }
+
+    private void confCurrentLocationButton(TomtomMap tomtomMap) {
+        int currentLocationButtonBottomMargin = view.getContext().getResources().getDimensionPixelSize(R.dimen.current_location_default_margin_bottom);
+        int currentLocationButtonLeftMargin = view.getContext().getResources().getDimensionPixelSize(R.dimen.compass_default_margin_start);
+
+        tomtomMap.getUiSettings().getCurrentLocationView()
+                .setMargins(currentLocationButtonLeftMargin, 0, 0,
+                        currentLocationButtonBottomMargin + getCurrentLocationBottomMarginDelta());
+    }
+
+    private int getCurrentLocationBottomMarginDelta() {
+        return DimensionUtils.fromDpToPx(DEFAULT_CURRENT_LOCATION_BUTTON_BOTTOM_MARGIN,
+                context.getResources().getDisplayMetrics());
+    }
+
 
     interface MatrixRouteView extends Contextable {
 

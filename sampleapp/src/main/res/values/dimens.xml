@@ -30,6 +30,7 @@
     <dimen name="offset_small">5dp</dimen>
     <dimen name="offset_default_small">8dp</dimen>
     <dimen name="offset_default">10dp</dimen>
+    <dimen name="offset_options_buttons">15dp</dimen>
     <dimen name="offset_medium">15dp</dimen>
     <dimen name="offset_big">20dp</dimen>
     <dimen name="offset_extra_big">25dp</dimen>
