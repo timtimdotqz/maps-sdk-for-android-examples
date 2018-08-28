@@ -43,6 +43,7 @@
     <string name="menu_markers_simple">Simple</string>
     <string name="menu_markers_decal">Decal</string>
     <string name="menu_markers_simple_draggable">Draggable</string>
+    <string name="menu_markers_animated">Animated</string>
     <string name="menu_markers_custom_view">Custom View</string>
 
     <string name="menu_markers_custom">Markers</string>
@@ -300,5 +301,8 @@
     <string name="restaurant_envy">Envy</string>
     <string name="marker_dragging_end_message">Marker was dragged to</string>
     <string name="marker_dragging_start_message">Marker dragged from</string>
+
+    <string name="menu_advanced_markers">Advanced markers</string>
+    <string name="advanced_markers_options_title">Advanced markers</string>
 
 </resources>

@@ -82,6 +82,10 @@
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/menu_markers_custom" />
             <item
+                android:id="@+id/advanced_markers"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/menu_advanced_markers" />
+            <item
                 android:id="@+id/markers_balloons"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/menu_markers_balloons" />

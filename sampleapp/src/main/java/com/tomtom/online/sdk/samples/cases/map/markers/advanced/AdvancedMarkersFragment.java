@@ -8,32 +8,32 @@
  * licensee then you are not authorised to use this software in any manner and should
  * immediately return it to TomTom N.V.
  */
-package com.tomtom.online.sdk.samples.cases.map.markers;
+package com.tomtom.online.sdk.samples.cases.map.markers.advanced;
 
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.cases.ExampleFragment;
 import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
 
-public class MarkerCustomFragment extends ExampleFragment<MarkerCustomPresenter> {
+public class AdvancedMarkersFragment extends ExampleFragment<AdvancedMarkersPresenter> {
 
     @Override
     public void onChange(boolean[] oldValues, boolean[] newValues) {
         if (newValues[0]) {
-            presenter.createSimpleMarker();
+            presenter.createAnimatedMarkers();
         } else if (newValues[1]) {
-            presenter.createDecalMarker();
+            presenter.createDraggableMarkers();
         }
     }
 
     @Override
-    protected MarkerCustomPresenter createPresenter() {
-        return new MarkerCustomPresenter();
+    protected AdvancedMarkersPresenter createPresenter() {
+        return new AdvancedMarkersPresenter();
     }
 
     @Override
     protected void onOptionsButtonsView(OptionsButtonsView view) {
-        view.addOption(R.string.menu_markers_simple);
-        view.addOption(R.string.menu_markers_decal);
+        view.addOption(R.string.menu_markers_animated);
+        view.addOption(R.string.menu_markers_simple_draggable);
     }
 
 }

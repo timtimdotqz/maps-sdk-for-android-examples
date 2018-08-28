@@ -25,6 +25,7 @@ import com.tomtom.online.sdk.samples.cases.map.manipulation.events.MapManipulati
 import com.tomtom.online.sdk.samples.cases.map.manipulation.perspective.MapViewPerspectiveFragment;
 import com.tomtom.online.sdk.samples.cases.map.manipulation.uiextensions.MapUiExtensionsFragment;
 import com.tomtom.online.sdk.samples.cases.map.markers.MarkerCustomFragment;
+import com.tomtom.online.sdk.samples.cases.map.markers.advanced.AdvancedMarkersFragment;
 import com.tomtom.online.sdk.samples.cases.map.markers.balloons.BalloonCustomFragment;
 import com.tomtom.online.sdk.samples.cases.map.markers.clustering.MarkersClusteringFragment;
 import com.tomtom.online.sdk.samples.cases.map.staticimage.StaticImageFragment;
@@ -180,6 +181,9 @@ public class FunctionalExamplesFactory {
 
             case R.id.matrix_routing:
                 return new MatrixRouteFragment();
+
+            case R.id.advanced_markers:
+                return new AdvancedMarkersFragment();
 
             default:
                 return new CurrentLocationFragment();

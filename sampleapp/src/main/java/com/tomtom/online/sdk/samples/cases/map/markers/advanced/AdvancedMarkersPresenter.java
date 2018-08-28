@@ -8,22 +8,19 @@
  * licensee then you are not authorised to use this software in any manner and should
  * immediately return it to TomTom N.V.
  */
-package com.tomtom.online.sdk.samples.cases.map.markers;
+package com.tomtom.online.sdk.samples.cases.map.markers.advanced;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 import com.tomtom.online.sdk.common.location.LatLng;
-import com.tomtom.online.sdk.map.Icon.Factory;
+import com.tomtom.online.sdk.map.Icon;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.Marker;
-import com.tomtom.online.sdk.map.MarkerAnchor;
 import com.tomtom.online.sdk.map.MarkerBuilder;
 import com.tomtom.online.sdk.map.SimpleMarkerBalloon;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.TomtomMapCallback;
-import com.tomtom.online.sdk.map.rx.RxTomtomMap;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
@@ -34,32 +31,24 @@ import com.tomtom.online.sdk.samples.utils.formatter.LatLngFormatter;
 
 import java.util.List;
 
-import io.reactivex.functions.Consumer;
 import timber.log.Timber;
 
-import static com.tomtom.online.sdk.map.MapConstants.ORIENTATION_SOUTH;
+public class AdvancedMarkersPresenter extends BaseFunctionalExamplePresenter {
 
-public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implements TomtomMapCallback.OnMarkerClickListener {
+    private static final String SAMPLE_GIF_ASSET_PATH = "images/racing_car.gif";
 
-    @SuppressLint("CheckResult")
+    private static final String TOAST_MESSAGE = "%s : %f, %f";
+    private static final int TOAST_DURATION_MS = 2000; //milliseconds
+
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
         super.bind(view, map);
+
         tomtomMap.getMarkerSettings().setMarkerBalloonViewAdapter(new TypedBalloonViewAdapter());
 
-        //tag::doc_register_marker_listener[]
-        tomtomMap.addOnMarkerClickListener(this);
-        //end::doc_register_marker_listener[]
-
-        //tag::doc_register_marker_observable[]
-        RxTomtomMap rxTomtomMap = new RxTomtomMap(tomtomMap);
-        rxTomtomMap.getOnMarkerClickObservable().subscribe(new Consumer<Marker>() {
-            @Override
-            public void accept(Marker marker) {
-                //Your code goes here
-            }
-        });
-        //end::doc_register_marker_observable[]
+        //tag::doc_register_draggable_marker_listener[]
+        tomtomMap.getMarkerSettings().addOnMarkerDragListener(onMarkerDragListener);
+        //end::doc_register_draggable_marker_listener[]
 
         if (!view.isMapRestored()) {
             centerMapOnLocation();
@@ -68,7 +57,7 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
 
     @Override
     public FunctionalExampleModel getModel() {
-        return new MarkerCustomFunctionalExample();
+        return new AdvancedMarkersFunctionalExample();
     }
 
     @Override
@@ -80,67 +69,87 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
     }
 
     @Override
-    public void onResume(Context context) {
-    }
-
-    @Override
     public void onPause() {
         if (!isMapReady()) {
             return;
         }
-        tomtomMap.removeOnMarkerClickListeners();
+        tomtomMap.removeOnMarkerDragListeners();
+    }
+
+    public void createAnimatedMarkers() {
+        resetMap();
+        List<LatLng> list = Locations.randomLocation(Locations.AMSTERDAM_LOCATION, 5, 0.2f);
+        for (LatLng position : list) {
+            //tag::doc_create_animated_marker[]
+            MarkerBuilder markerBuilder = new MarkerBuilder(position)
+                .icon(Icon.Factory.fromAssets(view.getContext(), SAMPLE_GIF_ASSET_PATH));
+            tomtomMap.addMarker(markerBuilder);
+            //end::doc_create_animated_marker[]
+        }
+    }
+
+    public void createDraggableMarkers() {
+        resetMap();
+        List<LatLng> list = Locations.randomLocation(Locations.AMSTERDAM_LOCATION, 5, 0.2f);
+        for (LatLng position : list) {
+            //tag::doc_create_simple_draggable_marker[]
+            MarkerBuilder markerBuilder = new MarkerBuilder(position)
+                    .markerBalloon(new SimpleMarkerBalloon(positionToText(position)))
+                    .draggable(true);
+            tomtomMap.addMarker(markerBuilder);
+            //end::doc_create_simple_draggable_marker[]
+        }
+    }
+
+    //tag::doc_create_draggable_marker_listener[]
+    TomtomMapCallback.OnMarkerDragListener onMarkerDragListener = new TomtomMapCallback.OnMarkerDragListener() {
+        @Override
+        public void onStartDragging(@NonNull Marker marker) {
+            Timber.d("onMarkerDragStart(): " + marker.toString());
+            displayMessage(R.string.marker_dragging_start_message, marker.getPosition().getLatitude(), marker.getPosition().getLongitude());
+        }
+
+        @Override
+        public void onStopDragging(@NonNull Marker marker) {
+            Timber.d("onMarkerDragEnd(): " + marker.toString());
+            displayMessage(R.string.marker_dragging_end_message, marker.getPosition().getLatitude(), marker.getPosition().getLongitude());
+        }
+
+        @Override
+        public void onDragging(@NonNull Marker marker) {
+            Timber.d("onMarkerDragging(): " + marker.toString());
+        }
+    };
+    //end::doc_create_draggable_marker_listener[]
+
+
+    @NonNull
+    private String positionToText(LatLng position) {
+        return LatLngFormatter.toSimpleString(position);
+    }
+
+    private void displayMessage(@StringRes int titleId, double lat, double lon) {
+        String title = view.getContext().getString(titleId);
+        Timber.d("Functional Example on %s", title);
+        String message = String.format(java.util.Locale.getDefault(),
+                TOAST_MESSAGE,
+                title,
+                lat,
+                lon);
+
+        view.showInfoText(message, TOAST_DURATION_MS);
     }
 
     private boolean isMapReady() {
         return tomtomMap != null;
     }
 
-    public void createSimpleMarker() {
+    private void resetMap(){
+        tomtomMap.removeMarkers();
         centerMapOnLocation();
-
-        //tag::doc_remove_all_markers[]
-        tomtomMap.removeMarkers();
-        //end::doc_remove_all_markers[]
-
-        //tag::doc_remove_tag_markers[]
-        tomtomMap.removeMarkerByTag("tag");
-        //end::doc_remove_tag_markers[]
-
-        //tag::doc_remove_id_markers[]
-        tomtomMap.removeMarkerByID(1);
-        //end::doc_remove_id_markers[]
-        List<LatLng> list = Locations.randomLocation(Locations.AMSTERDAM_LOCATION, 5, 0.2f);
-        for (LatLng position : list) {
-            //tag::doc_create_simple_marker[]
-            MarkerBuilder markerBuilder = new MarkerBuilder(position)
-                    .markerBalloon(new SimpleMarkerBalloon(positionToText(position)));
-            tomtomMap.addMarker(markerBuilder);
-            //end::doc_create_simple_marker[]
-        }
     }
 
-    public void createDecalMarker() {
-        tomtomMap.centerOn(
-                Locations.AMSTERDAM_LOCATION.getLatitude(),
-                Locations.AMSTERDAM_LOCATION.getLongitude(),
-                DEFAULT_ZOOM_LEVEL, ORIENTATION_SOUTH);
-
-        tomtomMap.removeMarkers();
-        List<LatLng> list = Locations.randomLocation(Locations.AMSTERDAM_LOCATION, 5, 0.2f);
-        for (LatLng position : list) {
-            //tag::doc_create_decal_marker[]
-            MarkerBuilder markerBuilder = new MarkerBuilder(position)
-                    .icon(Factory.fromResources(getContext(), R.drawable.ic_favourites))
-                    .markerBalloon(new SimpleMarkerBalloon(positionToText(position)))
-                    .tag("more information in tag").iconAnchor(MarkerAnchor.Bottom)
-                    .decal(true); //By default is false
-            tomtomMap.addMarker(markerBuilder);
-            //end::doc_create_decal_marker[]
-        }
-
-    }
-
-    public void centerMapOnLocation() {
+    private void centerMapOnLocation() {
         tomtomMap.centerOn(
                 Locations.AMSTERDAM_LOCATION.getLatitude(),
                 Locations.AMSTERDAM_LOCATION.getLongitude(),
@@ -148,16 +157,6 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
                 MapConstants.ORIENTATION_NORTH
         );
 
-    }
-
-    @Override
-    public void onMarkerClick(@NonNull Marker m) {
-        Timber.d("marker selected " + m.getTag());
-    }
-
-    @NonNull
-    private String positionToText(LatLng position) {
-        return LatLngFormatter.toSimpleString(position);
     }
 
 }
