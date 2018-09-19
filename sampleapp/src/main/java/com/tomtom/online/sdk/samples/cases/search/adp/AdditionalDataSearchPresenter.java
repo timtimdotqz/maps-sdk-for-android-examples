@@ -24,10 +24,10 @@ import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
 import com.tomtom.online.sdk.search.OnlineSearchApi;
 import com.tomtom.online.sdk.search.SearchApi;
-import com.tomtom.online.sdk.search.data.additionaldata.AdditionalDataSearchQuery;
 import com.tomtom.online.sdk.search.data.additionaldata.AdditionalDataSearchQueryBuilder;
 import com.tomtom.online.sdk.search.data.additionaldata.AdditionalDataSearchResponse;
 import com.tomtom.online.sdk.search.data.common.additionaldata.GeometryDataSource;
+import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQuery;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQueryBuilder;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResponse;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResult;
@@ -98,11 +98,11 @@ public class AdditionalDataSearchPresenter extends BaseFunctionalExamplePresente
         //ADP Data is not available in all types (e.g. not in POI)
         //We restrict list of results only to Geo (Geographies) types
         //So that we are sure that we receive fields required by ADP
-        FuzzySearchQueryBuilder fuzzySearchQuery = new FuzzySearchQueryBuilder(term);
-        fuzzySearchQuery.withIdx("Geo");
+        FuzzySearchQueryBuilder fuzzySearchQuery = FuzzySearchQueryBuilder.create(term)
+                .withIdx("Geo");
 
         final SearchApi searchApi = OnlineSearchApi.create(view.getContext());
-        observableWork = searchApi.search(fuzzySearchQuery)
+        observableWork = searchApi.search(fuzzySearchQuery.build())
                 .observeOn(getWorkingScheduler())
                 .filter(nonEmptyResponse())
                 .map(firstResultWithAdditionalData())
@@ -113,9 +113,9 @@ public class AdditionalDataSearchPresenter extends BaseFunctionalExamplePresente
                 .flatMap(new Function<GeometryDataSource, MaybeSource<? extends AdditionalDataSearchResponse>>() {
                     @Override
                     public MaybeSource<? extends AdditionalDataSearchResponse> apply(GeometryDataSource geometryDataSource) throws Exception {
-                        AdditionalDataSearchQuery adpQuery = new AdditionalDataSearchQueryBuilder();
+                        AdditionalDataSearchQueryBuilder adpQuery = AdditionalDataSearchQueryBuilder.create();
                         adpQuery.withGeometryDataSource(geometryDataSource);
-                        return searchApi.additionalDataSearch(adpQuery).toMaybe();
+                        return searchApi.additionalDataSearch(adpQuery.build()).toMaybe();
                     }
                 })
                 .subscribeOn(getResultScheduler())

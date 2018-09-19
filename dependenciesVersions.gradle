@@ -55,7 +55,7 @@ ext {
     libVersions = [
             timber                  : '4.6.0',
             crashlytics             : '2.9.0',
-            leakcanary              : '1.5.4',
+            leakcanary              : '1.6.1',
             corektx                 : '0.3',
             lombok                  : '1.16.20',
             groovy                  : '2.4.10',
@@ -69,7 +69,7 @@ ext {
             retrofitrxjava          : '1.0.0',
             okhttp                  : '3.9.1',
             kotlin                  : '1.2.40-eap-61',
-            jdoocsoup               : '0.1.8',
+            jdoocsoup               : '0.1.14',
             jodatime                : '2.9.9',
             singledateandtimepicker : '1.2.2',
             anko_version            : '0.10.4',

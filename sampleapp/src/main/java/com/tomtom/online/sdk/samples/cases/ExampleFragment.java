@@ -29,6 +29,8 @@ import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.views.InfoBarView;
 import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
 
+import timber.log.Timber;
+
 public abstract class ExampleFragment<T extends FunctionalExamplePresenter> extends Fragment
         implements FunctionalExampleFragment, OptionsButtonsView.OptionsChangeValue {
 
@@ -55,6 +57,7 @@ public abstract class ExampleFragment<T extends FunctionalExamplePresenter> exte
         if (savedInstanceState != null) {
             isRestored = savedInstanceState.getBoolean(MAP_RESTORE_KEY, false);
         }
+        Timber.d("isRestored= " + isRestored);
         return inflater.inflate(R.layout.example_fragment, null);
     }
 
@@ -84,6 +87,12 @@ public abstract class ExampleFragment<T extends FunctionalExamplePresenter> exte
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        presenter.onStop();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         optionsView.setEnabled(false);
@@ -109,6 +118,7 @@ public abstract class ExampleFragment<T extends FunctionalExamplePresenter> exte
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putBoolean(MAP_RESTORE_KEY, true);
+        Timber.d("onSaveInstanceState isRestored true");
         super.onSaveInstanceState(outState);
     }
 

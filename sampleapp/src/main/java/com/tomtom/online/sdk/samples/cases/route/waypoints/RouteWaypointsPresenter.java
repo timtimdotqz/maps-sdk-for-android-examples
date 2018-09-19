@@ -18,7 +18,7 @@ import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.MarkerBuilder;
 import com.tomtom.online.sdk.routing.data.RouteQuery;
 import com.tomtom.online.sdk.routing.data.RouteQueryBuilder;
-import com.tomtom.online.sdk.routing.data.RouteResult;
+import com.tomtom.online.sdk.routing.data.RouteResponse;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.RoutePlannerPresenter;
 import com.tomtom.online.sdk.samples.cases.RoutingUiListener;
@@ -104,23 +104,23 @@ public class RouteWaypointsPresenter extends RoutePlannerPresenter {
     }
 
     @Override
-    protected void displayRoutes(RouteResult routeResult) {
+    protected void displayRoutes(RouteResponse routeResponse) {
         for (LatLng waypoint : wayPoints) {
             tomtomMap.addMarker(new MarkerBuilder(waypoint));
         }
-        super.displayRoutes(routeResult);
+        super.displayRoutes(routeResponse);
     }
 
     @VisibleForTesting
     protected RouteQuery getRouteQuery(boolean computeBestOrder) {
         //tag::doc_route_waypoints[]
         LatLng[] wayPointsArray = wayPoints.toArray(new LatLng[wayPoints.size()]);
-        RouteQueryBuilder queryBuilder = new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
+        RouteQuery routeQuery = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
                 .withWayPoints(wayPointsArray)
                 .withComputeBestOrder(computeBestOrder)
-                .withTraffic(false);
+                .withConsiderTraffic(false).build();
         //end::doc_route_waypoints[]
-        return queryBuilder;
+        return routeQuery;
     }
 
     private void addWaypoint(LatLng latLng) {

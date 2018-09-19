@@ -72,11 +72,11 @@ public class ManeuversPresenter extends RoutePlannerPresenter {
     @VisibleForTesting
     protected RouteQuery getRouteQuery(String language) {
         //tag::doc_route_language[]
-        RouteQueryBuilder queryBuilder = new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
+        RouteQuery queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
                 .withLanguage(language)
                 .withReport(Report.EFFECTIVE_SETTINGS)
                 .withInstructionsType(InstructionsType.TEXT)
-                .withTraffic(false);
+                .withConsiderTraffic(false).build();
         //end::doc_route_language[]
         return queryBuilder;
     }

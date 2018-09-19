@@ -38,4 +38,6 @@ public interface FunctionalExamplePresenter {
     void alignCurrentLocationButton(FunctionalExampleFragment view, TomtomMap tomtomMap);
 
     int getCurrentLocationBottomMarginDelta(FunctionalExampleFragment view);
+
+    void onStop();
 }

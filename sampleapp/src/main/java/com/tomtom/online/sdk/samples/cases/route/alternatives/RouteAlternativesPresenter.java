@@ -61,11 +61,11 @@ public class RouteAlternativesPresenter extends RoutePlannerPresenter {
     @VisibleForTesting
     protected RouteQuery getRouteQuery(int maxAlternatives) {
         //tag::doc_route_alternatives[]
-        RouteQueryBuilder queryBuilder = new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
+        RouteQuery queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
                 .withMaxAlternatives(maxAlternatives)
                 .withReport(Report.EFFECTIVE_SETTINGS)
                 .withInstructionsType(InstructionsType.TEXT)
-                .withTraffic(false);
+                .withConsiderTraffic(false).build();
         //end::doc_route_alternatives[]
         return queryBuilder;
     }

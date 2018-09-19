@@ -20,8 +20,6 @@ import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
 
-import timber.log.Timber;
-
 public class VectorTrafficLayersPresenter extends BaseFunctionalExamplePresenter {
 
     @Override
@@ -30,7 +28,6 @@ public class VectorTrafficLayersPresenter extends BaseFunctionalExamplePresenter
         tomtomMap.getUiSettings().setMapTilesType(MapTilesType.VECTOR);
         if (!view.isMapRestored()) {
             centerOnLondon();
-
         }
     }
 

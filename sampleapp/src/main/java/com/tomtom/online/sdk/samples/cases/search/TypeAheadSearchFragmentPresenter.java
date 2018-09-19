@@ -14,8 +14,9 @@ package com.tomtom.online.sdk.samples.cases.search;
 import android.support.annotation.VisibleForTesting;
 
 import com.tomtom.online.sdk.common.location.LatLng;
-import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQuery;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQueryBuilder;
+import com.tomtom.online.sdk.search.data.fuzzy.IFuzzySearchQuery;
+import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQuery;
 
 public class TypeAheadSearchFragmentPresenter extends SearchFragmentPresenter {
 
@@ -34,9 +35,9 @@ public class TypeAheadSearchFragmentPresenter extends SearchFragmentPresenter {
     FuzzySearchQuery getSearchQuery(String text, LatLng position) {
         return
                 //tag::doc_create_typeahead_search_query[]
-                new FuzzySearchQueryBuilder(text)
+                FuzzySearchQueryBuilder.create(text)
                         .withPosition(position)
-                        .withTypeAhead(true);
+                        .withTypeAhead(true).build();
                 //end::doc_create_typeahead_search_query[]
     }
 

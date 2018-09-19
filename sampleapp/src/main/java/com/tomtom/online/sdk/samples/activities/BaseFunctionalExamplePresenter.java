@@ -108,4 +108,9 @@ public abstract class BaseFunctionalExamplePresenter implements FunctionalExampl
     public Context getContext() {
         return view.getContext();
     }
+
+    @Override
+    public void onStop() {
+
+    }
 }

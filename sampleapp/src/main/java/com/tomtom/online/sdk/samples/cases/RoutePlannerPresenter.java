@@ -29,14 +29,13 @@ import com.tomtom.online.sdk.routing.OnlineRoutingApi;
 import com.tomtom.online.sdk.routing.RoutingApi;
 import com.tomtom.online.sdk.routing.data.FullRoute;
 import com.tomtom.online.sdk.routing.data.RouteQuery;
-import com.tomtom.online.sdk.routing.data.RouteResult;
+import com.tomtom.online.sdk.routing.data.RouteResponse;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
 import com.tomtom.online.sdk.samples.utils.CheckedButtonCleaner;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -155,9 +154,9 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
         //tag::doc_execute_routing[]
         Disposable subscribe = routePlannerAPI.planRoute(routeQuery).subscribeOn(getWorkingScheduler())
                 .observeOn(getResultScheduler())
-                .subscribe(new Consumer<RouteResult>() {
+                .subscribe(new Consumer<RouteResponse>() {
                     @Override
-                    public void accept(RouteResult routeResult) throws Exception {
+                    public void accept(RouteResponse routeResult) throws Exception {
                         displayRoutes(routeResult);
                     }
                 }, new Consumer<Throwable>() {
@@ -177,17 +176,17 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
         return Optional.absent();
     }
 
-    protected void displayRoutes(RouteResult routeResult) {
+    protected void displayRoutes(RouteResponse routeResponse) {
 
         routesMap.clear();
 
-        displayFullRoutes(routeResult);
+        displayFullRoutes(routeResponse);
 
         tomtomMap.displayRoutesOverview();
     }
 
-    protected void displayFullRoutes(RouteResult routeResult) {
-        List<FullRoute> routes = routeResult.getRoutes();
+    protected void displayFullRoutes(RouteResponse routeResponse) {
+        List<FullRoute> routes = routeResponse.getRoutes();
         Optional<FullRoute> activeRoute = getActiveRoute(routes);
 
         for (FullRoute route : routes) {

@@ -13,8 +13,9 @@ package com.tomtom.online.sdk.samples.cases.search;
 import android.support.annotation.VisibleForTesting;
 
 import com.tomtom.online.sdk.common.location.LatLng;
-import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQuery;
+import com.tomtom.online.sdk.common.location.LatLngAcc;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQueryBuilder;
+import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQuery;
 
 public class CategoriesSearchFragmentPresenter extends SearchFragmentPresenter {
 
@@ -36,10 +37,10 @@ public class CategoriesSearchFragmentPresenter extends SearchFragmentPresenter {
     FuzzySearchQuery getSearchQuery(String text, LatLng position) {
         return
                 //tag::doc_create_category_query_plain_text[]
-                new FuzzySearchQueryBuilder(text)
-                        .withPosition(position, STANDARD_RADIUS)
+                FuzzySearchQueryBuilder.create(text)
+                        .withPreciseness(new LatLngAcc(position, STANDARD_RADIUS))
                         .withTypeAhead(true)
-                        .withCategory(true);
+                        .withCategory(true).build();
         //end::doc_create_category_query_plain_text[]
     }
 }

@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
+import com.tomtom.online.sdk.data.SpeedToConsumptionMap;
 import com.tomtom.online.sdk.map.Route;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.TomtomMapCallback;
@@ -30,7 +31,6 @@ import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
 public class RouteConsumptionModelPresenter extends RoutePlannerPresenter {
@@ -71,19 +71,19 @@ public class RouteConsumptionModelPresenter extends RoutePlannerPresenter {
 
     protected RouteQuery getRouteQueryElectric() {
         //tag::doc_consumption_model_electric[]
-        RouteQueryBuilder queryBuilder = new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
-                .withTraffic(false)
+        RouteQuery queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
+                .withConsiderTraffic(false)
                 .withMaxAlternatives(2)
-                .withVehicleWeight(1600) //vehicle weight in kilograms
-                .withCurrentChargeInkWh(43)
-                .withMaxChargeInkWh(85)
-                .withAuxiliaryPowerInkW(1.7f)
-                .withAccelerationEfficiency(0.33f) //e.g. KineticEnergyGained/ChemicalEnergyConsumed
-                .withDecelerationEfficiency(0.33f) //e.g. ChemicalEnergySaved/KineticEnergyLost
-                .withUphillEfficiency(0.33f) //e.g. PotentialEnergyGained/ChemicalEnergyConsumed
-                .withDownhillEfficiency(0.33f) //e.g. ChemicalEnergySaved/PotentialEnergyLost
+                .withVehicleWeightInKg(1600) //vehicle weight in kilograms
+                .withCurrentChargeInKWh(43.0)
+                .withMaxChargeInKWh(85.0)
+                .withAuxiliaryPowerInKW(1.7)
+                .withAccelerationEfficiency(0.33) //e.g. KineticEnergyGained/ChemicalEnergyConsumed
+                .withDecelerationEfficiency(0.33) //e.g. ChemicalEnergySaved/KineticEnergyLost
+                .withUphillEfficiency(0.33) //e.g. PotentialEnergyGained/ChemicalEnergyConsumed
+                .withDownhillEfficiency(0.33) //e.g. ChemicalEnergySaved/PotentialEnergyLost
                 .withVehicleEngineType(VehicleEngineType.ELECTRIC)
-                .withConstantSpeedConsumptionInkWh(ImmutableMap.<Integer, Double>builder()
+                .withConstantSpeedConsumptionInKWhPerHundredKm(SpeedToConsumptionMap.create(ImmutableMap.<Integer, Double>builder()
                     //vehicle specific consumption model <speed, consumption in kWh>
                     .put(10, 5.0)
                     .put(30, 10.0)
@@ -91,27 +91,27 @@ public class RouteConsumptionModelPresenter extends RoutePlannerPresenter {
                     .put(70, 20.0)
                     .put(90, 25.0)
                     .put(120, 30.0)
-                    .build()
-                );
+                    .build())
+                ).build();
         //end::doc_consumption_model_electric[]
         return queryBuilder;
     }
 
     protected RouteQuery getRouteQueryCombustion() {
         //tag::doc_consumption_model_combustion[]
-        RouteQueryBuilder queryBuilder = new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
-                .withTraffic(false)
+        RouteQuery queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
+                .withConsiderTraffic(false)
                 .withMaxAlternatives(2)
-                .withVehicleWeight(1600) //vehicle weight in kilograms
-                .withCurrentFuelInLiters(50.0f)
-                .withAuxiliaryPowerInLitersPerHour(0.2f)
-                .withFuelEnergyDensityInMJoulesPerLiter(34.2f)
-                .withAccelerationEfficiency(0.33f) //e.g. KineticEnergyGained/ChemicalEnergyConsumed
-                .withDecelerationEfficiency(0.33f) //e.g. ChemicalEnergySaved/KineticEnergyLost
-                .withUphillEfficiency(0.33f) //e.g. PotentialEnergyGained/ChemicalEnergyConsumed
-                .withDownhillEfficiency(0.33f) //e.g. ChemicalEnergySaved/PotentialEnergyLost
+                .withVehicleWeightInKg(1600) //vehicle weight in kilograms
+                .withCurrentFuelInLiters(50.0)
+                .withAuxiliaryPowerInLitersPerHour(0.2)
+                .withFuelEnergyDensityInMJoulesPerLiter(34.2)
+                .withAccelerationEfficiency(0.33) //e.g. KineticEnergyGained/ChemicalEnergyConsumed
+                .withDecelerationEfficiency(0.33) //e.g. ChemicalEnergySaved/KineticEnergyLost
+                .withUphillEfficiency(0.33) //e.g. PotentialEnergyGained/ChemicalEnergyConsumed
+                .withDownhillEfficiency(0.33) //e.g. ChemicalEnergySaved/PotentialEnergyLost
                 .withVehicleEngineType(VehicleEngineType.COMBUSTION)
-                .withConstantSpeedConsumptionInLiters(ImmutableMap.<Integer, Double>builder()
+                .withConstantSpeedConsumptionInLitersPerHundredKm(SpeedToConsumptionMap.create(ImmutableMap.<Integer, Double>builder()
                         //vehicle specific consumption model <speed, consumption in liters>
                         .put(10, 6.5)
                         .put(30, 7.0)
@@ -120,8 +120,8 @@ public class RouteConsumptionModelPresenter extends RoutePlannerPresenter {
                         .put(90, 7.7)
                         .put(120, 7.5)
                         .put(150, 9.0)
-                        .build()
-                );
+                        .build())
+                ).build();
         //end::doc_consumption_model_combustion[]
         return queryBuilder;
     }

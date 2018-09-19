@@ -60,12 +60,12 @@ public class RouteTravelModesPresenter extends RoutePlannerPresenter {
     @VisibleForTesting
     protected RouteQuery getRouteQuery(TravelMode travelMode) {
         //tag::doc_route_travel_mode[]
-        RouteQueryBuilder queryBuilder = new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
+        RouteQuery queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
                 .withMaxAlternatives(0)
                 .withReport(Report.EFFECTIVE_SETTINGS)
                 .withInstructionsType(InstructionsType.TEXT)
                 .withTravelMode(travelMode)
-                .withTraffic(false);
+                .withConsiderTraffic(false).build();
         //end::doc_route_travel_mode[]
         return queryBuilder;
     }

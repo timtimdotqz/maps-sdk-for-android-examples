@@ -24,9 +24,7 @@ import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
 
 import org.joda.time.DateTime;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class DepartureAndArrivalTimePresenter extends RoutePlannerPresenter {
 
@@ -57,11 +55,11 @@ public class DepartureAndArrivalTimePresenter extends RoutePlannerPresenter {
     @VisibleForTesting
     protected RouteQuery getArrivalRouteQuery(Date arrivalTime) {
         //tag::doc_route_arrival_time[]
-        RouteQueryBuilder queryBuilder = new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
+        RouteQuery queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
                 .withReport(Report.EFFECTIVE_SETTINGS)
                 .withInstructionsType(InstructionsType.TEXT)
                 .withArriveAt(arrivalTime)
-                .withTraffic(false);
+                .withConsiderTraffic(false).build();
         //end::doc_route_arrival_time[]
         return queryBuilder;
     }
@@ -73,11 +71,11 @@ public class DepartureAndArrivalTimePresenter extends RoutePlannerPresenter {
 
     protected RouteQuery getDepartureRouteQuery(Date departureTime) {
         //tag::doc_route_departure_time[]
-        return new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
+        return RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
                 .withReport(Report.EFFECTIVE_SETTINGS)
                 .withInstructionsType(InstructionsType.TEXT)
                 .withDepartAt(departureTime)
-                .withTraffic(false);
+                .withConsiderTraffic(false).build();
         //end::doc_route_departure_time[]
     }
 

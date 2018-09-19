@@ -56,12 +56,12 @@ public class RouteAvoidsPresenter extends RoutePlannerPresenter {
     @VisibleForTesting
     protected RouteQuery getRouteQuery(Avoid routeAvoid) {
         //tag::doc_route_avoids[]
-        RouteQueryBuilder queryBuilder = new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
+        RouteQuery queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
                 .withMaxAlternatives(0)
                 .withReport(Report.NONE)
                 .withInstructionsType(InstructionsType.NONE)
                 .withAvoidType(routeAvoid)
-                .withTraffic(false);
+                .withConsiderTraffic(false).build();
         //end::doc_route_avoids[]
         return queryBuilder;
     }

@@ -10,11 +10,7 @@
  */
 package com.tomtom.online.sdk.samples.cases.route.reachablerange;
 
-import com.tomtom.online.sdk.data.CommonParams;
-import com.tomtom.online.sdk.data.CommonParamsBuilder;
 import com.tomtom.online.sdk.data.SpeedToConsumptionMap;
-import com.tomtom.online.sdk.data.reachablerange.ReachableRangeParams;
-import com.tomtom.online.sdk.data.reachablerange.ReachableRangeParamsBuilder;
 import com.tomtom.online.sdk.data.reachablerange.ReachableRangeQuery;
 import com.tomtom.online.sdk.data.reachablerange.ReachableRangeQueryBuilder;
 import com.tomtom.online.sdk.routing.data.VehicleEngineType;
@@ -23,28 +19,10 @@ import com.tomtom.online.sdk.samples.utils.Locations;
 public class ReachableRangeQueryFactory {
 
     public ReachableRangeQuery createReachableRangeQueryForElectric() {
-        return new ReachableRangeQueryBuilder(createDefaultCommonParamsForElectric(), createDefaultReachableRangeParamsForElectric()
-                .withEnergyBudgetInKWh(5));
-    }
-
-    public ReachableRangeQuery createReachableRangeQueryForElectricLimitTo2Hours() {
-        return new ReachableRangeQueryBuilder(createDefaultCommonParamsForElectric(), createDefaultReachableRangeParamsForElectric()
-                .withTimeBudgetInSeconds(7200));
-    }
-
-    public ReachableRangeQuery createReachableRangeQueryForCombustion() {
-        //tag::doc_reachable_range_query_combustion[]
-        return new ReachableRangeQueryBuilder(
-                createDefaultCommonParamsForCombustion(),
-                createDefaultReachableRangeParamsForCombustion());
-        //end::doc_reachable_range_query_combustion[]
-    }
-
-    private CommonParams createDefaultCommonParamsForElectric() {
         SpeedToConsumptionMap consumption = new SpeedToConsumptionMap();
         consumption.addSpeedToConsumptionValue(50, 6.3);
-
-        return new CommonParamsBuilder()
+        return ReachableRangeQueryBuilder.create(Locations.AMSTERDAM_CENTER_LOCATION)
+                .withEnergyBudgetInKWh(5.0)
                 .withVehicleWeightInKg(1600)
                 .withCurrentChargeInKWh(43.0)
                 .withMaxChargeInKWh(85.0)
@@ -54,26 +32,35 @@ public class ReachableRangeQueryFactory {
                 .withUphillEfficiency(0.33)
                 .withDownhillEfficiency(0.33)
                 .withConstantSpeedConsumptionInKWhPerHundredKm(consumption)
-                .withVehicleEngineType(VehicleEngineType.ELECTRIC);
+                .withVehicleEngineType(VehicleEngineType.ELECTRIC).build();
     }
 
-    private ReachableRangeParams createDefaultReachableRangeParamsForElectric() {
-        return new ReachableRangeParamsBuilder(Locations.AMSTERDAM_CENTER_LOCATION);
-    }
-
-    private ReachableRangeParams createDefaultReachableRangeParamsForCombustion() {
-        //tag::doc_reachable_range_specific_params_combustion[]
-        return new ReachableRangeParamsBuilder(Locations.AMSTERDAM_CENTER_LOCATION)
-                .withFuelBudgetInLiters(5);
-        //end::doc_reachable_range_specific_params_combustion[]
-    }
-
-    private CommonParams createDefaultCommonParamsForCombustion() {
-        //tag::doc_reachable_range_common_params_combustion[]
+    public ReachableRangeQuery createReachableRangeQueryForElectricLimitTo2Hours() {
         SpeedToConsumptionMap consumption = new SpeedToConsumptionMap();
         consumption.addSpeedToConsumptionValue(50, 6.3);
+        return ReachableRangeQueryBuilder.create(Locations.AMSTERDAM_CENTER_LOCATION)
+                .withTimeBudgetInSeconds(7200.0)
+                .withVehicleWeightInKg(1600)
+                .withCurrentChargeInKWh(43.0)
+                .withMaxChargeInKWh(85.0)
+                .withAuxiliaryPowerInKW(1.7)
+                .withAccelerationEfficiency(0.33)
+                .withDecelerationEfficiency(0.33)
+                .withUphillEfficiency(0.33)
+                .withDownhillEfficiency(0.33)
+                .withConstantSpeedConsumptionInKWhPerHundredKm(consumption)
+                .withVehicleEngineType(VehicleEngineType.ELECTRIC).build();
+    }
 
-        return new CommonParamsBuilder()
+    public ReachableRangeQuery createReachableRangeQueryForCombustion() {
+
+        SpeedToConsumptionMap consumption = new SpeedToConsumptionMap();
+        consumption.addSpeedToConsumptionValue(50, 6.3);
+        //tag::doc_reachable_range_query_combustion[]
+        return ReachableRangeQueryBuilder.create(Locations.AMSTERDAM_CENTER_LOCATION)
+                .withFuelBudgetInLiters(5.0)
+                //end::doc_reachable_range_query_combustion[]
+                //tag::doc_reachable_range_common_params_combustion[]
                 .withVehicleWeightInKg(1600)
                 .withCurrentFuelInLiters(43.0)
                 .withFuelEnergyDensityInMJoulesPerLiter(34.2)
@@ -83,7 +70,9 @@ public class ReachableRangeQueryFactory {
                 .withUphillEfficiency(0.33)
                 .withDownhillEfficiency(0.33)
                 .withConstantSpeedConsumptionInLitersPerHundredKm(consumption)
-                .withVehicleEngineType(VehicleEngineType.COMBUSTION);
-        //tag::doc_reachable_range_common_params_combustion[]
+                .withVehicleEngineType(VehicleEngineType.COMBUSTION)
+                //tag::doc_reachable_range_common_params_combustion[]
+                .build();
     }
+
 }

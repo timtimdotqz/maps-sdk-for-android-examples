@@ -10,10 +10,6 @@
  */
 package com.tomtom.online.sdk.samples.cases.map.layers.traffic;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
-
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.cases.ExampleFragment;
 import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
@@ -47,7 +43,7 @@ public class VectorTrafficLayersFragment extends ExampleFragment<VectorTrafficLa
     @Override
     public boolean isMapRestored() {
 
-        final boolean[] previousState = new boolean[] {
+        final boolean[] previousState = new boolean[]{
                 optionsView.isSelected(0),
                 optionsView.isSelected(1),
         };

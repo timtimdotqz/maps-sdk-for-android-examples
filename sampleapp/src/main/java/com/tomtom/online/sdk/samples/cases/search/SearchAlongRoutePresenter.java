@@ -14,7 +14,6 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.tomtom.online.sdk.common.location.LatLng;
-import com.tomtom.online.sdk.map.BaseMarkerBalloon;
 import com.tomtom.online.sdk.map.MarkerBuilder;
 import com.tomtom.online.sdk.map.SimpleMarkerBalloon;
 import com.tomtom.online.sdk.map.TomtomMap;
@@ -73,11 +72,11 @@ public class SearchAlongRoutePresenter extends RoutePlannerPresenter {
     }
 
     protected RouteQuery getRouteQuery() {
-        RouteQueryBuilder queryBuilder = new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
+        RouteQuery queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
                 .withMaxAlternatives(0)
                 .withReport(Report.EFFECTIVE_SETTINGS)
                 .withInstructionsType(InstructionsType.TEXT)
-                .withRouteType(RouteType.FASTEST);
+                .withRouteType(RouteType.FASTEST).build();
         return queryBuilder;
     }
 
@@ -98,7 +97,7 @@ public class SearchAlongRoutePresenter extends RoutePlannerPresenter {
         FullRoute route = (FullRoute) routesMap.values().toArray()[0];
 
         //tag::doc_search_along_route_request[]
-        AlongRouteSearchQuery query = new AlongRouteSearchQueryBuilder(
+        AlongRouteSearchQueryBuilder query = new AlongRouteSearchQueryBuilder(
                 term,
                 route.getCoordinates(),
                 SEARCH_MAX_DETOUR_TIME
@@ -106,7 +105,7 @@ public class SearchAlongRoutePresenter extends RoutePlannerPresenter {
         query.withLimit(SEARCH_MAX_LIMIT);
 
         SearchApi searchAPI = OnlineSearchApi.create(context);
-        searchAPI.alongRouteSearch(query, alongRouteSearchCallback);
+        searchAPI.alongRouteSearch(query.build(), alongRouteSearchCallback);
         //end::doc_search_along_route_request[]
     }
 

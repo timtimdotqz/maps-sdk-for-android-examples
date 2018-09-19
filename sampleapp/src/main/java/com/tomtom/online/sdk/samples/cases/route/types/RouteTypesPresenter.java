@@ -56,14 +56,14 @@ public class RouteTypesPresenter extends RoutePlannerPresenter {
     @VisibleForTesting
     protected RouteQuery getRouteQuery(RouteType routeType) {
         //tag::doc_route_type[]
-        RouteQueryBuilder queryBuilder = new RouteQueryBuilder(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
+        RouteQueryBuilder queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
                 .withMaxAlternatives(0)
                 .withReport(Report.EFFECTIVE_SETTINGS)
                 .withInstructionsType(InstructionsType.TEXT)
                 .withRouteType(routeType)
-                .withTraffic(false);
+                .withConsiderTraffic(false);
+        return queryBuilder.build();
         //end::doc_route_type[]
-        return queryBuilder;
     }
 
     @Override

@@ -132,7 +132,7 @@ public class GeometrySearchPresenter extends BaseFunctionalExamplePresenter {
         geometries.add(new Geometry(new CircleGeometry(CIRCLE_CENTER, CIRCLE_RADIUS)));
 
         GeometrySearchQuery query = new GeometrySearchQueryBuilder(term, geometries)
-                .withLimit(SEARCH_RESULTS_LIMIT);
+                .withLimit(SEARCH_RESULTS_LIMIT).build();
 
         SearchApi searchAPI = OnlineSearchApi.create(context);
         searchAPI.geometrySearch(query, searchResultListener);

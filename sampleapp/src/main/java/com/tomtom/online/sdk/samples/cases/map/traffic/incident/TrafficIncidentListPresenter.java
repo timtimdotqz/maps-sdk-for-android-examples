@@ -58,8 +58,8 @@ public class TrafficIncidentListPresenter implements LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     public void onResume() {
         //tag::doc_traffic_query[]
-        IncidentDetailsQuery query = new IncidentDetailsQueryBuilder(IncidentStyle.S1, LONDON_BOUNDING_BOX, DEFAULT_ZOOM_LEVEL_FOR_EXAMPLE, "-1")
-                .withExpandCluster(true);
+        IncidentDetailsQuery query = IncidentDetailsQueryBuilder.create(IncidentStyle.S1, LONDON_BOUNDING_BOX, DEFAULT_ZOOM_LEVEL_FOR_EXAMPLE, "-1")
+                .withExpandCluster(true).build();
         trafficApi.findIncidentDetails(query, incidentDetailsResultListener);
         //end::doc_traffic_query[]
 

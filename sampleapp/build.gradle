@@ -99,5 +99,8 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:$rootProject.androidVersions.constraint_layout"
     implementation "android.arch.lifecycle:viewmodel:$rootProject.androidVersions.androidarch"
     implementation "android.arch.lifecycle:extensions:$rootProject.androidVersions.androidarch"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.libVersions.leakcanary"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.libVersions.leakcanary"
+
 }
 

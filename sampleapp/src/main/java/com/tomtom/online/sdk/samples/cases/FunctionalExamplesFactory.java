@@ -13,6 +13,7 @@ package com.tomtom.online.sdk.samples.cases;
 import android.support.annotation.IdRes;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.cases.driving.tracking.ChevronTrackingFragment;
 import com.tomtom.online.sdk.samples.cases.map.geopoliticalview.MapGeopoliticalViewFragment;
 import com.tomtom.online.sdk.samples.cases.map.langparam.MapLanguageParamFragment;
 import com.tomtom.online.sdk.samples.cases.map.layers.shapes.ShapesCustomFragment;
@@ -170,6 +171,7 @@ public class FunctionalExamplesFactory {
 
             case R.id.additional_data:
                 return new AdditionalDataSearchFragment();
+
             case R.id.traffic_incident:
                 return new TrafficIncidentListFragment();
 
@@ -178,6 +180,9 @@ public class FunctionalExamplesFactory {
 
             case R.id.batch_routing:
                 return new BatchRouteFragment();
+
+            case R.id.multiple_chevrons:
+                return new ChevronTrackingFragment();
 
             case R.id.matrix_routing:
                 return new MatrixRouteFragment();

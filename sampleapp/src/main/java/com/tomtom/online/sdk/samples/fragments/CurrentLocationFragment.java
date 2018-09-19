@@ -104,7 +104,7 @@ public class CurrentLocationFragment extends Fragment implements FunctionalExamp
             @Override
             public void onMapReady(TomtomMap map) {
                 tomtomMap = map;
-                alignCurrentLocationButton(map.getContext(), tomtomMap);
+                alignCurrentLocationButton(getContext(), tomtomMap);
                 if (!isMapRestored()) {
                     showMyPosition();
                 }

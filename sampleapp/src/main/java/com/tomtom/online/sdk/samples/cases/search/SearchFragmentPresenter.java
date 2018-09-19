@@ -20,21 +20,22 @@ import android.view.View;
 
 import com.google.common.collect.ImmutableList;
 import com.tomtom.online.sdk.common.location.LatLng;
+import com.tomtom.online.sdk.common.location.LatLngAcc;
 import com.tomtom.online.sdk.common.util.Contextable;
 import com.tomtom.online.sdk.location.LocationRequestsFactory;
 import com.tomtom.online.sdk.location.LocationSource;
 import com.tomtom.online.sdk.location.LocationSourceFactory;
 import com.tomtom.online.sdk.location.LocationUpdateListener;
 import com.tomtom.online.sdk.location.Locations;
-import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQuery;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQueryBuilder;
+import com.tomtom.online.sdk.search.data.fuzzy.IFuzzySearchQuery;
+import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQuery;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResponse;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResult;
 import com.tomtom.online.sdk.search.extensions.SearchService;
 import com.tomtom.online.sdk.search.extensions.SearchServiceConnectionCallback;
 import com.tomtom.online.sdk.common.rx.RxContext;
 
-import java.util.ArrayList;
 import java.util.concurrent.Executors;
 
 import io.reactivex.Scheduler;
@@ -184,20 +185,20 @@ public class SearchFragmentPresenter implements SearchPresenter, LocationUpdateL
 
     protected FuzzySearchQuery createSimpleQuery(String text) {
         Timber.d("createSimpleQuery(): %s", text);
-        return new FuzzySearchQueryBuilder(text);
+        return FuzzySearchQueryBuilder.create(text).build();
     }
 
     protected FuzzySearchQuery createSimpleQuery(String text, String lang) {
         Timber.d("createSimpleQuery(): %s, %s", text, lang);
         //tag::doc_create_simple_query_with_lang[]
-        return new FuzzySearchQueryBuilder(text).withLanguage(lang);
+        return FuzzySearchQueryBuilder.create(text).withLanguage(lang).build();
         //end::doc_create_simple_query_with_lang[]
     }
 
     @SuppressWarnings("unused")
     private FuzzySearchQuery getSimpleQueryBuilderWithTerm(String text) {
         //tag::doc_create_basic_query[]
-        return new FuzzySearchQueryBuilder(text);
+        return FuzzySearchQueryBuilder.create(text).build();
         //end::doc_create_basic_query[]
     }
 
@@ -208,7 +209,7 @@ public class SearchFragmentPresenter implements SearchPresenter, LocationUpdateL
         }
 
         //tag::doc_create_query_with_position[]
-        return new FuzzySearchQueryBuilder(text).withPosition(position, STANDARD_RADIUS);
+        return FuzzySearchQueryBuilder.create(text).withPreciseness(new LatLngAcc(position, STANDARD_RADIUS)).build();
         //end::doc_create_query_with_position[]
     }
 

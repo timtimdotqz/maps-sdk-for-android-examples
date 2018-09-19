@@ -15,7 +15,6 @@ import android.graphics.Color;
 
 import com.google.common.collect.ImmutableList;
 import com.tomtom.online.sdk.common.location.LatLng;
-import com.tomtom.online.sdk.map.BaseMarkerBalloon;
 import com.tomtom.online.sdk.map.CameraPosition;
 import com.tomtom.online.sdk.map.CircleBuilder;
 import com.tomtom.online.sdk.map.MapConstants;
@@ -31,9 +30,11 @@ import com.tomtom.online.sdk.search.OnlineSearchApi;
 import com.tomtom.online.sdk.search.SearchApi;
 import com.tomtom.online.sdk.search.api.SearchError;
 import com.tomtom.online.sdk.search.api.batch.BatchSearchResultListener;
+import com.tomtom.online.sdk.search.data.batch.BatchSearchQuery;
 import com.tomtom.online.sdk.search.data.batch.BatchSearchQueryBuilder;
 import com.tomtom.online.sdk.search.data.batch.BatchSearchResponse;
 import com.tomtom.online.sdk.search.data.batch.BatchableSearchResponseVisitorAdapter;
+import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQuery;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQueryBuilder;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResponse;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResult;
@@ -86,23 +87,23 @@ public class BatchSearchPresenter extends BaseFunctionalExamplePresenter {
     }
 
     private FuzzySearchQueryBuilder getBaseFuzzyQuery(String category) {
-        FuzzySearchQueryBuilder query = new FuzzySearchQueryBuilder(category);
-        query.withCategory(true);
-        return query;
+        FuzzySearchQueryBuilder queryBuilder = FuzzySearchQueryBuilder.create(category)
+                .withCategory(true);
+        return queryBuilder;
     }
 
-    private FuzzySearchQueryBuilder getAmsterdamQuery(String category) {
+    private FuzzySearchQuery getAmsterdamQuery(String category) {
         FuzzySearchQueryBuilder query = getBaseFuzzyQuery(category);
         query.withPosition(Locations.AMSTERDAM_CENTER_LOCATION);
         query.withLimit(10);
-        return query;
+        return query.build();
     }
 
-    private FuzzySearchQueryBuilder getHaarlemQuery(String category) {
+    private FuzzySearchQuery getHaarlemQuery(String category) {
         FuzzySearchQueryBuilder query = getBaseFuzzyQuery(category);
         query.withPosition(Locations.AMSTERDAM_HAARLEM);
         query.withLimit(15);
-        return query;
+        return query.build();
     }
 
     private GeometrySearchQuery getHoofddropQuery(String category) {
@@ -110,7 +111,7 @@ public class BatchSearchPresenter extends BaseFunctionalExamplePresenter {
         CircleGeometry circleGeometry = new CircleGeometry(Locations.HOOFDDORP_LOCATION, GEOMETRY_RADIUS);
         Geometry geometry = new Geometry(circleGeometry);
         geometries.add(geometry);
-        return new GeometrySearchQueryBuilder(category, geometries);
+        return new GeometrySearchQueryBuilder(category, geometries).build();
     }
 
     @SuppressLint("CheckResult")
@@ -130,7 +131,7 @@ public class BatchSearchPresenter extends BaseFunctionalExamplePresenter {
         batchQuery.withGeometrySearchQuery(getHoofddropQuery(category));
 
         final SearchApi searchApi = OnlineSearchApi.create(view.getContext());
-        searchApi.batchSearch(batchQuery, batchSearchResultListener);
+        searchApi.batchSearch(batchQuery.build(), batchSearchResultListener);
         //end::doc_batch_search_request[]
     }
 

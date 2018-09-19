@@ -83,12 +83,12 @@ public class RouteSupportingPointsPresenter extends RoutePlannerPresenter {
     protected RouteQuery getRouteQuery(int minDeviationDistance) {
 
         //tag::doc_route_supporting_points[]
-        RouteQueryBuilder queryBuilder = new RouteQueryBuilder(EXAMPLE_ORIGIN, EXAMPLE_DESTINATION)
+        RouteQuery queryBuilder = RouteQueryBuilder.create(EXAMPLE_ORIGIN, EXAMPLE_DESTINATION)
                 .withMaxAlternatives(1)
                 .withMinDeviationTime(0)
                 .withSupportingPoints(SUPPORTING_POINTS)
                 .withMinDeviationDistance(minDeviationDistance)
-                .withTraffic(false);
+                .withConsiderTraffic(false).build();
         //end::doc_route_supporting_points[]
         return queryBuilder;
     }

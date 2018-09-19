@@ -31,6 +31,7 @@ import com.tomtom.online.sdk.search.SearchApi;
 import com.tomtom.online.sdk.search.api.SearchError;
 import com.tomtom.online.sdk.search.api.revgeo.RevGeoSearchResultListener;
 import com.tomtom.online.sdk.search.data.common.Address;
+import com.tomtom.online.sdk.search.data.reversegeocoder.IReverseGeocoderSearchQuery;
 import com.tomtom.online.sdk.search.data.reversegeocoder.ReverseGeocoderSearchQuery;
 import com.tomtom.online.sdk.search.data.reversegeocoder.ReverseGeocoderSearchQueryBuilder;
 import com.tomtom.online.sdk.search.data.reversegeocoder.ReverseGeocoderSearchResponse;
@@ -115,7 +116,7 @@ public class ReverseGeocodingPresenter extends BaseFunctionalExamplePresenter {
     }
 
     protected ReverseGeocoderSearchQuery createReverseGeocoderQuery(double latitude, double longitude) {
-        return new ReverseGeocoderSearchQueryBuilder(latitude, longitude);
+        return ReverseGeocoderSearchQueryBuilder.create(latitude, longitude).build();
     }
 
     protected String getNoReverseGeocodingResultsMessage() {

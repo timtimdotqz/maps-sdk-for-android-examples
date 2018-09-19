@@ -12,7 +12,6 @@ package com.tomtom.online.sdk.samples.cases.map.layers.traffic;
 
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.TomtomMap;
-import com.tomtom.online.sdk.map.TrafficFlowType;
 import com.tomtom.online.sdk.map.model.MapTilesType;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;

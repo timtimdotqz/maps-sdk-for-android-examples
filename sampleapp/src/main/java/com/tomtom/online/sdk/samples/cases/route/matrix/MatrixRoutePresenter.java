@@ -34,6 +34,7 @@ import com.tomtom.online.sdk.map.SimpleMarkerBalloon;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.routing.OnlineRoutingApi;
 import com.tomtom.online.sdk.routing.RoutingApi;
+import com.tomtom.online.sdk.routing.data.Summary;
 import com.tomtom.online.sdk.routing.data.matrix.MatrixRoutingQuery;
 import com.tomtom.online.sdk.routing.data.matrix.MatrixRoutingQueryBuilder;
 import com.tomtom.online.sdk.routing.data.matrix.MatrixRoutingResponse;
@@ -306,7 +307,11 @@ public class MatrixRoutePresenter implements LifecycleObserver, RxContext {
 
     private int determineColor(MatrixRoutingResultKey matrixRoutingResultKey, MatrixRoutingResponse matrixRoutingResponse) {
 
-        DateTime currentRouteEta = new DateTime(matrixRoutingResponse.getResults().get(matrixRoutingResultKey).getSummary().getArrivalTime());
+        Summary summary = matrixRoutingResponse.getResults().get(matrixRoutingResultKey).getSummary();
+        if (summary == null){
+            return Color.GRAY;
+        }
+        DateTime currentRouteEta = new DateTime(summary.getArrivalTime());
         DateTime minEta = currentRouteEta;
 
         for (MatrixRoutingResultKey key : matrixRoutingResponse.getResults().keySet()) {

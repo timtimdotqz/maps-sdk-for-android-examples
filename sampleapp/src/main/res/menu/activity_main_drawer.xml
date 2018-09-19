@@ -102,6 +102,15 @@
         </menu>
     </item>
 
+    <item android:title="@string/dynamic_map">
+        <menu>
+            <item
+                android:id="@+id/multiple_chevrons"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/chevron_tracking" />
+        </menu>
+    </item>
+
     <item android:title="@string/menu_traffic">
         <menu>
             <item
