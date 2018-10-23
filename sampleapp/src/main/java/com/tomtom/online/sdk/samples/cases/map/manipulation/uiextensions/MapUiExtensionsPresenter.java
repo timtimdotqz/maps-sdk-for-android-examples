@@ -10,16 +10,11 @@
  */
 package com.tomtom.online.sdk.samples.cases.map.manipulation.uiextensions;
 
-import android.view.View;
 import android.widget.ImageView;
 
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.ui.arrowbuttons.ArrowButtonsGroup;
-import com.tomtom.online.sdk.map.ui.compass.BasicCompassView;
-import com.tomtom.online.sdk.map.ui.compass.CompassView;
-import com.tomtom.online.sdk.map.ui.currentlocation.BasicCurrentLocationView;
-import com.tomtom.online.sdk.map.ui.currentlocation.CurrentLocationView;
 import com.tomtom.online.sdk.map.ui.zoom.ZoomButtonsGroup;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;

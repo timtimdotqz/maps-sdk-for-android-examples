@@ -89,12 +89,8 @@ public abstract class BaseFunctionalExamplePresenter implements FunctionalExampl
     }
 
     protected void confMapPadding() {
-        int offsetBig = getContext().getResources().getDimensionPixelSize(R.dimen.offset_extra_big);
 
-        int actionBarHeight = getContext().getResources().getDimensionPixelSize(
-                android.support.v7.appcompat.R.dimen.abc_action_bar_default_height_material);
-
-        int padding = actionBarHeight + offsetBig;
+        int padding = getContext().getResources().getDimensionPixelSize(R.dimen.offset_extra_big);
 
         tomtomMap.setPadding(padding, padding, padding, padding);
     }

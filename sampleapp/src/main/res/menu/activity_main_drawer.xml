@@ -99,6 +99,10 @@
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/markers_clustering_title" />
 
+            <item
+                android:id="@+id/route_customization"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/menu_route_customization" />
         </menu>
     </item>
 

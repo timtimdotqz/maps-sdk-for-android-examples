@@ -14,7 +14,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
 import com.google.common.base.Optional;
+import com.tomtom.online.sdk.common.func.Block;
+import com.tomtom.online.sdk.common.func.FuncUtils;
 import com.tomtom.online.sdk.map.Route;
+import com.tomtom.online.sdk.map.RouteStyle;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.TomtomMapCallback;
 import com.tomtom.online.sdk.routing.data.Avoid;
@@ -60,7 +63,6 @@ public class BatchRoutePresenter extends RoutePlannerPresenter {
     @Override
     public void cleanup() {
         super.cleanup();
-        activeRouteSet = false;
         tomtomMap.removeOnRouteClickListener(onRouteClickListener);
     }
 
@@ -107,7 +109,6 @@ public class BatchRoutePresenter extends RoutePlannerPresenter {
     private void clearRouteSelection() {
         tomtomMap.clearRoute();
         routesMap.clear();
-        activeRouteSet = false;
     }
 
     private void displayRouteAndSetDescription(BatchRoutingResponse batchRoutingResponse) {
@@ -119,26 +120,52 @@ public class BatchRoutePresenter extends RoutePlannerPresenter {
             }
             displayFullRoutes(routeResponse);
         }
+
+        if (batchRoutingResponse.getRouteRoutingResponses().isEmpty()) {
+            return;
+        }
+
+        setRouteActiveIfApply();
+        displayInfoAboutRouteIfApply(batchRoutingResponse);
         tomtomMap.displayRoutesOverview();
     }
 
-    boolean activeRouteSet = false;
+    private void setRouteActiveIfApply() {
+        FuncUtils.apply(getFirstRoute(tomtomMap.getRouteSettings().getRoutes()), new Block<Route>() {
+            @Override
+            public void apply(Route route) {
+                tomtomMap.getRouteSettings().setRoutesInactive();
+                tomtomMap.getRouteSettings().setRouteActive(route.getId());
+            }
+        });
+    }
 
-    /**
-     * Override base method. Base method return active route from one request. Here first route
-     * from few requests is marked as a active.
-     *
-     * @param fullRoutes
-     * @return
-     */
-    @Override
-    protected Optional<FullRoute> getActiveRoute(List<FullRoute> fullRoutes) {
-        if (!activeRouteSet) {
-            activeRouteSet = true;
-            return Optional.fromNullable(fullRoutes.get(0));
-        } else {
+    private void displayInfoAboutRouteIfApply(BatchRoutingResponse batchRoutingResponse) {
+        FuncUtils.apply(getFirstFullRoute(batchRoutingResponse.getRouteRoutingResponses().get(0).getRoutes()), new Block<FullRoute>() {
+            @Override
+            public void apply(FullRoute fullRoute) {
+                displayInfoAboutRoute(fullRoute);
+            }
+        });
+    }
+
+    private Optional<Route> getFirstRoute(List<Route> routes) {
+        if (routes.isEmpty()) {
             return Optional.absent();
         }
+        return Optional.of(routes.get(0));
+    }
+
+    private Optional<FullRoute> getFirstFullRoute(List<FullRoute> fullRoutes) {
+        if (fullRoutes.isEmpty()) {
+            return Optional.absent();
+        }
+        return Optional.of(fullRoutes.get(0));
+    }
+
+    @Override
+    protected void selectFirstRouteAsActive(RouteStyle routeStyle) {
+        // Not needed
     }
 
     @VisibleForTesting

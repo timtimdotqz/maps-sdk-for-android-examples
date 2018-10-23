@@ -162,7 +162,7 @@ public class ChevronTrackingPresenter extends BaseFunctionalExamplePresenter {
     }
 
     private void showRoute(FullRoute route) {
-        tomtomMap.addRoute(new RouteBuilder(route.getCoordinates()).isActive(true));
+        tomtomMap.addRoute(new RouteBuilder(route.getCoordinates()));
         tomtomMap.getRouteSettings().displayRoutesOverview();
     }
 
@@ -201,9 +201,9 @@ public class ChevronTrackingPresenter extends BaseFunctionalExamplePresenter {
     }
 
     private void stopSimulator() {
-        if (routeSimulator!=null) {
+        if (routeSimulator != null) {
             routeSimulator.stop();
-        }else {
+        } else {
             Timber.d("Cannot stop routeSimulator");
         }
     }

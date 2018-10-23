@@ -89,6 +89,10 @@
     <string name="map_style_night">Custom</string>
     <string name="map_style_base">Basic</string>
 
+    <string name="map_custom_route">Custom</string>
+    <string name="map_basic_route">Basic</string>
+
+
     <string name="my_location_on">Chevron on</string>
     <string name="my_location_off">Chevron off</string>
 
@@ -213,6 +217,7 @@
     <string name="menu_geopolitical_view">Geopolitical view</string>
     <string name="menu_custom_style">Custom style</string>
     <string name="menu_static_image">Static map image</string>
+    <string name="menu_route_customization">Route customization</string>
     <string name="english">English</string>
     <string name="russian">Russian</string>
     <string name="dutch">Dutch</string>

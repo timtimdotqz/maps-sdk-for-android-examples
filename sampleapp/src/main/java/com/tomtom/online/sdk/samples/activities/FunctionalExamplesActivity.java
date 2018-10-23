@@ -11,6 +11,7 @@
 package com.tomtom.online.sdk.samples.activities;
 
 import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -24,6 +25,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import com.tomtom.online.sdk.common.location.LatLng;
+import com.tomtom.online.sdk.map.BaseGpsPositionIndicator;
 import com.tomtom.online.sdk.map.MapFragment;
 import com.tomtom.online.sdk.map.OnMapReadyCallback;
 import com.tomtom.online.sdk.map.TomtomMap;
@@ -62,7 +65,6 @@ public class FunctionalExamplesActivity extends AppCompatActivity
                 }
             };
     //end::doc_implement_on_map_ready_callback[]
-
 
     private TomtomMap tomtomMap;
     private MapFragment mapFragment;
@@ -245,5 +247,29 @@ public class FunctionalExamplesActivity extends AppCompatActivity
         tomtomMap.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
     //end::doc_map_permissions[]
+
+    /**
+     * Custom GPS position indicator that forces accuracy to 0.
+     */
+    @SuppressWarnings("unused")
+    //tag::doc_custom_gps_position_indicator
+    static class CustomGpsPositionIndicator extends BaseGpsPositionIndicator {
+
+        //To use this class, call setCustomGpsPositionIndicator on TomtomMap:
+        //tomtomMap.setGpsPositionIndicator(new CustomGpsPositionIndicator());
+        
+        @Override
+        public void setLocation(Location location) {
+            setLocation(new LatLng(location), 0.0, 0.0);
+        }
+
+        @Override
+        public void setLocation(LatLng latLng, double bearingInDegrees, double accuracyInMeters) {
+            super.show();
+            super.setDimmed(false);
+            super.setLocation(latLng, 0.0, 0.0);
+        }
+    }
+    //end::doc_custom_gps_position_indicator
 
 }

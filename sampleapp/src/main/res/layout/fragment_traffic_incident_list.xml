@@ -7,8 +7,7 @@
 
     <com.tomtom.online.sdk.samples.cases.map.traffic.incident.list.TrafficIncidentsListHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/control_top_panel_height"/>
+            android:layout_height="wrap_content" />
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/trafficIncidentsList"

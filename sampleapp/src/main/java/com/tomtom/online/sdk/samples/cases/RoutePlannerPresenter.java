@@ -13,8 +13,8 @@ package com.tomtom.online.sdk.samples.cases;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
-import com.google.common.base.Optional;
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.location.Locations;
 import com.tomtom.online.sdk.map.CameraPosition;
@@ -22,6 +22,7 @@ import com.tomtom.online.sdk.map.Icon;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.Route;
 import com.tomtom.online.sdk.map.RouteBuilder;
+import com.tomtom.online.sdk.map.RouteStyle;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.model.MapModeType;
 import com.tomtom.online.sdk.map.rx.RxContext;
@@ -50,6 +51,7 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
 
     protected static final int DEFAULT_ZOOM_FOR_EXAMPLE = 10;
     protected static final int DEFAULT_MAP_PADDING = 0;
+    protected static final double DEFAULT_ICON_SCALE = 2.0;
 
     protected CheckedButtonCleaner checkedButtonCleaner;
     protected RoutingUiListener viewModel;
@@ -61,8 +63,8 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
      */
     protected Map<Long, FullRoute> routesMap = new LinkedHashMap<>();
     protected CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private Icon startIcon;
-    private Icon endIcon;
+    private Icon defaultStartIcon;
+    private Icon defaultEndIcon;
 
     public void setRoutesMap(Map<Long, FullRoute> routesMap) {
         this.routesMap = routesMap;
@@ -128,8 +130,8 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
     }
 
     protected void confRouteIcons() {
-        startIcon = Icon.Factory.fromResources(view.getContext(), R.drawable.ic_map_route_departure);
-        endIcon = Icon.Factory.fromResources(view.getContext(), R.drawable.ic_map_route_destination);
+        defaultStartIcon = Icon.Factory.fromResources(view.getContext(), R.drawable.ic_map_route_departure, DEFAULT_ICON_SCALE);
+        defaultEndIcon = Icon.Factory.fromResources(view.getContext(), R.drawable.ic_map_route_destination, DEFAULT_ICON_SCALE);
     }
 
     protected void confMapPadding() {
@@ -150,14 +152,14 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
     }
 
     @SuppressLint("CheckResult")
-    public void showRoute(RouteQuery routeQuery) {
+    public void showRoute(RouteQuery routeQuery, final RouteStyle routeStyle, final Icon startIcon, final Icon endIcon) {
         //tag::doc_execute_routing[]
         Disposable subscribe = routePlannerAPI.planRoute(routeQuery).subscribeOn(getWorkingScheduler())
                 .observeOn(getResultScheduler())
                 .subscribe(new Consumer<RouteResponse>() {
                     @Override
                     public void accept(RouteResponse routeResult) throws Exception {
-                        displayRoutes(routeResult);
+                        displayRoutes(routeResult, routeStyle, startIcon, endIcon);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -169,41 +171,69 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
         compositeDisposable.add(subscribe);
     }
 
-    protected Optional<FullRoute> getActiveRoute(List<FullRoute> fullRoutes) {
-        if (fullRoutes != null && !fullRoutes.isEmpty()) {
-            return Optional.of(fullRoutes.get(0));
-        }
-        return Optional.absent();
+    @SuppressLint("CheckResult")
+    public void showRoute(RouteQuery routeQuery) {
+        //tag::doc_execute_routing[]
+        Disposable subscribe = routePlannerAPI.planRoute(routeQuery).subscribeOn(getWorkingScheduler())
+                .observeOn(getResultScheduler())
+                .subscribe(new Consumer<RouteResponse>() {
+                    @Override
+                    public void accept(RouteResponse routeResult) throws Exception {
+                        displayRoutes(routeResult, RouteStyle.DEFAULT_ROUTE_STYLE, defaultStartIcon, defaultEndIcon);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        proceedWithError(throwable.getMessage());
+                    }
+                });
+        //end::doc_execute_routing[]
+        compositeDisposable.add(subscribe);
     }
 
     protected void displayRoutes(RouteResponse routeResponse) {
+        displayFullRoutes(routeResponse, RouteStyle.DEFAULT_ROUTE_STYLE, defaultStartIcon, defaultEndIcon);
+    }
+
+    protected void displayRoutes(RouteResponse routeResponse, RouteStyle routeStyle, Icon startIcon, Icon endIcon) {
 
         routesMap.clear();
 
-        displayFullRoutes(routeResponse);
+        displayFullRoutes(routeResponse, routeStyle, startIcon, endIcon);
 
         tomtomMap.displayRoutesOverview();
     }
 
     protected void displayFullRoutes(RouteResponse routeResponse) {
+        displayFullRoutes(routeResponse, RouteStyle.DEFAULT_ROUTE_STYLE, defaultStartIcon, defaultEndIcon);
+    }
+
+    protected void displayFullRoutes(RouteResponse routeResponse, RouteStyle routeStyle, Icon startIcon, Icon endIcon) {
         List<FullRoute> routes = routeResponse.getRoutes();
-        Optional<FullRoute> activeRoute = getActiveRoute(routes);
 
         for (FullRoute route : routes) {
 
-            boolean isActiveRoute = activeRoute.isPresent() ? activeRoute.get().equals(route) : false;
-
             //tag::doc_display_route[]
             RouteBuilder routeBuilder = new RouteBuilder(route.getCoordinates())
-                    .isActive(isActiveRoute)
                     .endIcon(endIcon)
-                    .startIcon(startIcon);
+                    .startIcon(startIcon)
+                    .style(routeStyle);
             final Route mapRoute = tomtomMap.addRoute(routeBuilder);
             //end::doc_display_route[]
+
             routesMap.put(mapRoute.getId(), route);
-            if (isActiveRoute) {
-                displayInfoAboutRoute(route);
-            }
+        }
+
+        selectFirstRouteAsActive(routeStyle);
+        if (!routes.isEmpty()){
+            displayInfoAboutRoute(routes.get(0));
+        }
+    }
+
+    protected void selectFirstRouteAsActive(RouteStyle routeStyle) {
+        if (!tomtomMap.getRouteSettings().getRoutes().isEmpty() && routeStyle.equals(RouteStyle.DEFAULT_ROUTE_STYLE)) {
+            tomtomMap.getRouteSettings().setRoutesInactive();
+            tomtomMap.getRouteSettings().setRouteActive(tomtomMap.getRouteSettings().getRoutes().get(0).getId());
         }
     }
 

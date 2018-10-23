@@ -36,14 +36,5 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/content_main" />
-
-    <ImageView
-        android:id="@+id/fab2"
-        android:layout_width="1px"
-        android:layout_height="1px"
-        android:layout_gravity="bottom|end" />
 
 </android.support.design.widget.CoordinatorLayout>

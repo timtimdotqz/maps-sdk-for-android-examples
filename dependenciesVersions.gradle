@@ -21,7 +21,7 @@ ext {
         devSymbols = System.getenv('DEBUG_SYMBOLS').toBoolean()
     }
 
-    androidBuildToolsVersion = '27.0.3'
+    androidBuildToolsVersion = '28.0.2'
     androidCompileSdkVersion = 27
     androidTargetSdkVersion = 26
     androidMinSdkVersion = 16
@@ -54,7 +54,7 @@ ext {
     //doc_start_dependencies_version_config
     libVersions = [
             timber                  : '4.6.0',
-            crashlytics             : '2.9.0',
+            crashlytics             : '2.9.5',
             leakcanary              : '1.6.1',
             corektx                 : '0.3',
             lombok                  : '1.16.20',
@@ -68,7 +68,7 @@ ext {
             retrofit                : '2.3.0',
             retrofitrxjava          : '1.0.0',
             okhttp                  : '3.9.1',
-            kotlin                  : '1.2.40-eap-61',
+            kotlin                  : '1.2.51',
             jdoocsoup               : '0.1.14',
             jodatime                : '2.9.9',
             singledateandtimepicker : '1.2.2',

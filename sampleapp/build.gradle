@@ -15,7 +15,7 @@ android {
         buildConfigField("String[]", "BUILT_IN_LOCALE", '{"en-US","es-ES","fr-FR","de-DE"}');
         applicationId 'com.tomtom.mapssdk.examplesapp'
 
-        testInstrumentationRunner "com.tomtom.online.sdk.samples.activities.TestRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     lintOptions {
@@ -63,36 +63,24 @@ android {
 dependencies {
         //doc_dependencies_sample_app_start
         //dependency for display map and core code
-        api("com.tomtom.online:sdk-maps:$rootProject.internalVersions.sdk@aar") {
-            transitive = true
-        }
+        implementation("com.tomtom.online:sdk-maps:$rootProject.internalVersions.sdk")
 
         //dependency for traffic
-        api("com.tomtom.online:sdk-traffic:$rootProject.internalVersions.sdk@aar") {
-            transitive = true
-        }
+        implementation("com.tomtom.online:sdk-traffic:$rootProject.internalVersions.sdk")
 
         //dependency for search
-        api("com.tomtom.online:sdk-search:$rootProject.internalVersions.sdk@aar") {
-            transitive = true
-        }
+        implementation("com.tomtom.online:sdk-search:$rootProject.internalVersions.sdk")
+
         //dependency for route planner
-        api("com.tomtom.online:sdk-routing:$rootProject.internalVersions.sdk@aar") {
-            transitive = true
-        }
+        implementation("com.tomtom.online:sdk-routing:$rootProject.internalVersions.sdk")
+
         //dependency for rx extensions
-        api("com.tomtom.online:sdk-maps-rx-extensions:$rootProject.internalVersions.sdk@aar") {
-            transitive = true
-        }
+        implementation("com.tomtom.online:sdk-maps-rx-extensions:$rootProject.internalVersions.sdk")
 
         //dependency for maps ui extensions
-        api("com.tomtom.online:sdk-maps-ui-extensions:$rootProject.internalVersions.sdk@aar") {
-            transitive = true
-        }
+        implementation("com.tomtom.online:sdk-maps-ui-extensions:$rootProject.internalVersions.sdk")
         //dependency for static maps extensions
-        api("com.tomtom.online:sdk-maps-static-image:$rootProject.internalVersions.sdk@aar") {
-            transitive = true
-        }
+        implementation("com.tomtom.online:sdk-maps-static-image:$rootProject.internalVersions.sdk")
         //doc_dependencies_sample_app_stop
 
     implementation "com.github.florent37:singledateandtimepicker:$rootProject.libVersions.singledateandtimepicker"

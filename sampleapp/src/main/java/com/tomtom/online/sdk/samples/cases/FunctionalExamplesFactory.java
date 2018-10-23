@@ -29,6 +29,7 @@ import com.tomtom.online.sdk.samples.cases.map.markers.MarkerCustomFragment;
 import com.tomtom.online.sdk.samples.cases.map.markers.advanced.AdvancedMarkersFragment;
 import com.tomtom.online.sdk.samples.cases.map.markers.balloons.BalloonCustomFragment;
 import com.tomtom.online.sdk.samples.cases.map.markers.clustering.MarkersClusteringFragment;
+import com.tomtom.online.sdk.samples.cases.map.route.RouteCustomizationFragment;
 import com.tomtom.online.sdk.samples.cases.map.staticimage.StaticImageFragment;
 import com.tomtom.online.sdk.samples.cases.map.traffic.incident.TrafficIncidentListFragment;
 import com.tomtom.online.sdk.samples.cases.route.alternatives.RouteAlternativesFragment;
@@ -189,6 +190,9 @@ public class FunctionalExamplesFactory {
 
             case R.id.advanced_markers:
                 return new AdvancedMarkersFragment();
+
+            case R.id.route_customization:
+                return new RouteCustomizationFragment();
 
             default:
                 return new CurrentLocationFragment();

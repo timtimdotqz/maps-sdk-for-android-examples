@@ -86,24 +86,16 @@ Add service keys, taken from http://developer.tomtom.com, inside <application> t
 [source,shell,indent=0]
 ----
 //library required to display map
-api("com.tomtom.online:sdk-maps:2.+@aar"){
-    transitive = true;
-}
+api "com.tomtom.online:sdk-maps:2.+"
 
 //library required for search
-api("com.tomtom.online:sdk-search:2.+@aar"){
-    transitive = true;
-}
+api "com.tomtom.online:sdk-search:2.+"
 
 //library required for routing
-api("com.tomtom.online:sdk-routing:2.+@aar"){
-    transitive = true;
-}
+api "com.tomtom.online:sdk-routing:2.+"
 
 //library required for traffic
-api("com.tomtom.online:sdk-traffic:2.+@aar"){
-    transitive = true;
-}
+api "com.tomtom.online:sdk-traffic:2.+"
 ----
 
 * Add MultiDex support if required, as described https://developer.android.com/studio/build/multidex.html[here]
@@ -120,5 +112,3 @@ licensee then you are not authorised to use this software in any manner and shou
 immediately return it to TomTom N.V.
 
 See the <<LICENSE#,LICENSE>> file for details.
-
-

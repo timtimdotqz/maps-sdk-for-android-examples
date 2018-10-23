@@ -184,6 +184,14 @@ public class MapManipulationEventsPresenter extends BaseFunctionalExamplePresent
         );
         //end::doc_gesture_disable_zoom[]
 
+        //tag::doc_gesture_disable_tilt[]
+        tomtomMap.updateGesturesDetectionSettings(
+                GesturesDetectionSettingsBuilder.create()
+                        .tiltEnabled(false)
+                        .build()
+        );
+        //end::doc_gesture_disable_tilt[]
+
         //tag::doc_gesture_disable_rotation[]
         tomtomMap.updateGesturesDetectionSettings(
                 GesturesDetectionSettingsBuilder.create()
@@ -218,6 +226,7 @@ public class MapManipulationEventsPresenter extends BaseFunctionalExamplePresent
                         .rotationEnabled(true)
                         .panningEnabled(true)
                         .zoomEnabled(true)
+                        .tiltEnabled(true)
                         .build()
         );
         //end::doc_gesture_enable_all[]

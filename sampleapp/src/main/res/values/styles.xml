@@ -130,4 +130,9 @@
     </style>
     <!-- //end::zooming_buttons_style[] -->
 
+    <!-- tag::example_of_custom_logo_position[] -->
+    <style name="LogoView" parent="BaseLogoView" >
+        <item name="android:layout_gravity">bottom|left</item>
+    </style>
+    <!-- end::example_of_custom_logo_position[] -->
 </resources>

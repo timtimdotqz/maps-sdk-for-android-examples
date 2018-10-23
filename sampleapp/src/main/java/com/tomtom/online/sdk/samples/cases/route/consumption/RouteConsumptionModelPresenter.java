@@ -12,7 +12,6 @@ package com.tomtom.online.sdk.samples.cases.route.consumption;
 
 import android.support.annotation.NonNull;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.tomtom.online.sdk.data.SpeedToConsumptionMap;
 import com.tomtom.online.sdk.map.Route;
@@ -28,10 +27,6 @@ import com.tomtom.online.sdk.samples.cases.RoutingUiListener;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.routes.AmsterdamToUtrechtRouteConfig;
 import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 public class RouteConsumptionModelPresenter extends RoutePlannerPresenter {
 
@@ -84,14 +79,14 @@ public class RouteConsumptionModelPresenter extends RoutePlannerPresenter {
                 .withDownhillEfficiency(0.33) //e.g. ChemicalEnergySaved/PotentialEnergyLost
                 .withVehicleEngineType(VehicleEngineType.ELECTRIC)
                 .withConstantSpeedConsumptionInKWhPerHundredKm(SpeedToConsumptionMap.create(ImmutableMap.<Integer, Double>builder()
-                    //vehicle specific consumption model <speed, consumption in kWh>
-                    .put(10, 5.0)
-                    .put(30, 10.0)
-                    .put(50, 15.0)
-                    .put(70, 20.0)
-                    .put(90, 25.0)
-                    .put(120, 30.0)
-                    .build())
+                        //vehicle specific consumption model <speed, consumption in kWh>
+                        .put(10, 5.0)
+                        .put(30, 10.0)
+                        .put(50, 15.0)
+                        .put(70, 20.0)
+                        .put(90, 25.0)
+                        .put(120, 30.0)
+                        .build())
                 ).build();
         //end::doc_consumption_model_electric[]
         return queryBuilder;
@@ -124,20 +119,6 @@ public class RouteConsumptionModelPresenter extends RoutePlannerPresenter {
                 ).build();
         //end::doc_consumption_model_combustion[]
         return queryBuilder;
-    }
-
-    @Override
-    protected Optional<FullRoute> getActiveRoute(final List<FullRoute> routes) {
-        Collections.sort(routes, new Comparator<FullRoute>() {
-            @Override
-            public int compare(FullRoute route, FullRoute refRoute) {
-                if ((getConsumption(route) - getConsumption(refRoute)) < 0) {
-                    return -1;
-                }
-                return 1;
-            }
-        });
-        return Optional.of(routes.get(0));
     }
 
     @Override

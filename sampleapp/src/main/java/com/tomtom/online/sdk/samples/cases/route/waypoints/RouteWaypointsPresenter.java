@@ -16,6 +16,7 @@ import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.map.CameraPosition;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.MarkerBuilder;
+import com.tomtom.online.sdk.map.RouteStyle;
 import com.tomtom.online.sdk.routing.data.RouteQuery;
 import com.tomtom.online.sdk.routing.data.RouteQueryBuilder;
 import com.tomtom.online.sdk.routing.data.RouteResponse;

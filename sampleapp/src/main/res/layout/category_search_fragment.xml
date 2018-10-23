@@ -16,8 +16,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:orientation="vertical"
-    android:paddingTop="?attr/actionBarSize">
+    android:orientation="vertical">
 
     <com.tomtom.online.sdk.samples.utils.views.RadioModifierView
         android:id="@+id/search_modifier_tabs"

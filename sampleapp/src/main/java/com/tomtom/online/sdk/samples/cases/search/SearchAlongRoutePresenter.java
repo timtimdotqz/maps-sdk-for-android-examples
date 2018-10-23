@@ -33,7 +33,6 @@ import com.tomtom.online.sdk.search.OnlineSearchApi;
 import com.tomtom.online.sdk.search.SearchApi;
 import com.tomtom.online.sdk.search.api.SearchError;
 import com.tomtom.online.sdk.search.api.alongroute.AlongRouteSearchResultListener;
-import com.tomtom.online.sdk.search.data.alongroute.AlongRouteSearchQuery;
 import com.tomtom.online.sdk.search.data.alongroute.AlongRouteSearchQueryBuilder;
 import com.tomtom.online.sdk.search.data.alongroute.AlongRouteSearchResponse;
 import com.tomtom.online.sdk.search.data.alongroute.AlongRouteSearchResult;

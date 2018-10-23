@@ -16,7 +16,6 @@ import android.os.StrictMode;
 import android.support.annotation.RequiresApi;
 import android.support.multidex.MultiDexApplication;
 
-import com.google.common.base.Strings;
 import com.squareup.leakcanary.LeakCanary;
 import com.tomtom.core.maps.BuildConfig;
 
@@ -24,41 +23,41 @@ import timber.log.Timber;
 
 public class SampleApp extends MultiDexApplication {
 
+    private static final String ROBO_ELECTRIC_FINGERPRINT = "robolectric";
+
     //tag::doc_log[]
     @Override
     public void onCreate() {
         super.onCreate();
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
-
         }
         //end::doc_log[]
-        initStrictMode();
+        //initStrictMode();
         CrashSupporter.create(this);
-        if (!isRoboUnitTest()) {
+        if (!isRoboElectricUnitTest()) {
             LeakCanary.install(this);
         }
     }
 
-    public boolean isRoboUnitTest() {
-        return ROBO_FINGERPRINT.equals(Build.FINGERPRINT);
+    public boolean isRoboElectricUnitTest() {
+        return ROBO_ELECTRIC_FINGERPRINT.equals(Build.FINGERPRINT);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB_MR1)
-    @SuppressWarnings("unused")
     private void initStrictMode() {
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()
                     .detectDiskWrites()
-                    .detectAll()   // or .detectAll() for all detectable problems
+                    .detectAll()
                     .penaltyLog()
                     .build());
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
                     .detectLeakedSqlLiteObjects()
                     .detectLeakedClosableObjects()
                     .penaltyLog()
-//                    .penaltyDeath() TODO RoomDatabase closable
+                    //.penaltyDeath() TODO RoomDatabase closable
                     .build());
         }
     }
@@ -74,6 +73,5 @@ public class SampleApp extends MultiDexApplication {
             }
         }
     }
-    private static final String ROBO_FINGERPRINT = "robolectric";
 
 }
