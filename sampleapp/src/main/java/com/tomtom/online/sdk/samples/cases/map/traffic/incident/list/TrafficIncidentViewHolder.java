@@ -38,11 +38,17 @@ class TrafficIncidentViewHolder extends RecyclerView.ViewHolder {
 
     void fillViewWithData(TrafficIncidentItem item) {
         trafficIncidentView.setTrafficIncidentIcon(item.getDrawable());
-        if (item.isCluster()) {
-            trafficIncidentView.setNumberInsideTrafficIcon(item.getNumberOfIncidentsInCluster());
-        }
+        setupNumberOnIcon(item);
         trafficDescription.setText(item.getDescription());
         trafficDelay.setText(item.getDelay() != 0 ? TimeLengthFormatter.formatFromSecondsToMinutes(item.getDelay()) : NO_TIME_AVAILABLE_DEFAULT_SYMBOL);
         trafficLength.setText(DistanceFormatter.format(item.getLength()));
+    }
+
+    private void setupNumberOnIcon(TrafficIncidentItem item) {
+        if (item.isCluster()) {
+            trafficIncidentView.setNumberInsideTrafficIcon(item.getNumberOfIncidentsInCluster());
+        } else {
+            trafficIncidentView.disableIncidentsCounter();
+        }
     }
 }

@@ -5,7 +5,7 @@ releaseProps.load(new FileInputStream("$rootProject.rootDir/release.properties")
 
 ext {
     releaseBuild = false
-    release_notify_group = "sampleapp_group_internal";
+    release_notify_group = "sampleapp_group_internal"
     buildNumber = getBuildNumber()
     proguardEnable = getProguardOn()
     androidNdk = System.getenv("ANDROID_NDK_ROOT")
@@ -21,7 +21,7 @@ ext {
         devSymbols = System.getenv('DEBUG_SYMBOLS').toBoolean()
     }
 
-    androidBuildToolsVersion = '28.0.2'
+    androidBuildToolsVersion = '28.0.3'
     androidCompileSdkVersion = 27
     androidTargetSdkVersion = 26
     androidMinSdkVersion = 16
@@ -53,38 +53,38 @@ ext {
 
     //doc_start_dependencies_version_config
     libVersions = [
-            timber                  : '4.6.0',
-            crashlytics             : '2.9.5',
-            leakcanary              : '1.6.1',
-            corektx                 : '0.3',
-            lombok                  : '1.16.20',
-            groovy                  : '2.4.10',
-            gson                    : '2.8.2',
-            jsonsimple              : '1.1.1',
-            guava                   : '23.4-android',
-            dtool                   : '1.0',
-            rxjava                  : '2.1.0',
-            rxandroid               : '2.0.1',
-            retrofit                : '2.3.0',
-            retrofitrxjava          : '1.0.0',
-            okhttp                  : '3.9.1',
-            kotlin                  : '1.2.51',
-            jdoocsoup               : '0.1.14',
-            jodatime                : '2.9.9',
-            singledateandtimepicker : '1.2.2',
-            anko_version            : '0.10.4',
-            glide                   : '4.7.1',
-            androidgifdrawable      : '1.2.15',
-            test                    : [
+            timber                 : '4.6.0',
+            crashlytics            : '2.9.5',
+            leakcanary             : '1.6.1',
+            corektx                : '0.3',
+            lombok                 : '1.16.20',
+            groovy                 : '2.4.12',
+            gson                   : '2.8.2',
+            jsonsimple             : '1.1.1',
+            guava                  : '25.0-android',
+            dtool                  : '1.0',
+            rxjava                 : '2.1.0',
+            rxandroid              : '2.0.1',
+            retrofit               : '2.3.0',
+            retrofitrxjava         : '1.0.0',
+            okhttp                 : '3.9.1',
+            kotlin                 : '1.2.51',
+            jdoocsoup              : '0.1.14',
+            jodatime               : '2.9.9',
+            singledateandtimepicker: '1.2.2',
+            anko_version           : '0.10.4',
+            glide                  : '4.7.1',
+            androidgifdrawable     : '1.2.15',
+            test                   : [
                     junit              : '4.12',
                     robospock          : '1.0.1',
                     robolectric        : '3.0',
                     easytesting        : '1.0.16',
-                    cglib              : '3.2.4',
+                    cglib              : '3.2.8',
                     mockito            : '1.9.0',
                     easymock           : '3.2',
                     fest               : '2.0M10',
-                    cglibnodep         : '3.1',
+                    cglibnodep         : '3.2.8',
                     powermock          : '1.6.6',
                     mockitoForPowermock: '2.0.0-beta',
                     wiremock           : '2.14.0',
@@ -118,7 +118,7 @@ def getBuildNumber() {
     try {
         return Integer.parseInt("$parentBuildNumber");
     } catch (final Exception ex) {
-        return 0;
+        return 0
     }
 }
 
@@ -127,7 +127,7 @@ def getProguardOn() {
         return Boolean.parseBoolean("$proguard")
     } catch (final Exception ex) {
         println "getProguardOn false"
-        return false;
+        return false
     }
 }
 
@@ -136,7 +136,7 @@ def getIntegrationTestEnabled() {
         return Boolean.parseBoolean("$integrationTests")
     } catch (final Exception ex) {
         println "integrationTests false"
-        return false;
+        return false
     }
 }
 

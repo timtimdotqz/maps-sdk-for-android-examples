@@ -63,8 +63,6 @@ public class TrafficIncidentListFragment extends FunctionalExampleFragmentAdapte
     }
 
     void updateTrafficIncidentsList(List<TrafficIncidentItem> list) {
-        listAdapter.clearIncidentsList();
         listAdapter.updateIncidentsList(list);
-        listAdapter.notifyDataSetChanged();
     }
 }

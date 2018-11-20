@@ -61,6 +61,10 @@
     <string name="btn_text_avoid_ferries">Ferries</string>
     <string name="btn_text_avoid_motorways">Motorways</string>
 
+    <string name="btn_text_no_avoids">No avoids</string>
+    <string name="btn_text_avoid_vignettes">Avoid vignettes</string>
+    <string name="btn_text_avoid_area">Avoid area</string>
+
     <string name="btn_text_travel_mode_pedestrian">Pedestrian</string>
     <string name="btn_text_travel_mode_car">Car</string>
     <string name="btn_text_travel_mode_truck">Truck</string>
@@ -97,6 +101,8 @@
     <string name="my_location_off">Chevron off</string>
 
     <string name="batch_routing_title">Batch routing</string>
+    <string name="batch_reachable_range_title">Batch with reachable range</string>
+
     <string name="batch_routing_subtitle">Routing depends on:</string>
     <string name="matrix_routing_title">Matrix routing</string>
 
@@ -137,6 +143,7 @@
     <string name="amsterdam_to_rotterdam_desc">Amsterdam to Rotterdam</string>
     <string name="amsterdam_to_berlin_desc">Amsterdam to Berlin</string>
     <string name="amsterdam_to_oslo_desc">Amsterdam to Oslo</string>
+    <string name="czech_republic_to_romania_desc">Czech Republic to Romania</string>
 
     <string name="haarlem_destination_address">Haarlem</string>
     <string name="amsterdam_to_haarlem_desc">Amsterdam to Haarlem</string>
@@ -315,5 +322,14 @@
 
     <string name="menu_advanced_markers">Advanced markers</string>
     <string name="advanced_markers_options_title">Advanced markers</string>
+    <string name="label_with_avoiding_vignettes">with avoiding vignettes</string>
+    <string name="label_with_avoiding_area">with avoiding area</string>
+    <string name="label_no_avoids">no avoids</string>
+
+    <string name="date_not_available">N/A</string>
+    <string name="label_batch_reachablerange_electric">Reachable range for electric</string>
+    <string name="label_batch_reachablerange_combustion">Reachable range for combustion</string>
+    <string name="label_batch_reachablerange_electric_2h">Reachable range for electric with power for 2 h</string>
+    <string name="label_init_batch_reachablerange_info">Touch polyline to see the description...</string>
 
 </resources>

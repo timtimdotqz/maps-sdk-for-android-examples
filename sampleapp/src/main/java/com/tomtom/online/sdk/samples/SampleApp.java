@@ -29,9 +29,7 @@ public class SampleApp extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (BuildConfig.DEBUG) {
-            Timber.plant(new Timber.DebugTree());
-        }
+        Timber.plant(new Timber.DebugTree());
         //end::doc_log[]
         //initStrictMode();
         CrashSupporter.create(this);

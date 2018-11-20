@@ -11,6 +11,7 @@
 package com.tomtom.online.sdk.samples.cases.driving;
 
 import android.location.Location;
+import android.support.annotation.NonNull;
 
 import com.tomtom.online.sdk.common.location.LatLng;
 
@@ -22,12 +23,13 @@ import timber.log.Timber;
 
 public class RouteSimulator {
 
-    private static final int SIMULATOR_PERIOD_IN_MILLIS = 1000;
+    private static final int DEFAULT_SIMULATOR_PERIOD_IN_MILLIS = 1000;
 
 
     private List<LatLng> routeCoordinates;
 
     private Timer timer;
+    int simulatorPeriodInMillis = DEFAULT_SIMULATOR_PERIOD_IN_MILLIS;
     private RouteSimulatorEventListener routeSimulatorEventListener;
 
     public RouteSimulator(RouteSimulatorEventListener listener) {
@@ -48,7 +50,16 @@ public class RouteSimulator {
 
     private void start(LatLng activePointLocation) {
         timer = new Timer();
-        timer.scheduleAtFixedRate(new UpdateChevronTask(routeCoordinates, routeSimulatorEventListener, activePointLocation), 0, SIMULATOR_PERIOD_IN_MILLIS);
+        runTask(activePointLocation);
+    }
+
+    void runTask(LatLng activePointLocation) {
+        timer.scheduleAtFixedRate(getTask(activePointLocation), 0, simulatorPeriodInMillis);
+    }
+
+    @NonNull
+    TimerTask getTask(LatLng activePointLocation) {
+        return new UpdateChevronTask(routeCoordinates, routeSimulatorEventListener, activePointLocation);
     }
 
     private static class UpdateChevronTask extends TimerTask {

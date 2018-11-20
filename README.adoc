@@ -30,7 +30,6 @@ More informations how to start are available on: https://developer.tomtom.com/ma
 
 To develop your own application with Maps SDK, you need to make sure that the *pre-requisites* are in place and that you have added Maps SDK  as a dependency into your project. Follow the steps below and then you are ready to code!
 
-
 [[pre-requisites]]
 === Get the pre-requisites in place:
 
@@ -64,7 +63,7 @@ allprojects {
 === Configuration for all Maps SDK modules
 
 To include all Maps SDK modules in your app, modify AndroidManifest.xml
-and build.gradle  
+and build.gradle files
 
 * Modify AndroidManifest.xml
 
@@ -96,6 +95,19 @@ api "com.tomtom.online:sdk-routing:2.+"
 
 //library required for traffic
 api "com.tomtom.online:sdk-traffic:2.+"
+----
+
+* Enable Java 8 Support in build.gradle (app/build.gradle)
+
++
+[source,shell,indent=0]
+----
+android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
 ----
 
 * Add MultiDex support if required, as described https://developer.android.com/studio/build/multidex.html[here]

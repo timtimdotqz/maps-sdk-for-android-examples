@@ -55,13 +55,12 @@ public class DepartureAndArrivalTimePresenter extends RoutePlannerPresenter {
     @VisibleForTesting
     protected RouteQuery getArrivalRouteQuery(Date arrivalTime) {
         //tag::doc_route_arrival_time[]
-        RouteQuery queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
+        return RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
                 .withReport(Report.EFFECTIVE_SETTINGS)
                 .withInstructionsType(InstructionsType.TEXT)
                 .withArriveAt(arrivalTime)
                 .withConsiderTraffic(false).build();
         //end::doc_route_arrival_time[]
-        return queryBuilder;
     }
 
     public void displayDepartureAtRoute(DateTime departureDate) {

@@ -70,13 +70,10 @@ public class ChevronTrackingPresenter extends BaseFunctionalExamplePresenter {
 
         @Override
         public void onNewRoutePointVisited(final LatLng point, final double bearing) {
-            uiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    chevron.show();
-                    chevron.setDimmed(false);
-                    chevron.setLocation(point, bearing, 0.0f);
-                }
+            uiHandler.post(() -> {
+                chevron.show();
+                chevron.setDimmed(false);
+                chevron.setLocation(point, bearing, 0.0f);
             });
         }
     }

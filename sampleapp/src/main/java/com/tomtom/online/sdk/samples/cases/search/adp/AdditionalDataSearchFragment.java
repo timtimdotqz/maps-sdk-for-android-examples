@@ -23,19 +23,19 @@ public class AdditionalDataSearchFragment extends ExampleFragment<AdditionalData
 
     @Override
     protected void onOptionsButtonsView(OptionsButtonsView view) {
-        view.addOption(R.string.btn_text_amsterdam);
-        view.addOption(R.string.btn_text_berlin);
         view.addOption(R.string.btn_text_poland);
+        view.addOption(R.string.btn_text_amsterdam);
+        view.addOption(R.string.btn_text_airport);
     }
 
     @Override
     public void onChange(boolean[] oldValues, boolean[] newValues) {
         if (newValues[0]) {
-            presenter.performSearch("Amsterdam");
-        } else if (newValues[1]) {
-            presenter.performSearch("Berlin");
-        } else if (newValues[2]) {
             presenter.performSearch("Poland");
+        } else if (newValues[1]) {
+            presenter.performSearch("Amsterdam");
+        } else if (newValues[2]) {
+            presenter.performSearch("Amsterdam Airport Schiphol");
         }
     }
 

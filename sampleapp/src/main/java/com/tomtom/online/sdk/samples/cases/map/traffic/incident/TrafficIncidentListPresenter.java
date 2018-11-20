@@ -67,7 +67,7 @@ public class TrafficIncidentListPresenter implements LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     public void onPause() {
-        view.updateTrafficIncidentsList(new ArrayList<TrafficIncidentItem>());
+        view.updateTrafficIncidentsList(new ArrayList<>());
     }
 
     TrafficIncidentListFunctionalExample getModel() {

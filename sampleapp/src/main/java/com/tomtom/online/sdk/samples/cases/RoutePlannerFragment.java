@@ -19,6 +19,7 @@ import android.view.View;
 
 import com.tomtom.online.sdk.routing.data.FullRoute;
 import com.tomtom.online.sdk.routing.data.Summary;
+import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.utils.CheckedButtonCleaner;
 import com.tomtom.online.sdk.samples.utils.formatter.DistanceFormatter;
 import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
@@ -96,7 +97,12 @@ public abstract class RoutePlannerFragment<T extends RoutePlannerPresenter> exte
         int distance = routeSummary.getLengthInMeters();
         getInfoBarView().setRightText(DistanceFormatter.format(distance));
 
-        String arrivalTime = timeFormat.format(routeSummary.getArrivalTime());
+
+        String arrivalTime = getString(R.string.date_not_available);
+        if (routeSummary.getArrivalTime() != null) {
+            arrivalTime = timeFormat.format(routeSummary.getArrivalTime());
+        }
+
         getInfoBarView().setLeftText(arrivalTime + (route.getTag() == null ? " " : " " + route.getTag()));
 
         routeInProgress = false;

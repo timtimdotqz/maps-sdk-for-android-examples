@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
+
     buildToolsVersion rootProject.androidBuildToolsVersion
     compileSdkVersion rootProject.androidCompileSdkVersion
 
@@ -16,6 +17,10 @@ android {
         applicationId 'com.tomtom.mapssdk.examplesapp'
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     lintOptions {

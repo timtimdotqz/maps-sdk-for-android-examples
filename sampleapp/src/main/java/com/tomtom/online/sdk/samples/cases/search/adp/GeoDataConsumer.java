@@ -13,11 +13,9 @@ package com.tomtom.online.sdk.samples.cases.search.adp;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 
-import com.tomtom.online.sdk.common.func.Block;
 import com.tomtom.online.sdk.common.func.FuncUtils;
 import com.tomtom.online.sdk.common.geojson.Feature;
 import com.tomtom.online.sdk.common.geojson.GeoJsonObjectVisitorAdapter;
-import com.tomtom.online.sdk.common.geojson.geometry.Geometry;
 import com.tomtom.online.sdk.common.geojson.geometry.MultiPolygon;
 import com.tomtom.online.sdk.common.geojson.geometry.Polygon;
 import com.tomtom.online.sdk.common.location.LatLng;
@@ -52,34 +50,29 @@ class GeoDataConsumer implements Consumer<Feature> {
     }
 
     @NonNull
-    private List<LatLng> parsePolygonLatLngs(Polygon polygon){
+    private List<LatLng> parsePolygonLatLngs(Polygon polygon) {
         return polygon.getExteriorRing().getCoordinates().asList();
     }
 
     @Override
-    public void accept(Feature feature) throws Exception {
+    public void accept(Feature feature) {
 
-        FuncUtils.apply(feature.getGeometry(), new Block<Geometry>() {
+        FuncUtils.apply(feature.getGeometry(), input -> input.accept(new GeoJsonObjectVisitorAdapter() {
             @Override
-            public void apply(Geometry input) {
-                input.accept(new GeoJsonObjectVisitorAdapter() {
-                    @Override
-                    public void visit(Polygon polygon) {
-                        displayPolygon(polygon);
-                        tomtomMap.setCurrentBounds(parsePolygonLatLngs(polygon));
-                    }
-
-                    @Override
-                    public void visit(MultiPolygon multiPolygon) {
-                        List<LatLng> coordinates = new ArrayList<>();
-                        for (Polygon polygon : multiPolygon.getPolygons()) {
-                            coordinates.addAll(parsePolygonLatLngs(polygon));
-                            displayPolygon(polygon);
-                        }
-                        tomtomMap.setCurrentBounds(coordinates);
-                    }
-                });
+            public void visit(Polygon polygon) {
+                displayPolygon(polygon);
+                tomtomMap.setCurrentBounds(parsePolygonLatLngs(polygon));
             }
-        });
+
+            @Override
+            public void visit(MultiPolygon multiPolygon) {
+                List<LatLng> coordinates = new ArrayList<>();
+                for (Polygon polygon : multiPolygon.getPolygons()) {
+                    coordinates.addAll(parsePolygonLatLngs(polygon));
+                    displayPolygon(polygon);
+                }
+                tomtomMap.setCurrentBounds(coordinates);
+            }
+        }));
     }
 }

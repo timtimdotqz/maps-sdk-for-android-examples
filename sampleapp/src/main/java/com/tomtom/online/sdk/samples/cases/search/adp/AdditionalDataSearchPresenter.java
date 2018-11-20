@@ -15,6 +15,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.google.common.base.Optional;
+import com.tomtom.online.sdk.common.rx.RxContext;
 import com.tomtom.online.sdk.map.CameraPosition;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.TomtomMap;
@@ -25,19 +26,14 @@ import com.tomtom.online.sdk.samples.utils.Locations;
 import com.tomtom.online.sdk.search.OnlineSearchApi;
 import com.tomtom.online.sdk.search.SearchApi;
 import com.tomtom.online.sdk.search.data.additionaldata.AdditionalDataSearchQueryBuilder;
-import com.tomtom.online.sdk.search.data.additionaldata.AdditionalDataSearchResponse;
 import com.tomtom.online.sdk.search.data.common.additionaldata.GeometryDataSource;
-import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQuery;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQueryBuilder;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResponse;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResult;
-import com.tomtom.online.sdk.common.rx.RxContext;
 
-import io.reactivex.MaybeSource;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
@@ -76,7 +72,7 @@ public class AdditionalDataSearchPresenter extends BaseFunctionalExamplePresente
     @Override
     public void onPause() {
         super.onPause();
-        if (observableWork !=null) {
+        if (observableWork != null) {
             observableWork.dispose();
         }
     }
@@ -95,11 +91,7 @@ public class AdditionalDataSearchPresenter extends BaseFunctionalExamplePresente
         fragment.disableOptionsView();
 
         //tag::doc_adp_search_request[]
-        //ADP Data is not available in all types (e.g. not in POI)
-        //We restrict list of results only to Geo (Geographies) types
-        //So that we are sure that we receive fields required by ADP
-        FuzzySearchQueryBuilder fuzzySearchQuery = FuzzySearchQueryBuilder.create(term)
-                .withIdx("Geo");
+        FuzzySearchQueryBuilder fuzzySearchQuery = FuzzySearchQueryBuilder.create(term);
 
         final SearchApi searchApi = OnlineSearchApi.create(view.getContext());
         observableWork = searchApi.search(fuzzySearchQuery.build())
@@ -110,89 +102,55 @@ public class AdditionalDataSearchPresenter extends BaseFunctionalExamplePresente
                 .map(whenResultPresent())
                 .filter(whenGeometrySourcePresent())
                 .map(firstAvailableGeometryData())
-                .flatMap(new Function<GeometryDataSource, MaybeSource<? extends AdditionalDataSearchResponse>>() {
-                    @Override
-                    public MaybeSource<? extends AdditionalDataSearchResponse> apply(GeometryDataSource geometryDataSource) throws Exception {
-                        AdditionalDataSearchQueryBuilder adpQuery = AdditionalDataSearchQueryBuilder.create();
-                        adpQuery.withGeometryDataSource(geometryDataSource);
-                        return searchApi.additionalDataSearch(adpQuery.build()).toMaybe();
-                    }
+                .flatMap(geometryDataSource -> {
+                    AdditionalDataSearchQueryBuilder adpQuery = AdditionalDataSearchQueryBuilder.create();
+                    adpQuery.withGeometryDataSource(geometryDataSource);
+                    return searchApi.additionalDataSearch(adpQuery.build()).toMaybe();
                 })
                 .subscribeOn(getResultScheduler())
-                .subscribe(new Consumer<AdditionalDataSearchResponse>() {
-                    @Override
-                    public void accept(AdditionalDataSearchResponse adpResponse) throws Exception {
-                        fragment.enableOptionsView();
-                        new AdpResponseParser(new GeoDataConsumer(tomtomMap)).parseAdpResponse(adpResponse);
-                    }
+                .subscribe(adpResponse -> {
+                    fragment.enableOptionsView();
+                    new AdpResponseParser(new GeoDataConsumer(tomtomMap)).parseAdpResponse(adpResponse);
                 });
         //end::doc_adp_search_request[]
     }
 
     @NonNull
     private Function<FuzzySearchResult, GeometryDataSource> firstAvailableGeometryData() {
-        return new Function<FuzzySearchResult, GeometryDataSource>() {
-            @Override
-            public GeometryDataSource apply(FuzzySearchResult fuzzySearchResult) throws Exception {
-                return fuzzySearchResult.getAdditionalDataSources().getGeometryDataSource().get();
-            }
-        };
+        return fuzzySearchResult -> fuzzySearchResult.getAdditionalDataSources().getGeometryDataSource().get();
     }
 
     @NonNull
     private Predicate<FuzzySearchResult> whenGeometrySourcePresent() {
-        return new Predicate<FuzzySearchResult>() {
-            @Override
-            public boolean test(FuzzySearchResult fuzzySearchResult) throws Exception {
-                return fuzzySearchResult.getAdditionalDataSources() != null &&
-                        fuzzySearchResult.getAdditionalDataSources().getGeometryDataSource().isPresent();
-            }
-        };
+        return fuzzySearchResult -> fuzzySearchResult.getAdditionalDataSources() != null &&
+                fuzzySearchResult.getAdditionalDataSources().getGeometryDataSource().isPresent();
     }
 
     @NonNull
     private Function<FuzzySearchResponse, Optional<FuzzySearchResult>> firstResultWithAdditionalData() {
-        return new Function<FuzzySearchResponse, Optional<FuzzySearchResult>>() {
-            @Override
-            public Optional<FuzzySearchResult> apply(FuzzySearchResponse fuzzySearchResponse) throws Exception {
-                for (FuzzySearchResult result : fuzzySearchResponse.getResults()) {
-                    if (result.getAdditionalDataSources() == null) {
-                        continue;
-                    }
-                    return Optional.of(result);
+        return fuzzySearchResponse -> {
+            for (FuzzySearchResult result : fuzzySearchResponse.getResults()) {
+                if (result.getAdditionalDataSources() == null) {
+                    continue;
                 }
-                return Optional.absent();
+                return Optional.of(result);
             }
+            return Optional.absent();
         };
     }
 
     @NonNull
     private Predicate<FuzzySearchResponse> nonEmptyResponse() {
-        return new Predicate<FuzzySearchResponse>() {
-            @Override
-            public boolean test(FuzzySearchResponse fuzzySearchResponse) throws Exception {
-                return !fuzzySearchResponse.getResults().isEmpty();
-            }
-        };
+        return fuzzySearchResponse -> !fuzzySearchResponse.getResults().isEmpty();
     }
 
     @NonNull
-    private Predicate<Optional<FuzzySearchResult>> nonEmptyResult(){
-        return new Predicate<Optional<FuzzySearchResult>>() {
-            @Override
-            public boolean test(Optional<FuzzySearchResult> fuzzySearchResult) throws Exception {
-                return fuzzySearchResult.isPresent();
-            }
-        };
+    private Predicate<Optional<FuzzySearchResult>> nonEmptyResult() {
+        return fuzzySearchResult -> fuzzySearchResult.isPresent();
     }
 
-    private Function<Optional<FuzzySearchResult>, FuzzySearchResult> whenResultPresent(){
-        return new Function<Optional<FuzzySearchResult>, FuzzySearchResult>() {
-            @Override
-            public FuzzySearchResult apply(Optional<FuzzySearchResult> fuzzySearchResultOptional) throws Exception {
-                return fuzzySearchResultOptional.get();
-            }
-        };
+    private Function<Optional<FuzzySearchResult>, FuzzySearchResult> whenResultPresent() {
+        return fuzzySearchResultOptional -> fuzzySearchResultOptional.get();
     }
 
 

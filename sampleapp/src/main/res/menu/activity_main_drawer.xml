@@ -144,6 +144,11 @@
                 android:title="@string/route_avoids_title" />
 
             <item
+                android:id="@+id/route_avoid_vignettes_and_areas"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/route_avoid_vignettes_and_areas_title" />
+
+            <item
                 android:id="@+id/route_waypoints"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/route_waypoints" />
@@ -181,6 +186,11 @@
                 android:id="@+id/batch_routing"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/batch_routing" />
+
+            <item
+                android:id="@+id/batch_reachable_range"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/batch_reachable_range_title" />
 
             <item
                 android:id="@+id/matrix_routing"

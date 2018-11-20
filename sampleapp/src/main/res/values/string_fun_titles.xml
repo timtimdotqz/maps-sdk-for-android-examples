@@ -18,6 +18,7 @@
     <string name="traffic_vector_layers_title">Vector map and traffic</string>
     <string name="simple_simulation_title">Sample simulation</string>
     <string name="route_avoids_title">Route avoids</string>
+    <string name="route_avoid_vignettes_and_areas_title">Avoid vignettes and areas</string>
     <string name="route_waypoints_title">Route with waypoints</string>
     <string name="map_tiles_layers_title">Map layers</string>
     <string name="map_tiles_types_title">Map tiles</string>

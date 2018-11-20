@@ -48,7 +48,7 @@ public class TrafficIncidentView extends FrameLayout {
     }
 
     @SuppressLint("SetTextI18n")
-    public void setNumberInsideTrafficIcon(int numberOfIncidentsInCluster) {
+    void setNumberInsideTrafficIcon(int numberOfIncidentsInCluster) {
         trafficIconNumber.setText(Integer.toString(numberOfIncidentsInCluster));
     }
 
@@ -57,4 +57,7 @@ public class TrafficIncidentView extends FrameLayout {
     }
 
 
+    void disableIncidentsCounter() {
+        trafficIconNumber.setText(R.string.empty);
+    }
 }

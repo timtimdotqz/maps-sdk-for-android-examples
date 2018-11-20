@@ -41,13 +41,11 @@ public class TrafficIncidentsListAdapter extends RecyclerView.Adapter<TrafficInc
     }
 
     public void updateIncidentsList(List<TrafficIncidentItem> items) {
-        trafficIncidentItems.addAll(items);
-        notifyDataSetChanged();
-    }
-
-    public void clearIncidentsList() {
-        trafficIncidentItems.clear();
-        notifyDataSetChanged();
+        if (items != null) {
+            trafficIncidentItems.clear();
+            trafficIncidentItems.addAll(items);
+            notifyDataSetChanged();
+        }
     }
 
     @Override

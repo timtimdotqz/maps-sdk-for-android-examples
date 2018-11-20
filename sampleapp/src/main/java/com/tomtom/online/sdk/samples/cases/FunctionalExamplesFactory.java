@@ -34,7 +34,9 @@ import com.tomtom.online.sdk.samples.cases.map.staticimage.StaticImageFragment;
 import com.tomtom.online.sdk.samples.cases.map.traffic.incident.TrafficIncidentListFragment;
 import com.tomtom.online.sdk.samples.cases.route.alternatives.RouteAlternativesFragment;
 import com.tomtom.online.sdk.samples.cases.route.avoid.RouteAvoidsFragment;
+import com.tomtom.online.sdk.samples.cases.route.avoid.vignettesandareas.RouteAvoidsVignettesAndAreasFragment;
 import com.tomtom.online.sdk.samples.cases.route.batch.BatchRouteFragment;
+import com.tomtom.online.sdk.samples.cases.route.batch.reachablerange.BatchReachableRangeFragment;
 import com.tomtom.online.sdk.samples.cases.route.consumption.RouteConsumptionModelFragment;
 import com.tomtom.online.sdk.samples.cases.route.departureandarrivaltime.DepartureAndArrivalTimeFragment;
 import com.tomtom.online.sdk.samples.cases.route.maneuvers.ManeuversFragment;
@@ -70,6 +72,9 @@ public class FunctionalExamplesFactory {
 
             case R.id.route_avoids:
                 return new RouteAvoidsFragment();
+
+            case R.id.route_avoid_vignettes_and_areas:
+                return new RouteAvoidsVignettesAndAreasFragment();
 
             case R.id.departure_and_arrival_time:
                 return new DepartureAndArrivalTimeFragment();
@@ -181,6 +186,9 @@ public class FunctionalExamplesFactory {
 
             case R.id.batch_routing:
                 return new BatchRouteFragment();
+
+            case R.id.batch_reachable_range:
+                return new BatchReachableRangeFragment();
 
             case R.id.multiple_chevrons:
                 return new ChevronTrackingFragment();

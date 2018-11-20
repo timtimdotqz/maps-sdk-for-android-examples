@@ -13,7 +13,6 @@ package com.tomtom.online.sdk.samples.cases;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
 
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.location.Locations;
@@ -45,7 +44,6 @@ import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresenter implements RxContext {
 
@@ -63,8 +61,8 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
      */
     protected Map<Long, FullRoute> routesMap = new LinkedHashMap<>();
     protected CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private Icon defaultStartIcon;
-    private Icon defaultEndIcon;
+    protected Icon defaultStartIcon;
+    protected Icon defaultEndIcon;
 
     public void setRoutesMap(Map<Long, FullRoute> routesMap) {
         this.routesMap = routesMap;
@@ -156,17 +154,8 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
         //tag::doc_execute_routing[]
         Disposable subscribe = routePlannerAPI.planRoute(routeQuery).subscribeOn(getWorkingScheduler())
                 .observeOn(getResultScheduler())
-                .subscribe(new Consumer<RouteResponse>() {
-                    @Override
-                    public void accept(RouteResponse routeResult) throws Exception {
-                        displayRoutes(routeResult, routeStyle, startIcon, endIcon);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        proceedWithError(throwable.getMessage());
-                    }
-                });
+                .subscribe(routeResult -> displayRoutes(routeResult, routeStyle, startIcon, endIcon),
+                        throwable -> proceedWithError(throwable.getMessage()));
         //end::doc_execute_routing[]
         compositeDisposable.add(subscribe);
     }
@@ -176,17 +165,8 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
         //tag::doc_execute_routing[]
         Disposable subscribe = routePlannerAPI.planRoute(routeQuery).subscribeOn(getWorkingScheduler())
                 .observeOn(getResultScheduler())
-                .subscribe(new Consumer<RouteResponse>() {
-                    @Override
-                    public void accept(RouteResponse routeResult) throws Exception {
-                        displayRoutes(routeResult, RouteStyle.DEFAULT_ROUTE_STYLE, defaultStartIcon, defaultEndIcon);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        proceedWithError(throwable.getMessage());
-                    }
-                });
+                .subscribe(routeResult -> displayRoutes(routeResult, RouteStyle.DEFAULT_ROUTE_STYLE, defaultStartIcon, defaultEndIcon),
+                        throwable -> proceedWithError(throwable.getMessage()));
         //end::doc_execute_routing[]
         compositeDisposable.add(subscribe);
     }
@@ -224,11 +204,16 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
             routesMap.put(mapRoute.getId(), route);
         }
 
+        processAddedRoutes(routeStyle, routes);
+    }
+
+    protected void processAddedRoutes(RouteStyle routeStyle, List<FullRoute> routes) {
         selectFirstRouteAsActive(routeStyle);
-        if (!routes.isEmpty()){
+        if (!routes.isEmpty()) {
             displayInfoAboutRoute(routes.get(0));
         }
     }
+
 
     protected void selectFirstRouteAsActive(RouteStyle routeStyle) {
         if (!tomtomMap.getRouteSettings().getRoutes().isEmpty() && routeStyle.equals(RouteStyle.DEFAULT_ROUTE_STYLE)) {
