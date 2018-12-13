@@ -10,7 +10,6 @@
  */
 package com.tomtom.online.sdk.samples.activities;
 
-import android.content.Context;
 
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
@@ -19,25 +18,10 @@ public interface FunctionalExamplePresenter {
 
     int DEFAULT_ZOOM_LEVEL = 10;
 
-    int DEFAULT_CURRENT_LOCATION_BUTTON_BOTTOM_MARGIN = 40;
-
-    int DEFAULT_CURRENT_LOCATION_BUTTON_BOTTOM_MARGIN_DELTA = 0;
-
     void bind(FunctionalExampleFragment view, final TomtomMap map);
 
     void cleanup();
 
-    void onResume(Context context);
-
     void onPause();
 
-    void resetCompassButton(FunctionalExampleFragment view, TomtomMap tomtomMap);
-
-    void alignCompassButton(FunctionalExampleFragment view, TomtomMap tomtomMap);
-
-    void alignCurrentLocationButton(FunctionalExampleFragment view, TomtomMap tomtomMap);
-
-    int getCurrentLocationBottomMarginDelta(FunctionalExampleFragment view);
-
-    void onStop();
 }

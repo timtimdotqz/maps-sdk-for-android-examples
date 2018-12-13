@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.search;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class ReverseGeocodingFunctionalExample implements FunctionalExampleModel {
+public class ReverseGeocodingFunctionalExample extends BaseFunctionalExampleModel {
 
     public int getPlayableTitle() {
         return R.string.reverse_geocoding_title;
@@ -21,6 +22,13 @@ public class ReverseGeocodingFunctionalExample implements FunctionalExampleModel
 
     public int getPlayableSubtitle() {
         return R.string.reverse_geocoding_subtitle;
+    }
+
+    @Override
+    public int[] getCurrentLocationMargins() {
+        return new int[] {
+                R.dimen.compass_default_margin_start, R.dimen.current_location_top, R.dimen.current_location_right, R.dimen.current_location_default_margin_bottom
+        };
     }
 
 }

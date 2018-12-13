@@ -29,7 +29,6 @@ import com.tomtom.online.sdk.search.SearchApi;
 import com.tomtom.online.sdk.search.api.SearchError;
 import com.tomtom.online.sdk.search.api.fuzzy.FuzzySearchResultListener;
 import com.tomtom.online.sdk.search.data.common.EntryPoint;
-import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQuery;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQueryBuilder;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResponse;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResult;
@@ -38,6 +37,7 @@ public class EntryPointsSearchPresenter extends BaseFunctionalExamplePresenter {
 
     private static final int ZOOM_LEVEL_FOR_EXAMPLE = 10;
     private static final int DEFAULT_MAP_PADDING = 0;
+    public static final String IDX_POI = "POI";
 
     protected Context context;
     protected FunctionalExampleFragment fragment;
@@ -96,7 +96,7 @@ public class EntryPointsSearchPresenter extends BaseFunctionalExamplePresenter {
         fragment.disableOptionsView();
 
         SearchApi searchAPI = OnlineSearchApi.create(context);
-        searchAPI.search(FuzzySearchQueryBuilder.create(term).build(), new FuzzySearchResultListener() {
+        searchAPI.search(FuzzySearchQueryBuilder.create(term).withIdx(IDX_POI).build(), new FuzzySearchResultListener() {
             @Override
             public void onSearchResult(FuzzySearchResponse response) {
 

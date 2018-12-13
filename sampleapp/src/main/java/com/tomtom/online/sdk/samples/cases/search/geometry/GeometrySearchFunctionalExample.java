@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.search.geometry;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class GeometrySearchFunctionalExample implements FunctionalExampleModel {
+public class GeometrySearchFunctionalExample extends BaseFunctionalExampleModel {
 
     public int getPlayableTitle() {
         return R.string.geometry_search_title;

@@ -65,11 +65,6 @@ public class ShapesCustomPresenter extends BaseFunctionalExamplePresenter {
     }
 
     @Override
-    public void onResume(final Context context) {
-
-    }
-
-    @Override
     public void onPause() {
         //tag::doc_unregister_shape_listeners[]
         tomtomMap.removeOnCircleClickListeners();

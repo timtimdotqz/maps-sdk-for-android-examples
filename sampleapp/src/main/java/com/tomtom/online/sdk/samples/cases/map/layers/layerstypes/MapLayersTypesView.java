@@ -8,21 +8,10 @@
  * licensee then you are not authorised to use this software in any manner and should
  * immediately return it to TomTom N.V.
  */
-package com.tomtom.online.sdk.samples.cases.map.markers.clustering;
+package com.tomtom.online.sdk.samples.cases.map.layers.layerstypes;
 
-import com.tomtom.online.sdk.samples.R;
-import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
-import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
+public interface MapLayersTypesView {
 
-public class MarkersClusteringFunctionalExample extends BaseFunctionalExampleModel {
+    void showTilesStatus(String text);
 
-    @Override
-    public int getPlayableTitle() {
-        return R.string.markers_clustering_title;
-    }
-
-    @Override
-    public int getPlayableSubtitle() {
-        return R.string.amsterdam_city_name;
-    }
 }

@@ -15,7 +15,6 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.VisibleForTesting;
 
 import com.tomtom.online.sdk.map.Icon;
-import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.RouteStyle;
 import com.tomtom.online.sdk.map.RouteStyleBuilder;
 import com.tomtom.online.sdk.routing.data.RouteQuery;
@@ -24,7 +23,7 @@ import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.RoutePlannerPresenter;
 import com.tomtom.online.sdk.samples.cases.RoutingUiListener;
-import com.tomtom.online.sdk.samples.routes.AmsterdamToOsloRouteConfig;
+import com.tomtom.online.sdk.samples.routes.AmsterdamToRotterdamRouteConfig;
 import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
 
 public class RouteCustomizationPresenter extends RoutePlannerPresenter {
@@ -57,15 +56,15 @@ public class RouteCustomizationPresenter extends RoutePlannerPresenter {
 
     @Override
     public RouteConfigExample getRouteConfig() {
-        return new AmsterdamToOsloRouteConfig();
+        return new AmsterdamToRotterdamRouteConfig();
     }
 
     public void startRoutingWithCustomRoute() {
 
         RouteStyle routeStyle = createCustomRouteStyle();
 
-        Icon startIcon = prepareRouteIconFromDrawable(R.drawable.ic_map_route_departure, DEFAULT_ICON_SCALE);
-        Icon endIcon = prepareRouteIconFromDrawable(R.drawable.ic_map_fav, DEFAULT_SCALE_FOR_SAMPLE_APP_ICONS);
+        Icon startIcon = loadStartIcon();
+        Icon endIcon = loadEndIconForBasicStyle();
 
         displayRoute(routeStyle, startIcon, endIcon);
     }
@@ -83,10 +82,22 @@ public class RouteCustomizationPresenter extends RoutePlannerPresenter {
     }
 
     public void startRoutingWithBasicRoute() {
-        Icon startIcon = prepareRouteIconFromDrawable(R.drawable.ic_map_route_departure, DEFAULT_ICON_SCALE);
-        Icon endIcon = prepareRouteIconFromDrawable(R.drawable.ic_map_route_destination, DEFAULT_ICON_SCALE);
+        Icon startIcon = loadStartIcon();
+        Icon endIcon = loadEndIconForCustomStyle();
 
         displayRoute(RouteStyle.DEFAULT_ROUTE_STYLE, startIcon, endIcon);
+    }
+
+    Icon loadStartIcon() {
+        return prepareRouteIconFromDrawable(R.drawable.ic_map_route_departure, DEFAULT_ICON_SCALE);
+    }
+
+    Icon loadEndIconForBasicStyle() {
+        return prepareRouteIconFromDrawable(R.drawable.ic_map_route_destination, DEFAULT_ICON_SCALE);
+    }
+
+    Icon loadEndIconForCustomStyle() {
+        return prepareRouteIconFromDrawable(R.drawable.ic_map_fav, DEFAULT_SCALE_FOR_SAMPLE_APP_ICONS);
     }
 
     private Icon prepareRouteIconFromDrawable(@DrawableRes int routeIcon, double scale) {

@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.search.adp;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class AdditionalDataSearchFunctionalExample implements FunctionalExampleModel {
+public class AdditionalDataSearchFunctionalExample extends BaseFunctionalExampleModel {
 
     public int getPlayableTitle() {
         return R.string.additional_data_provider_search;

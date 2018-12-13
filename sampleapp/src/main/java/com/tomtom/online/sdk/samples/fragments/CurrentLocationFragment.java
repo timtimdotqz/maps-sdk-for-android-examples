@@ -19,13 +19,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.tomtom.online.sdk.map.MapFragment;
 import com.tomtom.online.sdk.map.OnMapReadyCallback;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.ActionBarModel;
-
 import timber.log.Timber;
 
 public class CurrentLocationFragment extends Fragment implements FunctionalExampleFragment {
@@ -40,6 +38,7 @@ public class CurrentLocationFragment extends Fragment implements FunctionalExamp
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Timber.v("onCreateView([inflater, container, savedInstanceState])" + new Object[]{inflater, container, savedInstanceState});
         if (savedInstanceState != null) {
             isRestored = savedInstanceState.getBoolean(MAP_RESTORE_KEY, false);
         }

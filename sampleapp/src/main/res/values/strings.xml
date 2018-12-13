@@ -332,4 +332,11 @@
     <string name="label_batch_reachablerange_electric_2h">Reachable range for electric with power for 2 h</string>
     <string name="label_init_batch_reachablerange_info">Touch polyline to see the description...</string>
 
+    <string name="map_layers_types">Map layers</string>
+    <string name="map_layers_tiles_type">Tiles types</string>
+    <string name="map_layers_layers_type">Layers types</string>
+    <string name="map_layers_tiles_type_select">Select map tiles type:</string>
+    <string name="map_layers_layers_type_select">Select map layers type:</string>
+    <string name="map_layers_status">Tiles: %1$s \t Labels: %2$s</string>
+
 </resources>

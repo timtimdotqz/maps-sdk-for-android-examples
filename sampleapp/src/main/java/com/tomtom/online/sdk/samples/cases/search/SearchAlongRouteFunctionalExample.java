@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.search;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class SearchAlongRouteFunctionalExample implements FunctionalExampleModel {
+public class SearchAlongRouteFunctionalExample extends BaseFunctionalExampleModel {
 
     public int getPlayableTitle() {
         return R.string.search_along_route_title;
@@ -23,4 +24,8 @@ public class SearchAlongRouteFunctionalExample implements FunctionalExampleModel
         return R.string.amsterdam_to_rotterdam_desc;
     }
 
+    @Override
+    public int[] getCompasMargins() {
+        return COMPAS_UNDER_BAR;
+    }
 }

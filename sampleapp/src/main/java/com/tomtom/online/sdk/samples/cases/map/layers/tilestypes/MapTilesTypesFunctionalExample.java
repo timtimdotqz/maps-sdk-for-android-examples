@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.map.layers.tilestypes;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class MapTilesTypesFunctionalExample implements FunctionalExampleModel {
+public class MapTilesTypesFunctionalExample extends BaseFunctionalExampleModel {
     public int getPlayableTitle() {
         return R.string.map_tiles_types_title;
     }

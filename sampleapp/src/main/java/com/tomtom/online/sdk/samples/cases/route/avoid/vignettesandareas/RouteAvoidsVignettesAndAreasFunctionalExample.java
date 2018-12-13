@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.route.avoid.vignettesandareas;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class RouteAvoidsVignettesAndAreasFunctionalExample implements FunctionalExampleModel {
+public class RouteAvoidsVignettesAndAreasFunctionalExample extends BaseFunctionalExampleModel {
 
     @Override
     public int getPlayableTitle() {
@@ -24,4 +25,10 @@ public class RouteAvoidsVignettesAndAreasFunctionalExample implements Functional
     public int getPlayableSubtitle() {
         return R.string.czech_republic_to_romania_desc;
     }
+
+    @Override
+    public int[] getCompasMargins() {
+        return COMPAS_UNDER_BAR;
+    }
+
 }

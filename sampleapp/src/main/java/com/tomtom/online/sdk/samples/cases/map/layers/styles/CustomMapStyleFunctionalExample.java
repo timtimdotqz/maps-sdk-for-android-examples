@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.map.layers.styles;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class CustomMapStyleFunctionalExample implements FunctionalExampleModel {
+public class CustomMapStyleFunctionalExample extends BaseFunctionalExampleModel {
     public int getPlayableTitle() {
         return R.string.map_styles_title;
     }

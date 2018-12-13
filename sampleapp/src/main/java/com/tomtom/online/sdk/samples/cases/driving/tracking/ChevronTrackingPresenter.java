@@ -120,12 +120,6 @@ public class ChevronTrackingPresenter extends BaseFunctionalExamplePresenter {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        Timber.d("onStop");
-    }
-
-    @Override
     public FunctionalExampleModel getModel() {
         return new ChevronTrackingFunctionalExample();
     }

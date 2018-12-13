@@ -20,8 +20,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tomtom.online.sdk.map.MapFragment;
-import com.tomtom.online.sdk.map.OnMapReadyCallback;
-import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.ActionBarModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExamplePresenter;
@@ -58,6 +56,7 @@ public abstract class ExampleFragment<T extends FunctionalExamplePresenter> exte
             isRestored = savedInstanceState.getBoolean(MAP_RESTORE_KEY, false);
         }
         Timber.d("isRestored= " + isRestored);
+
         return inflater.inflate(R.layout.example_fragment, null);
     }
 
@@ -68,7 +67,7 @@ public abstract class ExampleFragment<T extends FunctionalExamplePresenter> exte
 
         infoTextView = view.findViewById(R.id.infoTextView);
         optionsView = view.findViewById(R.id.optionsButtons);
-        infoBarView = view.findViewById(R.id.info_bar_view);
+        infoBarView = view.findViewById(R.id.infoBarView);
 
         if (optionsView != null) {
             optionsView.setListener(this);
@@ -87,26 +86,16 @@ public abstract class ExampleFragment<T extends FunctionalExamplePresenter> exte
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        presenter.onStop();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         optionsView.setEnabled(false);
-        presenter.onResume(getContext());
         actionBar = (ActionBarModel) getActivity();
 
-        MapFragment mapFragment = (MapFragment) getActivity().getSupportFragmentManager()
-                .findFragmentById(R.id.map_fragment);
-        mapFragment.getAsyncMap(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(TomtomMap tomtomMap) {
-                optionsView.setEnabled(true);
-                presenter.bind(ExampleFragment.this, tomtomMap);
-            }
+        MapFragment mapFragment = (MapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map_fragment);
+        mapFragment.getAsyncMap(tomtomMap -> {
+            optionsView.setEnabled(true);
+            presenter.bind(ExampleFragment.this, tomtomMap);
+
         });
     }
 

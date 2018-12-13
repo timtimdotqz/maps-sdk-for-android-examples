@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.route.maneuvers;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class ManeuversFunctionalExample implements FunctionalExampleModel {
+public class ManeuversFunctionalExample extends BaseFunctionalExampleModel {
 
     @Override
     public int getPlayableTitle() {

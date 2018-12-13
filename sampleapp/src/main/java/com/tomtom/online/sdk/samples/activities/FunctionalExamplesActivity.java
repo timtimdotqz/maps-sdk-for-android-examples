@@ -12,7 +12,11 @@ package com.tomtom.online.sdk.samples.activities;
 
 import android.content.Context;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
+import android.os.Environment;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -26,16 +30,19 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.tomtom.online.sdk.common.location.LatLng;
+import com.tomtom.online.sdk.common.util.LogUtils;
 import com.tomtom.online.sdk.map.BaseGpsPositionIndicator;
 import com.tomtom.online.sdk.map.MapFragment;
 import com.tomtom.online.sdk.map.OnMapReadyCallback;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.samples.BuildConfig;
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.SampleApp;
 import com.tomtom.online.sdk.samples.fragments.CurrentLocationFragment;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.BackButtonDelegate;
 
+import java.io.File;
 import java.util.Locale;
 
 import timber.log.Timber;
@@ -54,17 +61,28 @@ public class FunctionalExamplesActivity extends AppCompatActivity
     private FunctionalExamplesNavigationManager functionalExamplesNavigationManager;
 
     //tag::doc_implement_on_map_ready_callback[]
-    private OnMapReadyCallback onMapReadyCallback =
+    private final OnMapReadyCallback onMapReadyCallback =
             new OnMapReadyCallback() {
                 @Override
                 public void onMapReady(TomtomMap map) {
                     //Map is ready here
                     tomtomMap = map;
                     tomtomMap.setMyLocationEnabled(true);
-                    tomtomMap.setLanguage(Locale.getDefault().getLanguage());
+                    tomtomMap.collectLogsToFile(SampleApp.LOGCAT_PATH);
                 }
             };
     //end::doc_implement_on_map_ready_callback[]
+
+    //Just for example. documentation.
+    @SuppressWarnings("unused")
+    private final OnMapReadyCallback onMapReadyCallbackSaveLogs = new OnMapReadyCallback() {
+        //tag::doc_collect_logs_to_file_in_onready_callback[]
+        @Override
+        public void onMapReady(@NonNull TomtomMap tomtomMap) {
+            tomtomMap.collectLogsToFile(SampleApp.LOGCAT_PATH);
+        }
+        //end::doc_collect_logs_to_file_in_onready_callback[]
+    };
 
     private TomtomMap tomtomMap;
     private MapFragment mapFragment;
@@ -79,6 +97,7 @@ public class FunctionalExamplesActivity extends AppCompatActivity
         mapFragment.getAsyncMap(onMapReadyCallback);
         //end::doc_initialise_map[]
 
+        Timber.d("Phone language " + Locale.getDefault().getLanguage());
         restoreState(savedInstanceState);
     }
 
@@ -200,7 +219,7 @@ public class FunctionalExamplesActivity extends AppCompatActivity
     }
 
     static class ToolbarNavigationClickListener implements View.OnClickListener {
-        private DrawerLayout drawer;
+        private final DrawerLayout drawer;
 
         public ToolbarNavigationClickListener(DrawerLayout drawer) {
 
@@ -251,13 +270,13 @@ public class FunctionalExamplesActivity extends AppCompatActivity
     /**
      * Custom GPS position indicator that forces accuracy to 0.
      */
-    @SuppressWarnings("unused")
     //tag::doc_custom_gps_position_indicator
     static class CustomGpsPositionIndicator extends BaseGpsPositionIndicator {
+        private static final long serialVersionUID = -2164040010108911434L;
 
         //To use this class, call setCustomGpsPositionIndicator on TomtomMap:
         //tomtomMap.setGpsPositionIndicator(new CustomGpsPositionIndicator());
-        
+
         @Override
         public void setLocation(Location location) {
             setLocation(new LatLng(location), 0.0, 0.0);

@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.driving.tracking;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class ChevronTrackingFunctionalExample implements FunctionalExampleModel {
+public class ChevronTrackingFunctionalExample extends BaseFunctionalExampleModel {
 
     @Override
     public int getPlayableTitle() {

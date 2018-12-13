@@ -11,31 +11,39 @@
 package com.tomtom.online.sdk.samples;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.support.annotation.RequiresApi;
 import android.support.multidex.MultiDexApplication;
+import android.util.Log;
 
 import com.squareup.leakcanary.LeakCanary;
-import com.tomtom.core.maps.BuildConfig;
+import com.tomtom.online.sdk.common.util.LogUtils;
 
-import timber.log.Timber;
+import java.io.File;
 
 public class SampleApp extends MultiDexApplication {
 
     private static final String ROBO_ELECTRIC_FINGERPRINT = "robolectric";
+    public static final String LOGCAT_FILE_NAME = "logcat.txt";
+    public static final String LOGCAT_PATH = Environment.getExternalStorageDirectory() + File.separator + LOGCAT_FILE_NAME;
 
     //tag::doc_log[]
     @Override
     public void onCreate() {
         super.onCreate();
-        Timber.plant(new Timber.DebugTree());
+        LogUtils.enableLogs(Log.VERBOSE);
         //end::doc_log[]
         //initStrictMode();
         CrashSupporter.create(this);
         if (!isRoboElectricUnitTest()) {
             LeakCanary.install(this);
         }
+        //tag::register_crash_observer[]
+        LogUtils.registerCrashObserver(getApplicationContext(), Uri.parse("file://" + LOGCAT_PATH));
+        //end::register_crash_observer[]
     }
 
     public boolean isRoboElectricUnitTest() {

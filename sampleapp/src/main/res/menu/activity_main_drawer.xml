@@ -12,6 +12,11 @@
                 android:title="@string/map_tiles_types_title" />
 
             <item
+                android:id="@+id/map_layers_types"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/map_layers_types" />
+
+            <item
                 android:id="@+id/traffic_vector_layer"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/submenu_vector_map_traffic_layer" />

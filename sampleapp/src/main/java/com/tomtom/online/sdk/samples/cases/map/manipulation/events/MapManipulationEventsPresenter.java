@@ -100,12 +100,6 @@ public class MapManipulationEventsPresenter extends BaseFunctionalExamplePresent
         return new MapManipulationEventsFunctionalExample();
     }
 
-
-    @Override
-    public int getCurrentLocationBottomMarginDelta(FunctionalExampleFragment view) {
-        return DEFAULT_CURRENT_LOCATION_BUTTON_BOTTOM_MARGIN_DELTA;
-    }
-
     @Override
     public void cleanup() {
         Timber.d("RxUtils: clean()");
@@ -162,7 +156,7 @@ public class MapManipulationEventsPresenter extends BaseFunctionalExamplePresent
         }
 
         String title = view.getContext().getString(titleId);
-        Timber.d("Functional Example on %s", title);
+        Timber.v("Functional Example on %s", title);
         String message = String.format(java.util.Locale.getDefault(),
                 TOAST_MESSAGE,
                 title,

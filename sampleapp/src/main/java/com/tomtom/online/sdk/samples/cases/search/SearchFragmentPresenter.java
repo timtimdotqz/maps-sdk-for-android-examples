@@ -152,6 +152,7 @@ public class SearchFragmentPresenter implements SearchPresenter, LocationUpdateL
     }
 
     protected void performSearchWithoutBlockingUI(FuzzySearchQuery query) {
+        Timber.d("performSearch " + query);
         searchView.getSearchProgressBar().setVisibility(View.VISIBLE);
 
         lastSearchResult = null;

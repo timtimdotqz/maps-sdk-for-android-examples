@@ -11,16 +11,21 @@
 package com.tomtom.online.sdk.samples.cases.map.manipulation.centering;
 
 import android.location.Location;
+import android.net.Uri;
 
 import com.tomtom.online.sdk.common.location.LatLng;
+import com.tomtom.online.sdk.common.util.LogUtils;
 import com.tomtom.online.sdk.map.CameraPosition;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.SampleApp;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
+
+import java.io.File;
 
 public class MapCenteringPresenter extends BaseFunctionalExamplePresenter {
 
@@ -95,13 +100,14 @@ public class MapCenteringPresenter extends BaseFunctionalExamplePresenter {
     }
 
     @SuppressWarnings("unused")
-    public void turnOnMyLocation(){
+    public void turnOnMyLocation() {
         //tag::doc_my_location_enabled[]
         tomtomMap.setMyLocationEnabled(true);
         //end::doc_my_location_enabled[]
     }
+
     @SuppressWarnings("unused")
-    public Location getCurrentLocation(){
+    public Location getCurrentLocation() {
         //tag::doc_get_current_location[]
         Location location = tomtomMap.getUserLocation();
         //end::doc_get_current_location[]

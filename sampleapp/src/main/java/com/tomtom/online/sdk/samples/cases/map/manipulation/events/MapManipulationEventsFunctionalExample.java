@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.map.manipulation.events;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class MapManipulationEventsFunctionalExample implements FunctionalExampleModel {
+public class MapManipulationEventsFunctionalExample extends BaseFunctionalExampleModel {
 
     public int getPlayableTitle() {
         return R.string.map_events_title;
@@ -23,4 +24,10 @@ public class MapManipulationEventsFunctionalExample implements FunctionalExample
         return R.string.amsterdam_city_name;
     }
 
+    @Override
+    public int[] getCurrentLocationMargins() {
+        return new int[] {
+                R.dimen.compass_default_margin_start, R.dimen.current_location_top, R.dimen.current_location_right, R.dimen.current_location_default_margin_bottom
+        };
+    }
 }

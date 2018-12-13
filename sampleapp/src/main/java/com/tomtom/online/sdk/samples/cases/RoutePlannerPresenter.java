@@ -77,13 +77,6 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
     }
 
     @Override
-    public void onResume(Context context) {
-        //tag::doc_initialise_routing[]
-        routePlannerAPI = OnlineRoutingApi.create(context);
-        //end::doc_initialise_routing[]
-    }
-
-    @Override
     public void onPause() {
         compositeDisposable.clear();
     }
@@ -114,6 +107,8 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
         super.bind(view, map);
 
+        createOnlineRoutingApi(view.getContext().getApplicationContext());
+
         confMapPadding();
         confRouteIcons();
 
@@ -127,11 +122,18 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
         viewModel.repeatRequestWhenNotFinished();
     }
 
-    protected void confRouteIcons() {
+    public void createOnlineRoutingApi(Context context) {
+        //tag::doc_initialise_routing[]
+        routePlannerAPI = OnlineRoutingApi.create(context);
+        //end::doc_initialise_routing[]
+    }
+
+    public void confRouteIcons() {
         defaultStartIcon = Icon.Factory.fromResources(view.getContext(), R.drawable.ic_map_route_departure, DEFAULT_ICON_SCALE);
         defaultEndIcon = Icon.Factory.fromResources(view.getContext(), R.drawable.ic_map_route_destination, DEFAULT_ICON_SCALE);
     }
 
+    @Override
     protected void confMapPadding() {
         int offsetBig = view.getContext().getResources().getDimensionPixelSize(R.dimen.offset_super_big);
 
@@ -250,19 +252,6 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
         return Math.max(fuelConsumption, batteryConsumption);
     }
 
-    @Override
-    public void alignCompassButton(FunctionalExampleFragment view, TomtomMap tomtomMap) {
-        int compassButtonTopMargin = view.getContext().getResources().getDimensionPixelSize(R.dimen.compass_default_margin_top);
-        int compassLeftMargin = view.getContext().getResources().getDimensionPixelSize(R.dimen.compass_default_margin_start);
-        tomtomMap.getUiSettings().getCompassView().setMargins(compassLeftMargin, compassButtonTopMargin + getCurrentLocationBottomMarginDelta(view), 0, 0);
-    }
-
-    @Override
-    public void resetCompassButton(FunctionalExampleFragment view, TomtomMap tomtomMap) {
-        int compassLeftMargin = view.getContext().getResources().getDimensionPixelSize(R.dimen.compass_default_margin_start);
-        int compassButtonTopMargin = view.getContext().getResources().getDimensionPixelSize(R.dimen.compass_default_margin_top);
-        tomtomMap.getUiSettings().getCompassView().setMargins(compassLeftMargin, compassButtonTopMargin, 0, 0);
-    }
 
     public abstract RouteConfigExample getRouteConfig();
 

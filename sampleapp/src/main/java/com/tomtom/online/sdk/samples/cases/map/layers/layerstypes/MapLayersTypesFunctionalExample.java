@@ -8,25 +8,27 @@
  * licensee then you are not authorised to use this software in any manner and should
  * immediately return it to TomTom N.V.
  */
-package com.tomtom.online.sdk.samples.cases.route.supportingpoints;
+package com.tomtom.online.sdk.samples.cases.map.layers.layerstypes;
 
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class RouteSupportingPointsFunctionalExample extends BaseFunctionalExampleModel {
-
+public class MapLayersTypesFunctionalExample extends BaseFunctionalExampleModel {
     @Override
     public int getPlayableTitle() {
-        return R.string.route_supporting_points;
+        return R.string.map_layers_types;
     }
 
     @Override
     public int getPlayableSubtitle() {
-        return R.string.supporting_points_subtitle;
+        return R.string.amsterdam_city_name;
     }
+
     @Override
     public int[] getCompasMargins() {
-        return COMPAS_UNDER_BAR;
+        return new int[] {
+                R.dimen.compass_default_margin_start, R.dimen.compass_bigger_margin_top, R.dimen.compass_default_margin_right, R.dimen.compass_default_margin_bottom
+        };
     }
 }

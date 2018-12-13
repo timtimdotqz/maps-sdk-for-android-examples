@@ -16,7 +16,7 @@
     android:background="@android:color/transparent">
 
     <com.tomtom.online.sdk.samples.utils.views.InfoBarView
-        android:id="@+id/info_bar_view"
+        android:id="@+id/infoBarView"
         layout="@layout/info_bar_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/eta_panel_height"

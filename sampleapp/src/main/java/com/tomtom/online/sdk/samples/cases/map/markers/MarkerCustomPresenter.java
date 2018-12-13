@@ -80,10 +80,6 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
     }
 
     @Override
-    public void onResume(Context context) {
-    }
-
-    @Override
     public void onPause() {
         if (!isMapReady()) {
             return;

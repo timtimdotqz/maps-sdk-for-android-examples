@@ -55,7 +55,7 @@ public class MapLanguageParamPresenter extends BaseFunctionalExamplePresenter {
 
     @Override
     public void cleanup() {
-        tomtomMap.setLanguage(Locale.getDefault().getLanguage());
+        tomtomMap.setLanguage(BRITISH_ENGLISH_CODE);
     }
 
     public void english() {

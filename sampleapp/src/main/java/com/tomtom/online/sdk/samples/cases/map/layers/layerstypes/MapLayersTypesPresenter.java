@@ -8,17 +8,23 @@
  * licensee then you are not authorised to use this software in any manner and should
  * immediately return it to TomTom N.V.
  */
-package com.tomtom.online.sdk.samples.cases.map.layers.tilestypes;
+package com.tomtom.online.sdk.samples.cases.map.layers.layerstypes;
 
+import android.content.res.Resources;
+import com.google.common.base.Preconditions;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.TomtomMap;
+import com.tomtom.online.sdk.map.model.MapLayersType;
 import com.tomtom.online.sdk.map.model.MapTilesType;
+import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
 
-public class MapTilesTypesPresenter extends BaseFunctionalExamplePresenter {
+public class MapLayersTypesPresenter extends BaseFunctionalExamplePresenter {
+
+    private MapLayersTypesView view;
 
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
@@ -26,39 +32,49 @@ public class MapTilesTypesPresenter extends BaseFunctionalExamplePresenter {
         if (!view.isMapRestored()) {
             centerOnAmsterdam();
         }
+        Preconditions.checkArgument(view instanceof MapLayersTypesView);
+        this.view = (MapLayersTypesView) view;
+        updateTilesStatus();
+
     }
 
     @Override
     public FunctionalExampleModel getModel() {
-        return new MapTilesTypesFunctionalExample();
+        return new MapLayersTypesFunctionalExample();
     }
 
     @Override
     public void cleanup() {
+        super.cleanup();
         tomtomMap.getUiSettings().setMapTilesType(MapTilesType.VECTOR);
+        tomtomMap.getUiSettings().setMapLayersType(MapLayersType.BASIC);
     }
 
-    public void showOnlyVectorTiles() {
-        //tag::doc_set_vector_tiles[]
-        tomtomMap.getUiSettings().setMapTilesType(MapTilesType.VECTOR);
-        //end::doc_set_vector_tiles[]
+    public void setMapTilesType(MapTilesType type) {
+        tomtomMap.getUiSettings().setMapTilesType(type);
+        updateTilesStatus();
     }
 
-    public void showOnlyRasterTiles() {
-        //tag::doc_set_raster_tiles[]
-        tomtomMap.getUiSettings().setMapTilesType(MapTilesType.RASTER);
-        //end::doc_set_raster_tiles[]
+    public void setMapLayersType(MapLayersType type) {
+        tomtomMap.getUiSettings().setMapLayersType(type);
+        updateTilesStatus();
     }
 
-    @SuppressWarnings("unused")
-    public void showNoTiles() {
-        //tag::doc_set_none_tiles[]
-        tomtomMap.getUiSettings().setMapTilesType(MapTilesType.NONE);
-        //end::doc_set_none_tiles[]
+    public MapTilesType getMapTilesType() {
+        return tomtomMap.getUiSettings().getMapTilesType();
     }
 
-    public void centerOnAmsterdam() {
+    public MapLayersType getMapLayersType() {
+        return tomtomMap.getUiSettings().getMapLayersType();
+    }
 
+    private void updateTilesStatus() {
+        String tilesStatus = getContext().getString(R.string.map_layers_status,
+                getMapTilesType(), getMapLayersType());
+        view.showTilesStatus(tilesStatus);
+    }
+
+    private void centerOnAmsterdam() {
         tomtomMap.centerOn(
                 Locations.AMSTERDAM_LOCATION.getLatitude(),
                 Locations.AMSTERDAM_LOCATION.getLongitude(),

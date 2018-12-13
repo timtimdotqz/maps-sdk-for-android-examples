@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.map.layers.shapes;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class ShapesCustomFunctionalExample implements FunctionalExampleModel {
+public class ShapesCustomFunctionalExample extends BaseFunctionalExampleModel {
 
     @Override
     public int getPlayableTitle() {

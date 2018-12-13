@@ -16,6 +16,7 @@ import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.cases.driving.tracking.ChevronTrackingFragment;
 import com.tomtom.online.sdk.samples.cases.map.geopoliticalview.MapGeopoliticalViewFragment;
 import com.tomtom.online.sdk.samples.cases.map.langparam.MapLanguageParamFragment;
+import com.tomtom.online.sdk.samples.cases.map.layers.layerstypes.MapLayersTypesFragment;
 import com.tomtom.online.sdk.samples.cases.map.layers.shapes.ShapesCustomFragment;
 import com.tomtom.online.sdk.samples.cases.map.layers.styles.CustomMapStyleFragment;
 import com.tomtom.online.sdk.samples.cases.map.layers.tilestypes.MapTilesTypesFragment;
@@ -201,6 +202,9 @@ public class FunctionalExamplesFactory {
 
             case R.id.route_customization:
                 return new RouteCustomizationFragment();
+
+            case R.id.map_layers_types:
+                return new MapLayersTypesFragment();
 
             default:
                 return new CurrentLocationFragment();

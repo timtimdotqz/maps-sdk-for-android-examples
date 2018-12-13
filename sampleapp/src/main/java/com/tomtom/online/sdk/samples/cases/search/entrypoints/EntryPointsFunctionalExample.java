@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.search.entrypoints;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class EntryPointsFunctionalExample implements FunctionalExampleModel {
+public class EntryPointsFunctionalExample extends BaseFunctionalExampleModel {
 
     public int getPlayableTitle() {
         return R.string.entry_points_title;

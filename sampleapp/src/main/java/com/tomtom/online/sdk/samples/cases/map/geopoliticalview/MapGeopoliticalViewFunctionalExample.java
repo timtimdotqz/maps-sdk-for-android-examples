@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.map.geopoliticalview;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class MapGeopoliticalViewFunctionalExample implements FunctionalExampleModel {
+public class MapGeopoliticalViewFunctionalExample extends BaseFunctionalExampleModel {
 
     @Override
     public int getPlayableTitle() {

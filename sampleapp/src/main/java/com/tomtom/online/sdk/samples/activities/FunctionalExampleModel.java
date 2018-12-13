@@ -11,6 +11,8 @@
 package com.tomtom.online.sdk.samples.activities;
 
 import android.support.annotation.StringRes;
+import android.text.style.DrawableMarginSpan;
+import android.view.ViewGroup;
 
 public interface FunctionalExampleModel {
 
@@ -20,4 +22,7 @@ public interface FunctionalExampleModel {
     @StringRes
     int getPlayableSubtitle();
 
+    int[] getCurrentLocationMargins();
+
+    int[] getCompasMargins();
 }

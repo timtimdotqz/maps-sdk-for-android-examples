@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.map.route;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class RouteCustomizationFunctionalExample implements FunctionalExampleModel {
+public class RouteCustomizationFunctionalExample extends BaseFunctionalExampleModel {
 
     @Override
     public int getPlayableTitle() {
@@ -24,4 +25,10 @@ public class RouteCustomizationFunctionalExample implements FunctionalExampleMod
     public int getPlayableSubtitle() {
         return R.string.amsterdam_to_oslo_desc;
     }
+
+    @Override
+    public int[] getCompasMargins() {
+        return COMPAS_UNDER_BAR;
+    }
+
 }

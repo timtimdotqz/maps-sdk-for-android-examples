@@ -77,11 +77,6 @@ public class ReverseGeocodingPresenter extends BaseFunctionalExamplePresenter {
     }
 
     @Override
-    public int getCurrentLocationBottomMarginDelta(FunctionalExampleFragment view) {
-        return DEFAULT_CURRENT_LOCATION_BUTTON_BOTTOM_MARGIN_DELTA;
-    }
-
-    @Override
     public void cleanup() {
         tomtomMap.getMarkerSettings().removeMarkers();
         tomtomMap.removeOnMarkerClickListener(onMarkerClickListener);

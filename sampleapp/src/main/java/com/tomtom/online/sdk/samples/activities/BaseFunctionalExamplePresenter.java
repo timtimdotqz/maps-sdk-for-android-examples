@@ -11,17 +11,17 @@
 package com.tomtom.online.sdk.samples.activities;
 
 import android.content.Context;
-
+import android.content.res.Resources;
 import com.tomtom.online.sdk.common.util.Contextable;
 import com.tomtom.online.sdk.map.TomtomMap;
+import com.tomtom.online.sdk.map.ui.MapComponentView;
+import com.tomtom.online.sdk.map.ui.compass.CompassView;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
-import com.tomtom.online.sdk.samples.utils.DimensionUtils;
-
-import java.util.concurrent.Executors;
-
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
+
+import java.util.concurrent.Executors;
 
 public abstract class BaseFunctionalExamplePresenter implements FunctionalExamplePresenter, Contextable {
 
@@ -39,63 +39,50 @@ public abstract class BaseFunctionalExamplePresenter implements FunctionalExampl
         this.view = view;
         tomtomMap = map;
 
-        alignCompassButton(view, map);
-        alignCurrentLocationButton(view, map);
-        
-        view.setActionBarTitle(getModel().getPlayableTitle());
-        view.setActionBarSubtitle(getModel().getPlayableSubtitle());
+        setupUIModel(view);
 
         confMapPadding();
     }
 
+    public void setupUIModel(FunctionalExampleFragment view) {
+        setComponentMargins(tomtomMap.getUiSettings().getCurrentLocationView(), getModel().getCurrentLocationMargins());
+        setComponentMargins(tomtomMap.getUiSettings().getCompassView(), getModel().getCompasMargins());
+
+        view.setActionBarTitle(getModel().getPlayableTitle());
+        view.setActionBarSubtitle(getModel().getPlayableSubtitle());
+    }
+
+    public void setComponentMargins(MapComponentView componentView, int[] margins) {
+        Resources resources = view.getContext().getResources();
+        componentView.setMargins(
+                resources
+                        .getDimensionPixelSize(margins[0]),
+                resources
+                        .getDimensionPixelSize(margins[1]),
+                resources
+                        .getDimensionPixelSize(margins[2]),
+                resources
+                        .getDimensionPixelSize(margins[3]));
+    }
+
     @Override
     public void cleanup() {
-        resetCompassButton(view, tomtomMap);
+        setComponentMargins(tomtomMap.getUiSettings().getCompassView(), BaseFunctionalExampleModel.COMPAS_CLOSE_TO_BAR);
         resetMapPadding();
     }
 
     public abstract FunctionalExampleModel getModel();
 
     @Override
-    public void alignCompassButton(FunctionalExampleFragment view, TomtomMap map) {
-    }
-
-    @Override
-    public void resetCompassButton(FunctionalExampleFragment view, TomtomMap tomtomMap) {
-    }
-
-    @Override
     public void onPause() {
     }
 
-    @Override
-    public void onResume(Context context) {
-    }
-
-    @Override
-    public void alignCurrentLocationButton(FunctionalExampleFragment view, TomtomMap tomtomMap) {
-        int currentLocationButtonBottomMargin = view.getContext().getResources().getDimensionPixelSize(R.dimen.current_location_default_margin_bottom);
-        int currentLocationButtonLeftMargin = view.getContext().getResources().getDimensionPixelSize(R.dimen.compass_default_margin_start);
-
-        tomtomMap.getUiSettings().getCurrentLocationView()
-                .setMargins(currentLocationButtonLeftMargin, 0, 0,
-                        currentLocationButtonBottomMargin + getCurrentLocationBottomMarginDelta(view));
-    }
-
-    @Override
-    public int getCurrentLocationBottomMarginDelta(FunctionalExampleFragment view) {
-        return DimensionUtils.fromDpToPx(DEFAULT_CURRENT_LOCATION_BUTTON_BOTTOM_MARGIN,
-                getContext().getResources().getDisplayMetrics());
-    }
-
     protected void confMapPadding() {
-
         int padding = getContext().getResources().getDimensionPixelSize(R.dimen.offset_extra_big);
-
         tomtomMap.setPadding(padding, padding, padding, padding);
     }
 
-    protected void resetMapPadding(){
+    protected void resetMapPadding() {
         tomtomMap.setPadding(DEFAULT_MAP_PADDING, DEFAULT_MAP_PADDING,
                 DEFAULT_MAP_PADDING, DEFAULT_MAP_PADDING);
     }
@@ -105,8 +92,4 @@ public abstract class BaseFunctionalExamplePresenter implements FunctionalExampl
         return view.getContext();
     }
 
-    @Override
-    public void onStop() {
-
-    }
 }

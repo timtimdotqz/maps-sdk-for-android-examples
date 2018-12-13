@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.map.markers;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class MarkerCustomFunctionalExample implements FunctionalExampleModel {
+public class MarkerCustomFunctionalExample extends BaseFunctionalExampleModel {
 
     @Override
     public int getPlayableTitle() {

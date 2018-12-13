@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.route.waypoints;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class RouteWaypointsFunctionalExample implements FunctionalExampleModel {
+public class RouteWaypointsFunctionalExample extends BaseFunctionalExampleModel {
 
     @Override
     public int getPlayableTitle() {
@@ -23,5 +24,9 @@ public class RouteWaypointsFunctionalExample implements FunctionalExampleModel {
     @Override
     public int getPlayableSubtitle() {
         return R.string.amsterdam_to_berlin_desc;
+    }
+    @Override
+    public int[] getCompasMargins() {
+        return COMPAS_UNDER_BAR;
     }
 }

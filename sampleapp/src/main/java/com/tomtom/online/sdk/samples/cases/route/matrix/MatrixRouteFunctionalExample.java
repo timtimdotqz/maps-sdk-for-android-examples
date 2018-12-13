@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.route.matrix;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class MatrixRouteFunctionalExample implements FunctionalExampleModel {
+public class MatrixRouteFunctionalExample extends BaseFunctionalExampleModel {
 
     @Override
     public int getPlayableTitle() {

@@ -12,9 +12,10 @@ package com.tomtom.online.sdk.samples.cases.map.manipulation.centering;
 
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class MapCenteringFunctionalExample implements FunctionalExampleModel {
+public class MapCenteringFunctionalExample extends BaseFunctionalExampleModel {
 
     @Override
     public int getPlayableTitle() {

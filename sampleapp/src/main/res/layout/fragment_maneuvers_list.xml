@@ -16,7 +16,7 @@
     android:background="@android:color/white">
 
     <com.tomtom.online.sdk.samples.utils.views.InfoBarView
-        android:id="@+id/info_bar_view"
+        android:id="@+id/infoBarView"
         layout="@layout/info_bar_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/eta_panel_height"
@@ -27,7 +27,7 @@
         android:id="@+id/language_selector"
         android:layout_width="match_parent"
         android:layout_height="@dimen/eta_panel_height"
-        android:layout_below="@+id/info_bar_view"
+        android:layout_below="@+id/infoBarView"
         android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/offset_default" />
 

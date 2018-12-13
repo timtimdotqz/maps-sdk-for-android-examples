@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.map.manipulation.perspective;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class MapViewPerspectiveFunctionalExample implements FunctionalExampleModel {
+public class MapViewPerspectiveFunctionalExample extends BaseFunctionalExampleModel {
 
     public int getPlayableTitle() {
         return R.string.map_view_perspective_title;

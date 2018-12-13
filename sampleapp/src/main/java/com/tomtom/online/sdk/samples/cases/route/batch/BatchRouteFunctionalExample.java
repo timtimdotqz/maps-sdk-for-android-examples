@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.route.batch;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class BatchRouteFunctionalExample implements FunctionalExampleModel {
+public class BatchRouteFunctionalExample extends BaseFunctionalExampleModel {
 
     @Override
     public int getPlayableTitle() {
@@ -23,5 +24,9 @@ public class BatchRouteFunctionalExample implements FunctionalExampleModel {
     @Override
     public int getPlayableSubtitle() {
         return R.string.batch_routing_subtitle;
+    }
+    @Override
+    public int[] getCompasMargins() {
+        return COMPAS_UNDER_BAR;
     }
 }

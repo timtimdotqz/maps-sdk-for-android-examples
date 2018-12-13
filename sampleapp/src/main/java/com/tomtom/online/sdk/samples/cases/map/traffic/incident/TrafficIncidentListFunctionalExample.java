@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.map.traffic.incident;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class TrafficIncidentListFunctionalExample implements FunctionalExampleModel {
+public class TrafficIncidentListFunctionalExample extends BaseFunctionalExampleModel {
 
     public int getPlayableTitle() {
         return R.string.traffic_incident_list_title;

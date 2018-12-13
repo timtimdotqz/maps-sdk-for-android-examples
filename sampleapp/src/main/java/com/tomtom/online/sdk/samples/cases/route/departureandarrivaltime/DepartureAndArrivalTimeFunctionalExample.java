@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.route.departureandarrivaltime;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class DepartureAndArrivalTimeFunctionalExample implements FunctionalExampleModel {
+public class DepartureAndArrivalTimeFunctionalExample extends BaseFunctionalExampleModel {
 
     @Override
     public int getPlayableTitle() {
@@ -23,6 +24,11 @@ public class DepartureAndArrivalTimeFunctionalExample implements FunctionalExamp
     @Override
     public int getPlayableSubtitle() {
         return R.string.amsterdam_to_rotterdam_desc;
+    }
+
+    @Override
+    public int[] getCompasMargins() {
+        return COMPAS_UNDER_BAR;
     }
 
 }

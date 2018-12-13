@@ -16,6 +16,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-sdk tools:overrideLibrary="android.support.test.uiautomator.v18" />
+    <!-- tag::WRITE_EXTERNAL_STORAGE[] -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- end::WRITE_EXTERNAL_STORAGE[] -->
     <application
         android:name="com.tomtom.online.sdk.samples.SampleApp"
         android:icon="@drawable/ic_launcher"

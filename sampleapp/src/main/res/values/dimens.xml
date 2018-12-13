@@ -58,5 +58,10 @@
     <dimen name="static_image_margin">1dp</dimen>
     <dimen name="matrix_routing_box_height">200dp</dimen>
     <dimen name="common_layout_zero_dp">0dp</dimen>
+    <dimen name="current_location_top">0dp</dimen>
+    <dimen name="current_location_right">0dp</dimen>
+    <dimen name="compass_bigger_margin_top">55dp</dimen>
+    <dimen name="compass_default_margin_right">0dp</dimen>
+    <dimen name="compass_default_margin_bottom">0dp</dimen>
 
 </resources>

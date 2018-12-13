@@ -4,9 +4,9 @@ ext {
     def releaseProps = new Properties()
     releaseProps.load(new FileInputStream("release.properties"))
 
-    androidBuildToolsVersion = '28.0.2'
+    androidBuildToolsVersion = '28.0.3'
     androidCompileSdkVersion = 27
-    androidTargetSdkVersion = 23
+    androidTargetSdkVersion = 26
     libraryMinSdkVersion = 16
     xplorerMinSdkVersion = 16
     sampleMinSdkVersion = 16
@@ -29,7 +29,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0'
+        classpath 'com.android.tools.build:gradle:3.2.1'
     }
 }
 //end::doc_setup_main_build_gradle[]

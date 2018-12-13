@@ -50,10 +50,14 @@ public class CustomMapStylePresenter extends BaseFunctionalExamplePresenter {
     public void showNightStyle() {
         //tag::doc_set_style[]
         tomtomMap.getUiSettings().setStyleUrl("asset://styles/night.json");
+        tomtomMap.getLogoSettings().applyInvertedLogo();
         //end::doc_set_style[]
     }
 
     public void showBaseStyle() {
+        //tag::set_default_style[]
         tomtomMap.getUiSettings().setStyleUrl("asset://styles/mapssdk-default-style.json");
+        tomtomMap.getLogoSettings().applyDefaultLogo();
+        //end::set_default_style[]
     }
 }

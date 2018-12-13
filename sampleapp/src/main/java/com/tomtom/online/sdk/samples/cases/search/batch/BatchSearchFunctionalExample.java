@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.search.batch;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class BatchSearchFunctionalExample implements FunctionalExampleModel {
+public class BatchSearchFunctionalExample extends BaseFunctionalExampleModel {
 
     public int getPlayableTitle() {
         return R.string.batch_search;

@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.route.reachablerange;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class ReachableRangeFunctionalExample implements FunctionalExampleModel {
+public class ReachableRangeFunctionalExample extends BaseFunctionalExampleModel {
 
     @Override
     public int getPlayableTitle() {
@@ -23,5 +24,9 @@ public class ReachableRangeFunctionalExample implements FunctionalExampleModel {
     @Override
     public int getPlayableSubtitle() {
         return R.string.amsterdam_city_name;
+    }
+    @Override
+    public int[] getCompasMargins() {
+        return COMPAS_UNDER_BAR;
     }
 }

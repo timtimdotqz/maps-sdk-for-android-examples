@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.map.langparam;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 
-public class MapLanguageParamFunctionalExample implements FunctionalExampleModel {
+public class MapLanguageParamFunctionalExample extends BaseFunctionalExampleModel {
 
     @Override
     public int getPlayableTitle() {
