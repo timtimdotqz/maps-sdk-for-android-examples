@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -10,10 +10,14 @@
  */
 package com.tomtom.online.sdk.samples.cases.map.layers.traffic;
 
+import com.tomtom.online.sdk.map.DefaultOnTrafficFlowClickListener;
+import com.tomtom.online.sdk.map.DefaultOnTrafficIncidentClickListener;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.TomtomMap;
+import com.tomtom.online.sdk.map.TrafficFlowBalloonViewAdapter;
 import com.tomtom.online.sdk.map.TrafficFlowType;
 import com.tomtom.online.sdk.map.TrafficFlowType.VectorTrafficFlowType;
+import com.tomtom.online.sdk.map.TrafficIncidentsBalloonViewAdapter;
 import com.tomtom.online.sdk.map.model.MapTilesType;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
@@ -26,6 +30,22 @@ public class VectorTrafficLayersPresenter extends BaseFunctionalExamplePresenter
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
         super.bind(view, map);
         tomtomMap.getUiSettings().setMapTilesType(MapTilesType.VECTOR);
+        //tag::doc_traffic_flow_vector_listener[]
+        tomtomMap.getTrafficSettings().setOnTrafficFlowClickListener(new DefaultOnTrafficFlowClickListener(tomtomMap));
+        //end::doc_traffic_flow_vector_listener[]
+
+        //tag::doc_traffic_flow_balloon_view_adapter[]
+        tomtomMap.getTrafficSettings().setTrafficFlowBalloonViewAdapter(new TrafficFlowBalloonViewAdapter.Default());
+        //end::doc_traffic_flow_balloon_view_adapter[]
+
+        //tag::doc_traffic_incident_vector_listener[]
+        tomtomMap.getTrafficSettings().setOnTrafficIncidentsClickListener(new DefaultOnTrafficIncidentClickListener(tomtomMap));
+        //end::doc_traffic_incident_vector_listener[]
+
+        //tag::doc_traffic_incident_balloon_view_adapter[]
+        tomtomMap.getTrafficSettings().setTrafficIncidentsBalloonViewAdapter(new TrafficIncidentsBalloonViewAdapter.Default());
+        //end::doc_traffic_incident_balloon_view_adapter[]
+
         if (!view.isMapRestored()) {
             centerOnLondon();
         }
@@ -44,28 +64,28 @@ public class VectorTrafficLayersPresenter extends BaseFunctionalExamplePresenter
 
 
     public void showTrafficFlowTiles() {
-        tomtomMap.getUiSettings().turnOffTraffic();
         //tag::doc_traffic_vector_flow_on[]
-        tomtomMap.getUiSettings().turnOnVectorTrafficFlowTiles();
+        tomtomMap.getTrafficSettings().turnOnVectorTrafficFlowTiles();
         //end::doc_traffic_vector_flow_on[]
+
     }
 
     @SuppressWarnings("unused")
-    public void exampleOfUsingTrafficStyle(){
+    public void exampleOfUsingTrafficStyle() {
         //tag::doc_traffic_flow_styles[]
-        tomtomMap.getUiSettings().turnOnVectorTrafficFlowTiles(new TrafficFlowType.RelativeTrafficFlowStyle()); //default
-        tomtomMap.getUiSettings().turnOnVectorTrafficFlowTiles(new TrafficFlowType.AbsoluteTrafficFlowStyle());
-        tomtomMap.getUiSettings().turnOnVectorTrafficFlowTiles(new TrafficFlowType.RelativeDelayTrafficFlowStyle());
+        tomtomMap.getTrafficSettings().turnOnVectorTrafficFlowTiles(new TrafficFlowType.RelativeTrafficFlowStyle()); //default
+        tomtomMap.getTrafficSettings().turnOnVectorTrafficFlowTiles(new TrafficFlowType.AbsoluteTrafficFlowStyle());
+        tomtomMap.getTrafficSettings().turnOnVectorTrafficFlowTiles(new TrafficFlowType.RelativeDelayTrafficFlowStyle());
         //end::doc_traffic_flow_styles[]
         //tag::doc_get_style_info[]
-        VectorTrafficFlowType style = tomtomMap.getUiSettings().getTrafficVectorFlowStyle();
+        VectorTrafficFlowType style = tomtomMap.getTrafficSettings().getTrafficVectorFlowStyle();
         //end::doc_get_style_info[]
     }
 
     public void hideTrafficInformation() {
         //tag::doc_traffic_off[]
-        tomtomMap.getUiSettings().turnOffTraffic();
-        tomtomMap.getUiSettings().turnOffTrafficFlowTiles();
+        tomtomMap.getTrafficSettings().turnOffTraffic();
+        tomtomMap.getTrafficSettings().turnOffTrafficFlowTiles();
         //end::doc_traffic_off[]
     }
 
@@ -78,4 +98,17 @@ public class VectorTrafficLayersPresenter extends BaseFunctionalExamplePresenter
         );
     }
 
+    public void showTrafficIncidents() {
+        tomtomMap.getTrafficSettings().turnOffTraffic();
+        //tag::doc_traffic_vector_incidents_on[]
+        tomtomMap.getTrafficSettings().turnOnVectorTrafficIncidents();
+        //end::doc_traffic_vector_incidents_on[]
+    }
+
+
+    public void showTrafficFlowAndIncidentsTiles() {
+        tomtomMap.getTrafficSettings().turnOffTraffic();
+        tomtomMap.getTrafficSettings().turnOnVectorTrafficIncidents();
+        tomtomMap.getTrafficSettings().turnOnVectorTrafficFlowTiles();
+    }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -17,13 +17,11 @@ import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -224,26 +222,20 @@ public class SearchFragment extends SearchFunctionalFragment implements SearchVi
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
-    private ListView.OnItemClickListener searchListItemClicked = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if (!areListItemsClickable) {
-                return;
-            }
-            FuzzySearchResult searchResult = searchResults.get(position);
-            getActivity().getSupportFragmentManager().popBackStack();
+    private ListView.OnItemClickListener searchListItemClicked = (parent, view, position, id) -> {
+        if (!areListItemsClickable) {
+            return;
         }
+        FuzzySearchResult searchResult = searchResults.get(position);
+        getActivity().getSupportFragmentManager().popBackStack();
     };
 
-    private TextView.OnEditorActionListener searchTextViewEditorActionChanged = new TextView.OnEditorActionListener() {
-        @Override
-        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            if (actionId != EditorInfo.IME_ACTION_SEARCH || getSearchFieldText().isEmpty()) {
-                return false;
-            }
-
-            return onToggleSelectionActive();
+    private TextView.OnEditorActionListener searchTextViewEditorActionChanged = (v, actionId, event) -> {
+        if (actionId != EditorInfo.IME_ACTION_SEARCH || getSearchFieldText().isEmpty()) {
+            return false;
         }
+
+        return onToggleSelectionActive();
     };
 
     private boolean onToggleSelectionActive() {

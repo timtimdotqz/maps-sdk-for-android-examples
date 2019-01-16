@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -10,7 +10,6 @@
  */
 package com.tomtom.online.sdk.samples.cases.map.layers.layerstypes;
 
-import android.content.res.Resources;
 import com.google.common.base.Preconditions;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.TomtomMap;

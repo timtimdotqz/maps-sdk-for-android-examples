@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -150,12 +150,7 @@ public abstract class ExampleFragment<T extends FunctionalExamplePresenter> exte
             infoTextView.getHandler().removeCallbacks(infoViewRunnable);
         }
 
-        infoViewRunnable = new Runnable() {
-            @Override
-            public void run() {
-                infoTextView.setVisibility(View.GONE);
-            }
-        };
+        infoViewRunnable = () -> infoTextView.setVisibility(View.GONE);
 
         infoTextView.getHandler().postDelayed(infoViewRunnable, duration);
     }

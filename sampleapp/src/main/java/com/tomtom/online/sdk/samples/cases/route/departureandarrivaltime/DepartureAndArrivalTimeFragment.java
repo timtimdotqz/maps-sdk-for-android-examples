@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -18,7 +18,7 @@ import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
 
 import org.joda.time.DateTime;
 
-import java.util.Date;
+import static com.google.common.base.Optional.*;
 
 public class DepartureAndArrivalTimeFragment extends RoutePlannerFragment<DepartureAndArrivalTimePresenter> {
 
@@ -54,31 +54,25 @@ public class DepartureAndArrivalTimeFragment extends RoutePlannerFragment<Depart
     }
 
     public void startDepartureAt() {
-        showDateAndTimeDialog(R.string.label_departure_time, new SingleDateAndTimePickerDialog.Listener() {
-            @Override
-            public void onDateSelected(Date date) {
-                DateTime departureDate = new DateTime(date);
-                if (!isValidDate(departureDate)) {
-                    return;
-                }
-                presenter.displayDepartureAtRoute(departureDate);
-                exampleType = ExampleType.DEPARTURE;
+        showDateAndTimeDialog(R.string.label_departure_time, date -> {
+            DateTime departureDate = new DateTime(date);
+            if (!isValidDate(departureDate)) {
+                return;
             }
+            presenter.displayDepartureAtRoute(departureDate);
+            exampleType = ExampleType.DEPARTURE;
         });
     }
 
 
     public void startArrivalAt() {
-        showDateAndTimeDialog(R.string.label_arrival_time, new SingleDateAndTimePickerDialog.Listener() {
-            @Override
-            public void onDateSelected(Date date) {
-                DateTime arrivalDateTime = new DateTime(date);
-                if (!isValidDate(arrivalDateTime)) {
-                    return;
-                }
-                presenter.displayArrivalAtRoute(arrivalDateTime);
-                exampleType = ExampleType.ARRIVAL;
+        showDateAndTimeDialog(R.string.label_arrival_time, date -> {
+            DateTime arrivalDateTime = new DateTime(date);
+            if (!isValidDate(arrivalDateTime)) {
+                return;
             }
+            presenter.displayArrivalAtRoute(arrivalDateTime);
+            exampleType = ExampleType.ARRIVAL;
         });
 
     }
@@ -106,12 +100,14 @@ public class DepartureAndArrivalTimeFragment extends RoutePlannerFragment<Depart
     public void routeUpdated(FullRoute route) {
         super.routeUpdated(route);
         if(exampleType == ExampleType.DEPARTURE){
-            String arrivalTime = timeFormat.format(route.getSummary().getArrivalTime());
+            String arrivalTime = fromNullable(route.getSummary().getArrivalTimeWithZone())
+                    .transform(time -> time.toString(TIME_FORMAT)).or("N/A");
             getInfoBarView().setLeftIcon(R.drawable.maneuver_arrival_flag);
             getInfoBarView().setLeftText(arrivalTime);
         }
         else if(exampleType == ExampleType.ARRIVAL){
-            String departureTime = timeFormat.format(route.getSummary().getDepartureTime());
+            String departureTime = fromNullable(route.getSummary().getDepartureTimeWithZone())
+                    .transform(time -> time.toString(TIME_FORMAT)).or("N/A");
             getInfoBarView().setLeftIcon(R.drawable.ic_arrival_time);
             getInfoBarView().setLeftText(departureTime);
         }

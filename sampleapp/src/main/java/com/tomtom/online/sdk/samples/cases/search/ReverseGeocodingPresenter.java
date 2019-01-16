@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -11,7 +11,6 @@
 package com.tomtom.online.sdk.samples.cases.search;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.google.common.base.Strings;
 import com.tomtom.online.sdk.common.location.LatLng;
@@ -31,37 +30,27 @@ import com.tomtom.online.sdk.search.SearchApi;
 import com.tomtom.online.sdk.search.api.SearchError;
 import com.tomtom.online.sdk.search.api.revgeo.RevGeoSearchResultListener;
 import com.tomtom.online.sdk.search.data.common.Address;
-import com.tomtom.online.sdk.search.data.reversegeocoder.IReverseGeocoderSearchQuery;
 import com.tomtom.online.sdk.search.data.reversegeocoder.ReverseGeocoderSearchQuery;
 import com.tomtom.online.sdk.search.data.reversegeocoder.ReverseGeocoderSearchQueryBuilder;
 import com.tomtom.online.sdk.search.data.reversegeocoder.ReverseGeocoderSearchResponse;
 
+import io.reactivex.functions.Consumer;
+import timber.log.Timber;
+
 public class ReverseGeocodingPresenter extends BaseFunctionalExamplePresenter {
 
+    private ReverseGeoMarker revGeoMarker;
     protected Context context;
-    private Marker marker;
-    private SimpleMarkerBalloon balloon;
 
-    private TomtomMapCallback.OnMapLongClickListener onMapLongClickListener =
-            new TomtomMapCallback.OnMapLongClickListener() {
-                @Override
-                public void onMapLongClick(@NonNull LatLng latLng) {
-                    tomtomMap.removeMarkers();
-                    createMarker(latLng.getLatitude(), latLng.getLongitude());
-                    reverseGeocode(latLng.getLatitude(), latLng.getLongitude());
-                }
+    private final TomtomMapCallback.OnMapLongClickListener onMapLongClickListener =
+            latLng -> {
+                    revGeoMarker = new ReverseGeoMarker(getContext(), tomtomMap);
+                tomtomMap.removeMarkers();
+                    revGeoMarker.createMarker(latLng);
+                    reverseGeocode(latLng);
             };
 
-    private TomtomMapCallback.OnMarkerClickListener onMarkerClickListener = new TomtomMapCallback.OnMarkerClickListener() {
-        @Override
-        public void onMarkerClick(@NonNull Marker marker) {
-            tomtomMap.centerOn(marker.getPosition());
-        }
-    };
-
-    public ReverseGeocodingPresenter() {
-        balloon = new SimpleMarkerBalloon("Welcome to TomTom");
-    }
+    private final TomtomMapCallback.OnMarkerClickListener onMarkerClickListener = marker -> tomtomMap.centerOn(marker.getPosition());
 
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
@@ -97,12 +86,6 @@ public class ReverseGeocodingPresenter extends BaseFunctionalExamplePresenter {
         tomtomMap.addOnMapLongClickListener(onMapLongClickListener);
     }
 
-    private void createMarker(double latitude, double longitude) {
-        MarkerBuilder markerBuilder = new MarkerBuilder(new LatLng(latitude, longitude)).markerBalloon(balloon);
-        balloon.setText(context.getString(R.string.reverse_geocoding_fetching));
-        marker = tomtomMap.addMarker(markerBuilder);
-    }
-
     protected SearchApi createSearchAPI() {
         //tag::doc_create_search_object[]
         SearchApi searchApi = OnlineSearchApi.create(context);
@@ -110,53 +93,37 @@ public class ReverseGeocodingPresenter extends BaseFunctionalExamplePresenter {
         return searchApi;
     }
 
-    protected ReverseGeocoderSearchQuery createReverseGeocoderQuery(double latitude, double longitude) {
-        return ReverseGeocoderSearchQueryBuilder.create(latitude, longitude).build();
+    protected ReverseGeocoderSearchQuery createReverseGeocoderQuery(LatLng latLng) {
+        return ReverseGeocoderSearchQueryBuilder.create(latLng.getLatitude(), latLng.getLongitude()).build();
     }
 
-    protected String getNoReverseGeocodingResultsMessage() {
-        return context.getString(R.string.reverse_geocoding_no_results);
-    }
-
-    protected String getAddressFromResponse(ReverseGeocoderSearchResponse response) {
-
-        String result = getNoReverseGeocodingResultsMessage();
-
-        if (!response.hasResults()) {
-            return result;
-        }
-
-        Address address = response.getAddresses().get(0).getAddress();
-        String freeformAddress = address.getFreeformAddress();
-        if (!Strings.isNullOrEmpty(freeformAddress)) {
-            result = freeformAddress;
-        }
-
-        return result;
-    }
-
-    protected void reverseGeocode(final double latitude, final double longitude) {
+    protected void reverseGeocode(LatLng latLng) {
 
         //tag::doc_reverse_geocoding_request[]
         SearchApi searchAPI = createSearchAPI();
         ReverseGeocoderSearchQuery reverseGeocoderQuery =
-                createReverseGeocoderQuery(latitude, longitude);
+                createReverseGeocoderQuery(latLng);
 
         searchAPI.reverseGeocoding(reverseGeocoderQuery, new RevGeoSearchResultListener() {
             @Override
             public void onSearchResult(ReverseGeocoderSearchResponse response) {
-                String address = getAddressFromResponse(response);
-                balloon.setText(address);
-                marker.select();
+                String address = new AddressResponseFormatter(getContext()).format(response);
+                revGeoMarker.updateMarkerBalloon(address);
             }
 
             @Override
             public void onSearchError(SearchError error) {
-                balloon.setText(context.getString(R.string.reverse_geocoding_error));
-                marker.select();
+                revGeoMarker.updateMarkerBalloon(context.getString(R.string.reverse_geocoding_error));
             }
         });
         //end::doc_reverse_geocoding_request[]
+        //tag::doc_reverse_geocoding_request_rx[]
+        searchAPI.reverseGeocoding(reverseGeocoderQuery).subscribe(response -> {
+            Timber.i("Response address " + response.getSummary());
+        }, throwable -> {
+            Timber.i(throwable, "reverseGeocoding error ");
+        });
+        //end::doc_reverse_geocoding_request_rx[]
     }
 
 }

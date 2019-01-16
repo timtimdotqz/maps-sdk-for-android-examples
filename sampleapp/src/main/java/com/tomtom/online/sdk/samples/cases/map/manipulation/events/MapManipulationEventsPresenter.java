@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -10,13 +10,10 @@
  */
 package com.tomtom.online.sdk.samples.cases.map.manipulation.events;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 
 import com.tomtom.core.maps.gestures.GesturesDetectionSettings;
 import com.tomtom.core.maps.gestures.GesturesDetectionSettingsBuilder;
-import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.TomtomMapCallback;
@@ -29,7 +26,6 @@ import com.tomtom.online.sdk.samples.utils.Locations;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import timber.log.Timber;
 
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
@@ -43,45 +39,25 @@ public class MapManipulationEventsPresenter extends BaseFunctionalExamplePresent
 
     //tag::doc_map_define_map_manipulation_listeners[]
     private TomtomMapCallback.OnMapClickListener onMapClickListener =
-            new TomtomMapCallback.OnMapClickListener() {
-                @Override
-                public void onMapClick(@NonNull LatLng latLng) {
-                    displayMessage(
-                            R.string.menu_events_on_map_click,
-                            latLng.getLatitude(),
-                            latLng.getLongitude()
-                    );
-                }
-            };
+            latLng -> displayMessage(
+                    R.string.menu_events_on_map_click,
+                    latLng.getLatitude(),
+                    latLng.getLongitude()
+            );
     private TomtomMapCallback.OnMapLongClickListener onMapLongClickListener =
-            new TomtomMapCallback.OnMapLongClickListener() {
-                @Override
-                public void onMapLongClick(@NonNull LatLng latLng) {
-                    displayMessage(
-                            R.string.menu_events_on_map_long_click,
-                            latLng.getLatitude(),
-                            latLng.getLongitude()
-                    );
-                }
-            };
+            latLng -> displayMessage(
+                    R.string.menu_events_on_map_long_click,
+                    latLng.getLatitude(),
+                    latLng.getLongitude()
+            );
     private TomtomMapCallback.OnMapViewPortChanged onMapViewPortChangedListener =
-            new TomtomMapCallback.OnMapViewPortChanged() {
-                @Override
-                public void onMapViewPortChanged(float focalLatitude,
-                                                 float focalLongitude,
-                                                 double zoomLevel,
-                                                 float perspectiveRatio,
-                                                 float yawDegrees) {
-                    displayMessage(
-                            R.string.menu_events_on_map_panning,
-                            focalLatitude,
-                            focalLongitude
-                    );
-                }
-            };
+            (focalLatitude, focalLongitude, zoomLevel, perspectiveRatio, yawDegrees) -> displayMessage(
+                    R.string.menu_events_on_map_panning,
+                    focalLatitude,
+                    focalLongitude
+            );
 
     //end::doc_map_define_map_manipulation_listeners[]
-
 
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
@@ -133,16 +109,11 @@ public class MapManipulationEventsPresenter extends BaseFunctionalExamplePresent
         Disposable mapClickDisposable = rxTomtomMap
                 .getOnMapClickObservable()
                 .observeOn(mainThread())
-                .subscribe(new Consumer<LatLng>() {
-                    @Override
-                    public void accept(LatLng latLng) throws Exception {
-                        displayMessage(
-                                R.string.menu_events_on_map_click,
-                                latLng.getLatitude(),
-                                latLng.getLongitude()
-                        );
-                    }
-                });
+                .subscribe(latLng -> displayMessage(
+                        R.string.menu_events_on_map_click,
+                        latLng.getLatitude(),
+                        latLng.getLongitude()
+                ));
         //end::doc_map_set_map_manipulation_observables[]
         rxDisposables.add(mapClickDisposable);
     }
@@ -150,8 +121,7 @@ public class MapManipulationEventsPresenter extends BaseFunctionalExamplePresent
 
     private void displayMessage(@StringRes int titleId, double lat, double lon) {
 
-        Context context = view.getContext();
-        if (context == null) {
+        if (view.getContext() == null) {
             return;
         }
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -12,11 +12,7 @@ package com.tomtom.online.sdk.samples.activities;
 
 import android.content.Context;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Debug;
-import android.os.Environment;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -30,7 +26,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.tomtom.online.sdk.common.location.LatLng;
-import com.tomtom.online.sdk.common.util.LogUtils;
 import com.tomtom.online.sdk.map.BaseGpsPositionIndicator;
 import com.tomtom.online.sdk.map.MapFragment;
 import com.tomtom.online.sdk.map.OnMapReadyCallback;
@@ -42,7 +37,6 @@ import com.tomtom.online.sdk.samples.fragments.CurrentLocationFragment;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.BackButtonDelegate;
 
-import java.io.File;
 import java.util.Locale;
 
 import timber.log.Timber;
@@ -85,7 +79,7 @@ public class FunctionalExamplesActivity extends AppCompatActivity
     };
 
     private TomtomMap tomtomMap;
-    private MapFragment mapFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +87,7 @@ public class FunctionalExamplesActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         inflateActivity();
         //tag::doc_initialise_map[]
-        mapFragment = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
+        MapFragment mapFragment = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
         mapFragment.getAsyncMap(onMapReadyCallback);
         //end::doc_initialise_map[]
 

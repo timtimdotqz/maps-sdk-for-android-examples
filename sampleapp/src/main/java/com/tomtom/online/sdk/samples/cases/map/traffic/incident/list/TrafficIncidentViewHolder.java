@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -14,12 +14,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tomtom.online.sdk.common.util.TimeLengthFormatter;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.cases.map.traffic.incident.model.TrafficIncidentItem;
 import com.tomtom.online.sdk.samples.utils.formatter.DistanceFormatter;
-import com.tomtom.online.sdk.samples.utils.formatter.TimeLengthFormatter;
 
-import static com.tomtom.online.sdk.samples.utils.formatter.TimeLengthFormatter.NO_TIME_AVAILABLE_DEFAULT_SYMBOL;
 
 class TrafficIncidentViewHolder extends RecyclerView.ViewHolder {
 
@@ -40,7 +39,7 @@ class TrafficIncidentViewHolder extends RecyclerView.ViewHolder {
         trafficIncidentView.setTrafficIncidentIcon(item.getDrawable());
         setupNumberOnIcon(item);
         trafficDescription.setText(item.getDescription());
-        trafficDelay.setText(item.getDelay() != 0 ? TimeLengthFormatter.formatFromSecondsToMinutes(item.getDelay()) : NO_TIME_AVAILABLE_DEFAULT_SYMBOL);
+        trafficDelay.setText(new TimeLengthFormatter(itemView.getContext()).format(Long.valueOf(item.getDelay())));
         trafficLength.setText(DistanceFormatter.format(item.getLength()));
     }
 

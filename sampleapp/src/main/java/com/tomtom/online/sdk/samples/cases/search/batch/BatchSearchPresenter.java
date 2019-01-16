@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -30,7 +30,6 @@ import com.tomtom.online.sdk.search.OnlineSearchApi;
 import com.tomtom.online.sdk.search.SearchApi;
 import com.tomtom.online.sdk.search.api.SearchError;
 import com.tomtom.online.sdk.search.api.batch.BatchSearchResultListener;
-import com.tomtom.online.sdk.search.data.batch.BatchSearchQuery;
 import com.tomtom.online.sdk.search.data.batch.BatchSearchQueryBuilder;
 import com.tomtom.online.sdk.search.data.batch.BatchSearchResponse;
 import com.tomtom.online.sdk.search.data.batch.BatchableSearchResponseVisitorAdapter;

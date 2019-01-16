@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -83,51 +83,39 @@ public class RadioModifierView extends LinearLayout {
     }
 
     private void initClickListeners() {
-        leftBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deselectAll();
-                leftBtn.setSelected(true);
-                currentlySelectedButton = ModifierButton.LEFT;
-                if (searchModifiersLViewListener != null) {
-                    searchModifiersLViewListener.onLeftButtonClicked();
-                }
+        leftBtn.setOnClickListener(v -> {
+            deselectAll();
+            leftBtn.setSelected(true);
+            currentlySelectedButton = ModifierButton.LEFT;
+            if (searchModifiersLViewListener != null) {
+                searchModifiersLViewListener.onLeftButtonClicked();
             }
         });
 
-        rightBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deselectAll();
-                rightBtn.setSelected(true);
-                currentlySelectedButton = ModifierButton.RIGHT;
-                if (searchModifiersLViewListener != null) {
-                    searchModifiersLViewListener.onRightButtonClicked();
-                }
+        rightBtn.setOnClickListener(v -> {
+            deselectAll();
+            rightBtn.setSelected(true);
+            currentlySelectedButton = ModifierButton.RIGHT;
+            if (searchModifiersLViewListener != null) {
+                searchModifiersLViewListener.onRightButtonClicked();
             }
         });
 
-        firstMiddleBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deselectAll();
-                firstMiddleBtn.setSelected(true);
-                currentlySelectedButton = ModifierButton.FIRST_MIDDLE;
-                if (searchModifiersLViewListener != null) {
-                    searchModifiersLViewListener.onFirstMiddleButtonClicked();
-                }
+        firstMiddleBtn.setOnClickListener(v -> {
+            deselectAll();
+            firstMiddleBtn.setSelected(true);
+            currentlySelectedButton = ModifierButton.FIRST_MIDDLE;
+            if (searchModifiersLViewListener != null) {
+                searchModifiersLViewListener.onFirstMiddleButtonClicked();
             }
         });
 
-        secondMiddleBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deselectAll();
-                secondMiddleBtn.setSelected(true);
-                currentlySelectedButton = ModifierButton.SECOND_MIDDLE;
-                if (searchModifiersLViewListener != null) {
-                    searchModifiersLViewListener.onSecondMiddleButtonClicked();
-                }
+        secondMiddleBtn.setOnClickListener(v -> {
+            deselectAll();
+            secondMiddleBtn.setSelected(true);
+            currentlySelectedButton = ModifierButton.SECOND_MIDDLE;
+            if (searchModifiersLViewListener != null) {
+                searchModifiersLViewListener.onSecondMiddleButtonClicked();
             }
         });
     }

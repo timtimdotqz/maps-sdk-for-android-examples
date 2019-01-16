@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -20,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.tomtom.online.sdk.map.MapFragment;
-import com.tomtom.online.sdk.map.OnMapReadyCallback;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.ActionBarModel;
@@ -99,14 +98,11 @@ public class CurrentLocationFragment extends Fragment implements FunctionalExamp
 
     public void assignMap() {
         MapFragment mapFragment = (MapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map_fragment);
-        mapFragment.getAsyncMap(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(TomtomMap map) {
-                tomtomMap = map;
-                alignCurrentLocationButton(getContext(), tomtomMap);
-                if (!isMapRestored()) {
-                    showMyPosition();
-                }
+        mapFragment.getAsyncMap(map -> {
+            tomtomMap = map;
+            alignCurrentLocationButton(getContext(), tomtomMap);
+            if (!isMapRestored()) {
+                showMyPosition();
             }
         });
     }

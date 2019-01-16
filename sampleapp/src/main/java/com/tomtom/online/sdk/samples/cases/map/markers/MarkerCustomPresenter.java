@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -11,7 +11,6 @@
 package com.tomtom.online.sdk.samples.cases.map.markers;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.tomtom.online.sdk.common.location.LatLng;
@@ -34,7 +33,6 @@ import com.tomtom.online.sdk.samples.utils.formatter.LatLngFormatter;
 
 import java.util.List;
 
-import io.reactivex.functions.Consumer;
 import timber.log.Timber;
 
 import static com.tomtom.online.sdk.map.MapConstants.ORIENTATION_SOUTH;
@@ -53,11 +51,8 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
 
         //tag::doc_register_marker_observable[]
         RxTomtomMap rxTomtomMap = new RxTomtomMap(tomtomMap);
-        rxTomtomMap.getOnMarkerClickObservable().subscribe(new Consumer<Marker>() {
-            @Override
-            public void accept(Marker marker) {
-                //Your code goes here
-            }
+        rxTomtomMap.getOnMarkerClickObservable().subscribe(marker -> {
+            //Your code goes here
         });
         //end::doc_register_marker_observable[]
 

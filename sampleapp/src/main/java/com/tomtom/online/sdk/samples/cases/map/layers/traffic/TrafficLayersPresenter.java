@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -12,6 +12,7 @@ package com.tomtom.online.sdk.samples.cases.map.layers.traffic;
 
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.TomtomMap;
+import com.tomtom.online.sdk.map.UiSettings;
 import com.tomtom.online.sdk.map.model.MapTilesType;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
@@ -44,39 +45,41 @@ public class TrafficLayersPresenter extends BaseFunctionalExamplePresenter {
     }
 
     public void showTrafficFlowTiles() {
-        tomtomMap.getUiSettings().turnOffTraffic();
+        tomtomMap.getTrafficSettings().turnOffTraffic();
         //tag::doc_traffic_flow_on[]
-        tomtomMap.getUiSettings().turnOnRasterTrafficFlowTiles();
+        tomtomMap.getTrafficSettings().turnOnRasterTrafficFlowTiles();
         //end::doc_traffic_flow_on[]
     }
 
     @SuppressWarnings("unused")
     public void exampleOfUsingTrafficStyle(){
         //tag::doc_traffic_flow_styles[]
-        tomtomMap.getUiSettings().turnOnRasterTrafficFlowTiles(new RelativeTrafficFlowStyle()); //default
-        tomtomMap.getUiSettings().turnOnRasterTrafficFlowTiles(new AbsoluteTrafficFlowStyle());
-        tomtomMap.getUiSettings().turnOnRasterTrafficFlowTiles(new RelativeDelayTrafficFlowStyle());
-        tomtomMap.getUiSettings().turnOnRasterTrafficFlowTiles(new ReducedSensitivityTrafficFlowStyle());
+        UiSettings uiSettings = tomtomMap.getUiSettings();
+        //default
+        uiSettings.turnOnRasterTrafficFlowTiles(new RelativeTrafficFlowStyle());
+        uiSettings.turnOnRasterTrafficFlowTiles(new AbsoluteTrafficFlowStyle());
+        uiSettings.turnOnRasterTrafficFlowTiles(new RelativeDelayTrafficFlowStyle());
+        uiSettings.turnOnRasterTrafficFlowTiles(new ReducedSensitivityTrafficFlowStyle());
         //end::doc_traffic_flow_styles[]
     }
 
     public void showTrafficIncidents() {
-        tomtomMap.getUiSettings().turnOffTraffic();
-        tomtomMap.getUiSettings().turnOnRasterTrafficIncidents();
+        tomtomMap.getTrafficSettings().turnOffTraffic();
+        tomtomMap.getTrafficSettings().turnOnRasterTrafficIncidents();
     }
 
     public void showTrafficFlowAndIncidentsTiles() {
         //tag::doc_traffic_flow_inc_tiles_raster_on[]
-        tomtomMap.getUiSettings().turnOnRasterTrafficIncidents();
+        tomtomMap.getTrafficSettings().turnOnRasterTrafficIncidents();
         //end::doc_traffic_flow_inc_tiles_raster_on[]
-        tomtomMap.getUiSettings().turnOnRasterTrafficFlowTiles();
+        tomtomMap.getTrafficSettings().turnOnRasterTrafficFlowTiles();
 
     }
 
     public void hideTrafficInformation() {
-        tomtomMap.getUiSettings().turnOffTraffic();
+        tomtomMap.getTrafficSettings().turnOffTraffic();
         //tag::doc_traffic_off[]
-        tomtomMap.getUiSettings().turnOffTrafficIncidents();
+        tomtomMap.getTrafficSettings().turnOffTrafficIncidents();
         //end::doc_traffic_off[]
     }
 

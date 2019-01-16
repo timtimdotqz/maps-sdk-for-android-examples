@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -22,32 +22,38 @@ public class VectorTrafficLayersFragment extends ExampleFragment<VectorTrafficLa
     }
 
     @Override
-    protected void onOptionsButtonsView(final OptionsButtonsView view) {
-        view.setSelectMode(OptionsButtonsView.SelectMode.SINGLE);
+    protected void onOptionsButtonsView(OptionsButtonsView view) {
+        view.setSelectMode(OptionsButtonsView.SelectMode.MULTI);
+        view.addOption(getString(R.string.traffic_incidents));
         view.addOption(getString(R.string.traffic_flow));
         view.addOption(getString(R.string.traffic_off_btn));
-        view.selectItem(1, true);
+        optionsView.selectItem(2, true);
     }
 
     @Override
     public void onChange(boolean[] oldValues, boolean[] newValues) {
-        optionsView.setEnabled(false);
-        if (newValues[0]) {
-            presenter.showTrafficFlowTiles();
-        } else if (newValues[1]) {
+        if(!oldValues[2] && newValues[2]) {
+            optionsView.selectItem(0, false);
+            optionsView.selectItem(1, false);
+            optionsView.selectItem(2, true);
             presenter.hideTrafficInformation();
+        } else if(newValues[0] && newValues[1]) {
+            optionsView.selectItem(2, false);
+            presenter.showTrafficFlowAndIncidentsTiles();
+        } else if (newValues[0]) {
+            optionsView.selectItem(2, false);
+            presenter.showTrafficIncidents();
+        } else if (newValues[1]) {
+            optionsView.selectItem(2, false);
+            presenter.showTrafficFlowTiles();
+        } else {
+            presenter.hideTrafficInformation();
+            optionsView.selectItem(2, true);
         }
-        optionsView.setEnabled(true);
     }
 
     @Override
     public boolean isMapRestored() {
-
-        final boolean[] previousState = new boolean[]{
-                optionsView.isSelected(0),
-                optionsView.isSelected(1),
-        };
-        onChange(previousState, previousState);
         return super.isMapRestored();
     }
 

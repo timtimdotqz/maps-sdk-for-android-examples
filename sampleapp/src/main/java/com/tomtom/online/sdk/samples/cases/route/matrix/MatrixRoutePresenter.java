@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -12,7 +12,6 @@ package com.tomtom.online.sdk.samples.cases.route.matrix;
 
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -43,7 +42,6 @@ import com.tomtom.online.sdk.routing.data.matrix.MatrixRoutingResultKey;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.route.matrix.data.AmsterdamPoi;
-import com.tomtom.online.sdk.samples.utils.DimensionUtils;
 import com.tomtom.online.sdk.samples.utils.Locations;
 
 import org.joda.time.DateTime;
@@ -57,7 +55,6 @@ import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -91,18 +88,12 @@ public class MatrixRoutePresenter implements LifecycleObserver, RxContext {
         context = view.getContext();
 
         routesTableViewModel = ViewModelProviders.of(view.getFragment()).get(MatrixRoutesTableViewModel.class);
-        routesTableViewModel.getLastMatrixRoutingResponse().observe(view.getFragment(), new Observer<MatrixRoutingResponse>() {
+        routesTableViewModel.getLastMatrixRoutingResponse().observe(view.getFragment(), matrixRoutingResponse -> view.runOnTomtomMap(new OnMapReadyCallback() {
             @Override
-            public void onChanged(final MatrixRoutingResponse matrixRoutingResponse) {
-
-                view.runOnTomtomMap(new OnMapReadyCallback() {
-                    @Override
-                    public void onMapReady(@NonNull TomtomMap tomtomMap) {
-                        proceedWithResponse(matrixRoutingResponse);
-                    }
-                });
+            public void onMapReady(@NonNull TomtomMap tomtomMap) {
+                proceedWithResponse(matrixRoutingResponse);
             }
-        });
+        }));
     }
 
     public FunctionalExampleModel getModel() {
@@ -111,15 +102,10 @@ public class MatrixRoutePresenter implements LifecycleObserver, RxContext {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     public void onCreate() {
-        view.runOnTomtomMap(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(@NonNull TomtomMap tomtomMap) {
-                tomtomMap.centerOn(
-                        Locations.AMSTERDAM_CENTER_LOCATION.getLatitude(),
-                        Locations.AMSTERDAM_CENTER_LOCATION.getLongitude(),
-                        DEFAULT_ZOOM_LEVEL_FOR_EXAMPLE, ORIENTATION_SOUTH);
-            }
-        });
+        view.runOnTomtomMap(tomtomMap -> tomtomMap.centerOn(
+                Locations.AMSTERDAM_CENTER_LOCATION.getLatitude(),
+                Locations.AMSTERDAM_CENTER_LOCATION.getLongitude(),
+                DEFAULT_ZOOM_LEVEL_FOR_EXAMPLE, ORIENTATION_SOUTH));
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
@@ -181,17 +167,9 @@ public class MatrixRoutePresenter implements LifecycleObserver, RxContext {
                 //end::doc_execute_matrix_routing[]
                 .subscribeOn(getWorkingScheduler())
                 .observeOn(getResultScheduler())
-                .subscribe(new Consumer<MatrixRoutingResponse>() {
-                    @Override
-                    public void accept(MatrixRoutingResponse matrixRoutingResponse) {
-                        routesTableViewModel.saveMatrixRoutingResponse(matrixRoutingResponse);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) {
-                        Timber.e(throwable, throwable.getMessage());
-                        Toast.makeText(context, R.string.matrix_routing_error_message, Toast.LENGTH_LONG).show();
-                    }
+                .subscribe(routesTableViewModel::saveMatrixRoutingResponse, throwable -> {
+                    Timber.e(throwable, throwable.getMessage());
+                    Toast.makeText(context, R.string.matrix_routing_error_message, Toast.LENGTH_LONG).show();
                 });
 
         compositeDisposable.add(subscribe);
@@ -204,12 +182,9 @@ public class MatrixRoutePresenter implements LifecycleObserver, RxContext {
     }
 
     private void setupMapAfterResponse() {
-        view.runOnTomtomMap(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(@NonNull TomtomMap tomtomMap) {
-                confMapPadding(tomtomMap);
-                tomtomMap.getMarkerSettings().zoomToAllMarkers();
-            }
+        view.runOnTomtomMap(tomtomMap -> {
+            confMapPadding(tomtomMap);
+            tomtomMap.getMarkerSettings().zoomToAllMarkers();
         });
     }
 
@@ -264,12 +239,7 @@ public class MatrixRoutePresenter implements LifecycleObserver, RxContext {
                 .color(determineColor(matrixRoutingResultKey, matrixRoutingResponse))
                 .build();
 
-        view.runOnTomtomMap(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(@NonNull TomtomMap tomtomMap) {
-                tomtomMap.getOverlaySettings().addOverlay(polyline);
-            }
-        });
+        view.runOnTomtomMap(tomtomMap -> tomtomMap.getOverlaySettings().addOverlay(polyline));
     }
 
     private void addMarkerForPoi(AmsterdamPoi poi, Icon icon) {
@@ -283,22 +253,14 @@ public class MatrixRoutePresenter implements LifecycleObserver, RxContext {
             markerBuilder.icon(icon);
         }
 
-        view.runOnTomtomMap(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(@NonNull TomtomMap tomtomMap) {
-                tomtomMap.getMarkerSettings().addMarker(markerBuilder);
-            }
-        });
+        view.runOnTomtomMap(tomtomMap -> tomtomMap.getMarkerSettings().addMarker(markerBuilder));
     }
 
     void cleanup() {
-        view.runOnTomtomMap(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(@NonNull TomtomMap tomtomMap) {
-                tomtomMap.getOverlaySettings().removeOverlays();
-                tomtomMap.removeMarkers();
-                tomtomMap.setPadding(DEFAULT_MAP_PADDING, DEFAULT_MAP_PADDING, DEFAULT_MAP_PADDING, DEFAULT_MAP_PADDING);
-            }
+        view.runOnTomtomMap(tomtomMap -> {
+            tomtomMap.getOverlaySettings().removeOverlays();
+            tomtomMap.removeMarkers();
+            tomtomMap.setPadding(DEFAULT_MAP_PADDING, DEFAULT_MAP_PADDING, DEFAULT_MAP_PADDING, DEFAULT_MAP_PADDING);
         });
         view.hideMatrixRoutesTable();
     }
@@ -309,14 +271,14 @@ public class MatrixRoutePresenter implements LifecycleObserver, RxContext {
         if (summary == null){
             return Color.GRAY;
         }
-        DateTime currentRouteEta = new DateTime(summary.getArrivalTime());
+        DateTime currentRouteEta = summary.getArrivalTimeWithZone();
         DateTime minEta = currentRouteEta;
 
         for (MatrixRoutingResultKey key : matrixRoutingResponse.getResults().keySet()) {
             if (key.getOrigin().equals(matrixRoutingResultKey.getOrigin())) {
                 final MatrixRoutingResult result = matrixRoutingResponse.getResults().get(key);
                 if (result.getSummary() != null) {
-                    final DateTime arrivalTime = new DateTime(result.getSummary().getArrivalTime());
+                    final DateTime arrivalTime = result.getSummary().getArrivalTimeWithZone();
                     if (arrivalTime.isBefore(minEta)) {
                         minEta = arrivalTime;
                     }

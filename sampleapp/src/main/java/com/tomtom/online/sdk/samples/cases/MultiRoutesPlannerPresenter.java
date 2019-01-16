@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -14,9 +14,6 @@ import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
-import com.tomtom.online.sdk.common.func.Block;
-import com.tomtom.online.sdk.common.func.BlockWithIndex;
-import com.tomtom.online.sdk.common.func.FuncUtils;
 import com.tomtom.online.sdk.map.Route;
 import com.tomtom.online.sdk.map.RouteBuilder;
 import com.tomtom.online.sdk.map.RouteStyle;
@@ -34,8 +31,9 @@ import java.util.List;
 
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+
+import static com.tomtom.online.sdk.common.func.FuncUtils.*;
 
 public abstract class MultiRoutesPlannerPresenter extends RoutePlannerPresenter {
 
@@ -72,12 +70,8 @@ public abstract class MultiRoutesPlannerPresenter extends RoutePlannerPresenter 
     private List<Single<RouteResponse>> createListOfRxSingleRouteResponses(MultiRoutesQueryAdapter[] multiRoutesQueryAdapters) {
         final List<Single<RouteResponse>> listOfObservableRouteResponses = new ArrayList<>();
 
-        FuncUtils.forEach(Arrays.asList(multiRoutesQueryAdapters), new Block<MultiRoutesQueryAdapter>() {
-            @Override
-            public void apply(MultiRoutesQueryAdapter query) {
-                listOfObservableRouteResponses.add(getRoutePlannerAPI().planRoute(query.getRouteQuery()));
-            }
-        });
+        forEach(Arrays.asList(multiRoutesQueryAdapters),
+                query -> listOfObservableRouteResponses.add(getRoutePlannerAPI().planRoute(query.getRouteQuery())));
         return listOfObservableRouteResponses;
     }
 
@@ -88,20 +82,16 @@ public abstract class MultiRoutesPlannerPresenter extends RoutePlannerPresenter 
 
     @NonNull
     private Function<Object[], List<RouteResponse>> createMergeRouteResponsesFunction() {
-        return new Function<Object[], List<RouteResponse>>() {
-            @Override
-            public List<RouteResponse> apply(Object[] objects) {
+        return objects -> {
+            ArrayList<RouteResponse> responses = new ArrayList<>();
 
-                ArrayList<RouteResponse> responses = new ArrayList<>();
-
-                for (Object obj : objects) {
-                    if (obj instanceof RouteResponse) {
-                        responses.add((RouteResponse) obj);
-                    }
+            for (Object obj : objects) {
+                if (obj instanceof RouteResponse) {
+                    responses.add((RouteResponse) obj);
                 }
-
-                return responses;
             }
+
+            return responses;
         };
     }
 
@@ -110,19 +100,11 @@ public abstract class MultiRoutesPlannerPresenter extends RoutePlannerPresenter 
         Disposable subscribe = Single.zip(listOfObservableRouteResponses, mergeRouteResponses)
                 .observeOn(getResultScheduler())
                 .subscribeOn(getWorkingScheduler())
-                .subscribe(new Consumer<List<RouteResponse>>() {
-                    @Override
-                    public void accept(List<RouteResponse> routeResponses) {
-                        displayFullRoutesWithMultiRoutesAdapter(routeResponses, multiRoutesQueryAdapters);
-                        selectPrimaryRoute();
-                        finishRouting();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) {
-                        proceedWithError(throwable.getMessage());
-                    }
-                });
+                .subscribe(routeResponses -> {
+                    displayFullRoutesWithMultiRoutesAdapter(routeResponses, multiRoutesQueryAdapters);
+                    selectPrimaryRoute();
+                    finishRouting();
+                }, throwable -> proceedWithError(throwable.getMessage()));
 
         compositeDisposable.add(subscribe);
     }
@@ -133,23 +115,15 @@ public abstract class MultiRoutesPlannerPresenter extends RoutePlannerPresenter 
     }
 
     private void selectPrimaryRoute() {
-        FuncUtils.forEachIndexed(tomtomMap.getRouteSettings().getRoutes(), new BlockWithIndex<Route>() {
-            @Override
-            public void apply(Route route, int index) {
-                if (route.getTag() instanceof String && multiRoutesQueryAdapters[index].isPrimary()) {
-                    selectRoute(route);
-                }
+        forEachIndexed(tomtomMap.getRouteSettings().getRoutes(), (route, index) -> {
+            if (route.getTag() instanceof String && multiRoutesQueryAdapters[index].isPrimary()) {
+                selectRoute(route);
             }
         });
     }
 
     private void displayFullRoutesWithMultiRoutesAdapter(List<RouteResponse> routeResponses, final MultiRoutesQueryAdapter[] multiRoutesQueryAdapters) {
-        FuncUtils.forEachIndexed(routeResponses, new BlockWithIndex<RouteResponse>() {
-            @Override
-            public void apply(RouteResponse response, int index) {
-                displayFullRoutes(response, multiRoutesQueryAdapters[index]);
-            }
-        });
+        forEachIndexed(routeResponses, (response, index) -> displayFullRoutes(response, multiRoutesQueryAdapters[index]));
     }
 
     @Override
@@ -176,12 +150,7 @@ public abstract class MultiRoutesPlannerPresenter extends RoutePlannerPresenter 
         }
     }
 
-    private TomtomMapCallback.OnRouteClickListener onRouteClickListener = new TomtomMapCallback.OnRouteClickListener() {
-        @Override
-        public void onRouteClick(@NonNull Route route) {
-            selectRoute(route);
-        }
-    };
+    private TomtomMapCallback.OnRouteClickListener onRouteClickListener = this::selectRoute;
 
     private void selectRoute(Route route) {
         tomtomMap.bringRouteToFront(route.getId());

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -14,7 +14,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
 import com.google.common.base.Optional;
-import com.tomtom.online.sdk.common.func.Block;
 import com.tomtom.online.sdk.common.func.FuncUtils;
 import com.tomtom.online.sdk.map.Route;
 import com.tomtom.online.sdk.map.RouteStyle;
@@ -44,7 +43,6 @@ import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 public class BatchRoutePresenter extends RoutePlannerPresenter {
 
@@ -91,17 +89,7 @@ public class BatchRoutePresenter extends RoutePlannerPresenter {
                 //end::doc_execute_batch_routing[]
                 .subscribeOn(getWorkingScheduler())
                 .observeOn(getResultScheduler())
-                .subscribe(new Consumer<BatchRoutingResponse>() {
-                    @Override
-                    public void accept(BatchRoutingResponse batchRoutingResponse) throws Exception {
-                        displayRouteAndSetDescription(batchRoutingResponse);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        proceedWithError(throwable.getMessage());
-                    }
-                });
+                .subscribe(batchRoutingResponse -> displayRouteAndSetDescription(batchRoutingResponse), throwable -> proceedWithError(throwable.getMessage()));
 
         compositeDisposable.add(subscribe);
     }
@@ -131,22 +119,14 @@ public class BatchRoutePresenter extends RoutePlannerPresenter {
     }
 
     private void setRouteActiveIfApply() {
-        FuncUtils.apply(getFirstRoute(tomtomMap.getRouteSettings().getRoutes()), new Block<Route>() {
-            @Override
-            public void apply(Route route) {
-                tomtomMap.getRouteSettings().setRoutesInactive();
-                tomtomMap.getRouteSettings().setRouteActive(route.getId());
-            }
+        FuncUtils.apply(getFirstRoute(tomtomMap.getRouteSettings().getRoutes()), route -> {
+            tomtomMap.getRouteSettings().setRoutesInactive();
+            tomtomMap.getRouteSettings().setRouteActive(route.getId());
         });
     }
 
     private void displayInfoAboutRouteIfApply(BatchRoutingResponse batchRoutingResponse) {
-        FuncUtils.apply(getFirstFullRoute(batchRoutingResponse.getRouteRoutingResponses().get(0).getRoutes()), new Block<FullRoute>() {
-            @Override
-            public void apply(FullRoute fullRoute) {
-                displayInfoAboutRoute(fullRoute);
-            }
-        });
+        FuncUtils.apply(getFirstFullRoute(batchRoutingResponse.getRouteRoutingResponses().get(0).getRoutes()), fullRoute -> displayInfoAboutRoute(fullRoute));
     }
 
     private Optional<Route> getFirstRoute(List<Route> routes) {
@@ -242,15 +222,12 @@ public class BatchRoutePresenter extends RoutePlannerPresenter {
         return new AmsterdamToRotterdamRouteConfig();
     }
 
-    private TomtomMapCallback.OnRouteClickListener onRouteClickListener = new TomtomMapCallback.OnRouteClickListener() {
-        @Override
-        public void onRouteClick(@NonNull Route route) {
-            long routeId = route.getId();
-            tomtomMap.getRouteSettings().setRoutesInactive();
-            tomtomMap.getRouteSettings().setRouteActive(routeId);
-            FullRoute fullRoute = routesMap.get(routeId);
-            displayInfoAboutRoute(fullRoute);
-        }
+    private TomtomMapCallback.OnRouteClickListener onRouteClickListener = route -> {
+        long routeId = route.getId();
+        tomtomMap.getRouteSettings().setRoutesInactive();
+        tomtomMap.getRouteSettings().setRouteActive(routeId);
+        FullRoute fullRoute = routesMap.get(routeId);
+        displayInfoAboutRoute(fullRoute);
     };
 
 }

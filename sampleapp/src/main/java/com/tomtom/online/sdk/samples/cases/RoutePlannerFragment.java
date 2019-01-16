@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -24,8 +24,9 @@ import com.tomtom.online.sdk.samples.utils.CheckedButtonCleaner;
 import com.tomtom.online.sdk.samples.utils.formatter.DistanceFormatter;
 import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
 
+import org.joda.time.DateTime;
+
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Map;
 
 public abstract class RoutePlannerFragment<T extends RoutePlannerPresenter> extends ExampleFragment<T>
@@ -34,9 +35,10 @@ public abstract class RoutePlannerFragment<T extends RoutePlannerPresenter> exte
     private static final String KEY_ROUTES = "KEY_ROUTES";
     private static final String KEY_SELECTED_ROUTE = "KEY_ROUTES_SELECTED";
     private static final String KEY_ROUTING_IN_PROGRESS = "ROUTING_IN_PROGRESS";
+    public static final String TIME_FORMAT = "HH:mm";
 
     private RoutePlanningInProgressDialog routingInProgressDialog = new RoutePlanningInProgressDialog();
-    protected final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
     private boolean routeInProgress = false;
     private int selectedKey;
 
@@ -97,10 +99,10 @@ public abstract class RoutePlannerFragment<T extends RoutePlannerPresenter> exte
         int distance = routeSummary.getLengthInMeters();
         getInfoBarView().setRightText(DistanceFormatter.format(distance));
 
-
+        DateTime timeZoneDate = routeSummary.getArrivalTimeWithZone();
         String arrivalTime = getString(R.string.date_not_available);
-        if (routeSummary.getArrivalTime() != null) {
-            arrivalTime = timeFormat.format(routeSummary.getArrivalTime());
+        if (timeZoneDate != null) {
+            arrivalTime = timeZoneDate.toString(TIME_FORMAT);
         }
 
         getInfoBarView().setLeftText(arrivalTime + (route.getTag() == null ? " " : " " + route.getTag()));

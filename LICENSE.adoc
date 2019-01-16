@@ -89,5 +89,5 @@ You may not use the Maps SDK and may not accept the Agreement if you are a perso
 
 12.3. The rights granted to you in this Agreement may not be assigned or transferred by you without TomTom’s prior written approval.
 
-12.4. The TomTom Online APIs and Maps SDKs are provided as “Commercial Computer Software” or “restricted computer software”. Use, duplication, or disclosure by the U.S. Government or U.S. Government subcontractor is subject to the restrictions set forth in 48.C.F.R. Section 12.212 or 48 C.F.R.227.2702, as applicable or successor provisions. In respect of the TomTom Online Maps API, the Online Search API, the Android and iOS SDKs the manufacturer is Uber Technologies, Inc., San Francisco, CA, 94103.
+12.4. The TomTom APIs and Maps SDKs are provided as “Commercial Computer Software” or “restricted computer software”. Use, duplication, or disclosure by the U.S. Government or U.S. Government subcontractor is subject to the restrictions set forth in 48.C.F.R. Section 12.212 or 48 C.F.R.227.2702, as applicable or successor provisions. In respect of the TomTom Maps API, the Search API, the Android and iOS SDKs the manufacturer is Uber Technologies, Inc., San Francisco, CA, 94103.
 --

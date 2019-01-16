@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -10,10 +10,8 @@
  */
 package com.tomtom.online.sdk.samples.cases.route.alternatives;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
-import com.tomtom.online.sdk.map.Route;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.TomtomMapCallback;
 import com.tomtom.online.sdk.routing.data.FullRoute;
@@ -75,15 +73,12 @@ public class RouteAlternativesPresenter extends RoutePlannerPresenter {
         return new AmsterdamToRotterdamRouteConfig();
     }
 
-    private TomtomMapCallback.OnRouteClickListener onRouteClickListener = new TomtomMapCallback.OnRouteClickListener() {
-        @Override
-        public void onRouteClick(@NonNull Route route) {
-            long routeId = route.getId();
-            tomtomMap.getRouteSettings().setRoutesInactive();
-            tomtomMap.getRouteSettings().setRouteActive(routeId);
-            FullRoute fullRoute = routesMap.get(routeId);
-            displayInfoAboutRoute(fullRoute);
-        }
+    private TomtomMapCallback.OnRouteClickListener onRouteClickListener = route -> {
+        long routeId = route.getId();
+        tomtomMap.getRouteSettings().setRoutesInactive();
+        tomtomMap.getRouteSettings().setRouteActive(routeId);
+        FullRoute fullRoute = routesMap.get(routeId);
+        displayInfoAboutRoute(fullRoute);
     };
 
 }

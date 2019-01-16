@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -21,6 +21,7 @@ import com.tomtom.online.sdk.map.MarkerBuilder;
 import com.tomtom.online.sdk.map.SimpleMarkerBalloon;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.TomtomMapCallback;
+import com.tomtom.online.sdk.map.rx.RxTomtomMap;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
@@ -31,6 +32,8 @@ import com.tomtom.online.sdk.samples.utils.formatter.LatLngFormatter;
 
 import java.util.List;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 public class AdvancedMarkersPresenter extends BaseFunctionalExamplePresenter {
@@ -39,11 +42,12 @@ public class AdvancedMarkersPresenter extends BaseFunctionalExamplePresenter {
 
     private static final String TOAST_MESSAGE = "%s : %f, %f";
     private static final int TOAST_DURATION_MS = 2000; //milliseconds
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private RxTomtomMap rxTomtomMap;
 
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
         super.bind(view, map);
-
         tomtomMap.getMarkerSettings().setMarkerBalloonViewAdapter(new TypedBalloonViewAdapter());
 
         //tag::doc_register_draggable_marker_listener[]
@@ -53,6 +57,22 @@ public class AdvancedMarkersPresenter extends BaseFunctionalExamplePresenter {
         if (!view.isMapRestored()) {
             centerMapOnLocation();
         }
+
+        //tag::doc_register_rx_disposable[]
+        rxTomtomMap = new RxTomtomMap(tomtomMap);
+        Disposable longClickDisposable = rxTomtomMap
+                .getOnMapLongClickObservable()
+                .subscribe(latLng -> Timber.i("long click on " + latLng));
+        Disposable onClickDisposable = rxTomtomMap
+                .getOnMapClickObservable()
+                .subscribe(latLng -> Timber.i("click on " + latLng));
+        Disposable markerClickDisposable = rxTomtomMap
+                .getOnMarkerClickObservable()
+                .subscribe(marker -> Timber.i("marker clicked " + marker.getId()));
+        //end::doc_register_rx_disposable[]
+        compositeDisposable.add(longClickDisposable);
+        compositeDisposable.add(onClickDisposable);
+        compositeDisposable.add(markerClickDisposable);
     }
 
     @Override
@@ -66,6 +86,7 @@ public class AdvancedMarkersPresenter extends BaseFunctionalExamplePresenter {
             return;
         }
         tomtomMap.removeMarkers();
+        compositeDisposable.dispose();
     }
 
     @Override
@@ -74,6 +95,7 @@ public class AdvancedMarkersPresenter extends BaseFunctionalExamplePresenter {
             return;
         }
         tomtomMap.removeOnMarkerDragListeners();
+        compositeDisposable.dispose();
     }
 
     public void createAnimatedMarkers() {
@@ -121,7 +143,6 @@ public class AdvancedMarkersPresenter extends BaseFunctionalExamplePresenter {
         }
     };
     //end::doc_create_draggable_marker_listener[]
-
 
     @NonNull
     private String positionToText(LatLng position) {

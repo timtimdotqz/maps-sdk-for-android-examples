@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -24,11 +24,12 @@ import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.cases.route.matrix.data.AmsterdamPoi;
 import com.tomtom.online.sdk.samples.utils.formatter.DistanceFormatter;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
+import timber.log.Timber;
 
 class MatrixRoutesTableListAdapter extends RecyclerView.Adapter<MatrixRoutesTableListAdapter.MatrixRouteItemViewHolder> {
 
@@ -45,11 +46,14 @@ class MatrixRoutesTableListAdapter extends RecyclerView.Adapter<MatrixRoutesTabl
     @Override
     public void onBindViewHolder(@NonNull MatrixRouteItemViewHolder holder, int position) {
         final MatrixRoutingResult item = itemList.get(position);
-
-        DateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-
+        String etaString = "N/A";
+        DateTime arrivalTime = item.getSummary().getArrivalTimeWithZone();
+        Timber.d("raw arrival time " + item.getSummary().getRawArrivalTime());
+        if (arrivalTime != null) {
+            etaString = arrivalTime.toString("HH:mm");
+        }
         holder.no.setText(String.format("%s%d", AmsterdamPoi.EMPTY_STRING, position + 1));
-        holder.eta.setText(simpleDateFormat.format(item.getSummary().getArrivalTime()));
+        holder.eta.setText(etaString);
         holder.destination.setText(AmsterdamPoi.getName(holder.destination.getContext(), item.getDestination()));
         holder.origin.setText(AmsterdamPoi.getName(holder.origin.getContext(), item.getOrigin()));
         holder.distance.setText(DistanceFormatter.format(item.getSummary().getLengthInMeters()));

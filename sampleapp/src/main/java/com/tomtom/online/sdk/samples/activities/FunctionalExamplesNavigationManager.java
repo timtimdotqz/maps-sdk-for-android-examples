@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2018 TomTom N.V. All rights reserved.
+ * Copyright (c) 2015-2019 TomTom N.V. All rights reserved.
  *
  * This software is the proprietary copyright of TomTom N.V. and its subsidiaries and may be used
  * for internal evaluation purposes or commercial use strictly subject to separate licensee
@@ -28,7 +28,7 @@ public class FunctionalExamplesNavigationManager implements NavigationView.OnNav
     }
 
     private void closeDrawer() {
-        DrawerLayout drawer = (DrawerLayout) functionalExamplesActivity.findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = functionalExamplesActivity.findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
 
