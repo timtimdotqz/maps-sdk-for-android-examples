@@ -25,7 +25,7 @@ public class RouteTravelModesFunctionalExample extends BaseFunctionalExampleMode
         return R.string.amsterdam_to_rotterdam_desc;
     }
     @Override
-    public int[] getCompasMargins() {
-        return COMPAS_UNDER_BAR;
+    public int[] getCompassMargins() {
+        return COMPASS_UNDER_BAR;
     }
 }

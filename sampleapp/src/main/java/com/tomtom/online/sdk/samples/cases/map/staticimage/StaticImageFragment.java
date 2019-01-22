@@ -22,10 +22,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.tomtom.online.sdk.common.config.loader.ConfigLoader;
-import com.tomtom.online.sdk.common.config.loader.ManifestConfigLoader;
+import com.tomtom.online.sdk.common.config.loader.SingleManifestValueLoader;
 import com.tomtom.online.sdk.common.config.provider.ConfigProvider;
-import com.tomtom.online.sdk.common.config.provider.PriorityConfigProvider;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.ActionBarModel;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
@@ -77,9 +75,7 @@ public class StaticImageFragment extends Fragment implements FunctionalExampleFr
      * Default key from manifest.
      */
     private static String getMapApiKey(@NonNull Context context) {
-        ConfigLoader configLoader = new ManifestConfigLoader(context);
-        ConfigProvider configProvider = new PriorityConfigProvider(configLoader);
-        return configProvider.provideConfiguration().get(ConfigProvider.ONLINE_MAPS_KEY).getValue();
+        return new SingleManifestValueLoader(context, ConfigProvider.ONLINE_MAPS_KEY).getValue();
     }
 
     private void loadData() {

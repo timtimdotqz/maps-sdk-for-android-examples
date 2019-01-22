@@ -14,6 +14,7 @@ import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 
 public class MapTilesTypesFunctionalExample extends BaseFunctionalExampleModel {
+
     public int getPlayableTitle() {
         return R.string.map_tiles_types_title;
     }
@@ -21,4 +22,5 @@ public class MapTilesTypesFunctionalExample extends BaseFunctionalExampleModel {
     public int getPlayableSubtitle() {
         return R.string.amsterdam_city_name;
     }
+
 }

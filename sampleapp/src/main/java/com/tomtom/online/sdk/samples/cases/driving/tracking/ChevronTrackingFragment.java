@@ -11,10 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.driving.tracking;
 
 import com.tomtom.online.sdk.samples.R;
-import com.tomtom.online.sdk.samples.cases.ExampleFragment;
+import com.tomtom.online.sdk.samples.cases.driving.AbstractTrackingFragment;
 import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
 
-public class ChevronTrackingFragment extends ExampleFragment<ChevronTrackingPresenter> {
+public class ChevronTrackingFragment extends AbstractTrackingFragment<ChevronTrackingPresenter> {
 
     @Override
     public void onChange(boolean[] oldValues, boolean[] newValues) {
@@ -39,4 +39,8 @@ public class ChevronTrackingFragment extends ExampleFragment<ChevronTrackingPres
         optionsView.selectItem(1, true);
     }
 
+    @Override
+    protected boolean isDescriptionVisible() {
+        return false;
+    }
 }

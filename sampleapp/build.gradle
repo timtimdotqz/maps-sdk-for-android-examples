@@ -84,8 +84,12 @@ dependencies {
 
         //dependency for maps ui extensions
         implementation("com.tomtom.online:sdk-maps-ui-extensions:$rootProject.internalVersions.sdk")
+
         //dependency for static maps extensions
         implementation("com.tomtom.online:sdk-maps-static-image:$rootProject.internalVersions.sdk")
+
+        //dependency for driving extensions
+        implementation("com.tomtom.online:sdk-maps-driving-extensions:$rootProject.internalVersions.sdk")
         //doc_dependencies_sample_app_stop
 
     implementation "com.github.florent37:singledateandtimepicker:$rootProject.libVersions.singledateandtimepicker"

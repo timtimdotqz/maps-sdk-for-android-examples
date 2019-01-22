@@ -45,7 +45,7 @@ public abstract class BaseFunctionalExamplePresenter implements FunctionalExampl
 
     public void setupUIModel(FunctionalExampleFragment view) {
         setComponentMargins(tomtomMap.getUiSettings().getCurrentLocationView(), getModel().getCurrentLocationMargins());
-        setComponentMargins(tomtomMap.getUiSettings().getCompassView(), getModel().getCompasMargins());
+        setComponentMargins(tomtomMap.getUiSettings().getCompassView(), getModel().getCompassMargins());
 
         view.setActionBarTitle(getModel().getPlayableTitle());
         view.setActionBarSubtitle(getModel().getPlayableSubtitle());
@@ -66,7 +66,7 @@ public abstract class BaseFunctionalExamplePresenter implements FunctionalExampl
 
     @Override
     public void cleanup() {
-        setComponentMargins(tomtomMap.getUiSettings().getCompassView(), BaseFunctionalExampleModel.COMPAS_CLOSE_TO_BAR);
+        setComponentMargins(tomtomMap.getUiSettings().getCompassView(), BaseFunctionalExampleModel.COMPASS_CLOSE_TO_BAR);
         resetMapPadding();
     }
 

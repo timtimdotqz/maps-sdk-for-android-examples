@@ -117,6 +117,16 @@
                 android:id="@+id/multiple_chevrons"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/chevron_tracking" />
+
+            <item
+                android:id="@+id/route_matching"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/route_matching"/>
+
+            <item
+                android:id="@+id/map_matching"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/map_matching"/>
         </menu>
     </item>
 

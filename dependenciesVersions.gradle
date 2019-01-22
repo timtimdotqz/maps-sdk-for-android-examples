@@ -22,7 +22,7 @@ ext {
     }
 
     androidBuildToolsVersion = '28.0.3'
-    androidCompileSdkVersion = 27
+    androidCompileSdkVersion = 28
     androidTargetSdkVersion = 26
     androidMinSdkVersion = 16
     buildVersionName = releaseProps.getProperty('mapsSdkVersion')

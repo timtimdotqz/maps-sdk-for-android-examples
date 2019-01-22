@@ -28,7 +28,7 @@ import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.MultiRoutesPlannerPresenter;
 import com.tomtom.online.sdk.samples.cases.MultiRoutesQueryAdapter;
 import com.tomtom.online.sdk.samples.cases.MultiRoutesRoutingUiListener;
-import com.tomtom.online.sdk.samples.routes.CzechRepublicToRomania;
+import com.tomtom.online.sdk.samples.routes.CzechRepublicToRomaniaRouteConfig;
 import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class RouteAvoidsVignettesAndAreasPresenter extends MultiRoutesPlannerPre
 
     @Override
     public RouteConfigExample getRouteConfig() {
-        return new CzechRepublicToRomania();
+        return new CzechRepublicToRomaniaRouteConfig();
     }
 
     @Override

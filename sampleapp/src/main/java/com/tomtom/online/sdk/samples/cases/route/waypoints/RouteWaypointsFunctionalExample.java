@@ -25,7 +25,7 @@ public class RouteWaypointsFunctionalExample extends BaseFunctionalExampleModel 
         return R.string.amsterdam_to_berlin_desc;
     }
     @Override
-    public int[] getCompasMargins() {
-        return COMPAS_UNDER_BAR;
+    public int[] getCompassMargins() {
+        return COMPASS_UNDER_BAR;
     }
 }

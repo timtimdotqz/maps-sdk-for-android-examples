@@ -26,21 +26,37 @@ public class BaseFunctionalExampleModel implements FunctionalExampleModel {
 
     @Override
     public int[] getCurrentLocationMargins() {
-        return new int[] {
-                R.dimen.compass_default_margin_start, R.dimen.current_location_top, R.dimen.current_location_right, R.dimen.bigger_location_default_margin_bottom
+        return new int[]{
+                R.dimen.compass_default_margin_start,
+                R.dimen.current_location_top,
+                R.dimen.current_location_right,
+                R.dimen.bigger_location_default_margin_bottom
         };
     }
 
     @Override
-    public int[] getCompasMargins() {
-        return COMPAS_CLOSE_TO_BAR;
+    public int[] getCompassMargins() {
+        return COMPASS_CLOSE_TO_BAR;
     }
 
-    public static final int[] COMPAS_UNDER_BAR = new int[] {
-        R.dimen.compass_default_margin_start, R.dimen.compass_bigger_margin_top, R.dimen.compass_default_margin_right, R.dimen.compass_default_margin_bottom
+    public static final int[] COMPASS_UNDER_BAR = new int[]{
+            R.dimen.compass_default_margin_start,
+            R.dimen.compass_bigger_margin_top,
+            R.dimen.compass_default_margin_right,
+            R.dimen.compass_default_margin_bottom
     };
 
-    public static final int[] COMPAS_CLOSE_TO_BAR = {
-            R.dimen.compass_default_margin_start, R.dimen.compass_default_margin_top, R.dimen.compass_default_margin_right, R.dimen.compass_default_margin_bottom
+    public static final int[] COMPASS_CLOSE_TO_BAR = {
+            R.dimen.compass_default_margin_start,
+            R.dimen.compass_default_margin_top,
+            R.dimen.compass_default_margin_right,
+            R.dimen.compass_default_margin_bottom
+    };
+
+    public static final int[] CURRENT_LOCATION_CLOSE_TO_BOTTOM = new int[]{
+            R.dimen.compass_default_margin_start,
+            R.dimen.current_location_top,
+            R.dimen.current_location_right,
+            R.dimen.current_location_default_margin_bottom
     };
 }

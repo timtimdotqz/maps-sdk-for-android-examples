@@ -320,6 +320,12 @@
     <string name="chevron_tracking_start">Start tracking</string>
     <string name="chevron_tracking_stop">Stop tracking</string>
 
+    <string name="route_matching">Route matching</string>
+    <string name="map_matching">Map matching</string>
+    <string name="route_matching_subtitle">GPS matched to the given route</string>
+    <string name="map_matching_subtitle">GPS matched to road network</string>
+    <string name="matching_description">Red circle shows raw GPS position</string>
+
     <string name="menu_advanced_markers">Advanced markers</string>
     <string name="advanced_markers_options_title">Advanced markers</string>
     <string name="label_with_avoiding_vignettes">with avoiding vignettes</string>

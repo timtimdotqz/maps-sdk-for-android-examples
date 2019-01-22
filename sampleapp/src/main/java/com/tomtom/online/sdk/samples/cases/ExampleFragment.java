@@ -33,6 +33,7 @@ public abstract class ExampleFragment<T extends FunctionalExamplePresenter> exte
         implements FunctionalExampleFragment, OptionsButtonsView.OptionsChangeValue {
 
     private static final String MAP_RESTORE_KEY = "MAP_RESTORED_ARG";
+    private static final String EXAMPLE_PRIVATE_DATA_KEY = "EXAMPLE_PRIVATE_DATA";
 
     protected T presenter;
     protected ActionBarModel actionBar;
@@ -43,17 +44,18 @@ public abstract class ExampleFragment<T extends FunctionalExamplePresenter> exte
     private Runnable infoViewRunnable;
 
     private boolean isRestored;
+    private Bundle examplePrivateData = new Bundle();
 
     public ExampleFragment() {
         presenter = createPresenter();
     }
-
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             isRestored = savedInstanceState.getBoolean(MAP_RESTORE_KEY, false);
+            examplePrivateData = savedInstanceState.getBundle(EXAMPLE_PRIVATE_DATA_KEY);
         }
         Timber.d("isRestored= " + isRestored);
 
@@ -107,6 +109,7 @@ public abstract class ExampleFragment<T extends FunctionalExamplePresenter> exte
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putBoolean(MAP_RESTORE_KEY, true);
+        outState.putBundle(EXAMPLE_PRIVATE_DATA_KEY, examplePrivateData);
         Timber.d("onSaveInstanceState isRestored true");
         super.onSaveInstanceState(outState);
     }

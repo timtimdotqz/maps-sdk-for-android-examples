@@ -8,33 +8,31 @@
  * licensee then you are not authorised to use this software in any manner and should
  * immediately return it to TomTom N.V.
  */
-package com.tomtom.online.sdk.samples.routes;
+package com.tomtom.online.sdk.samples.cases.driving.matching.map;
 
-import android.support.annotation.NonNull;
+import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 
-import com.tomtom.online.sdk.common.location.LatLng;
+public class MapMatchingFunctionalExample extends BaseFunctionalExampleModel {
 
-public class CzechRepublicToRomania implements RouteConfigExample {
-    
-    @NonNull
     @Override
-    public LatLng getOrigin() {
-        return new LatLng(50.746420115485755, 14.799316562712196);
-    }
-
-    @NonNull
-    @Override
-    public LatLng getDestination() {
-        return new LatLng(45.33232542221267, 22.753418125212196);
+    public int getPlayableTitle() {
+        return R.string.map_matching;
     }
 
     @Override
-    public int getDestinationAddress() {
-        return 0;
+    public int getPlayableSubtitle() {
+        return R.string.map_matching_subtitle;
     }
 
     @Override
-    public int getRouteDescription() {
-        return 0;
+    public int[] getCurrentLocationMargins() {
+        return CURRENT_LOCATION_CLOSE_TO_BOTTOM;
     }
+
+    @Override
+    public int[] getCompassMargins() {
+       return COMPASS_UNDER_BAR;
+    }
+
 }

@@ -22,5 +22,5 @@ public interface FunctionalExampleModel {
 
     int[] getCurrentLocationMargins();
 
-    int[] getCompasMargins();
+    int[] getCompassMargins();
 }

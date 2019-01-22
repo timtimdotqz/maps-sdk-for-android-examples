@@ -25,9 +25,7 @@ public class MapLayersTypesFunctionalExample extends BaseFunctionalExampleModel 
     }
 
     @Override
-    public int[] getCompasMargins() {
-        return new int[] {
-                R.dimen.compass_default_margin_start, R.dimen.compass_bigger_margin_top, R.dimen.compass_default_margin_right, R.dimen.compass_default_margin_bottom
-        };
+    public int[] getCompassMargins() {
+        return COMPASS_UNDER_BAR;
     }
 }

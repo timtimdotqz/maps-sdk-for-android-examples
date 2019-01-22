@@ -11,9 +11,12 @@
 package com.tomtom.online.sdk.samples.routes;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
 import com.tomtom.online.sdk.common.location.LatLng;
+
+import java.util.List;
 
 public interface RouteConfigExample {
 
@@ -28,4 +31,7 @@ public interface RouteConfigExample {
 
     @StringRes
     int getRouteDescription();
+
+    @Nullable
+    List<LatLng> getWaypoints();
 }

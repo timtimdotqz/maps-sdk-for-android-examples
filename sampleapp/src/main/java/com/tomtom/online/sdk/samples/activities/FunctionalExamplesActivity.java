@@ -73,13 +73,12 @@ public class FunctionalExamplesActivity extends AppCompatActivity
         //tag::doc_collect_logs_to_file_in_onready_callback[]
         @Override
         public void onMapReady(@NonNull TomtomMap tomtomMap) {
-            tomtomMap.collectLogsToFile(SampleApp.LOGCAT_PATH);
+            //tomtomMap.collectLogsToFile(SampleApp.LOGCAT_PATH);
         }
         //end::doc_collect_logs_to_file_in_onready_callback[]
     };
 
     private TomtomMap tomtomMap;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -273,14 +272,19 @@ public class FunctionalExamplesActivity extends AppCompatActivity
 
         @Override
         public void setLocation(Location location) {
-            setLocation(new LatLng(location), 0.0, 0.0);
+            setLocation(new LatLng(location), 0.0, 0.0, location.getTime());
         }
 
         @Override
         public void setLocation(LatLng latLng, double bearingInDegrees, double accuracyInMeters) {
+            setLocation(latLng, 0.0, 0.0, 0);
+        }
+
+        @Override
+        public void setLocation(LatLng latLng, double bearingInDegrees, double accuracyInMeters, long timeInMillis) {
             super.show();
             super.setDimmed(false);
-            super.setLocation(latLng, 0.0, 0.0);
+            super.setLocation(latLng, 0.0, 0.0, timeInMillis);
         }
     }
     //end::doc_custom_gps_position_indicator

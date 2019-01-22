@@ -11,10 +11,13 @@
 package com.tomtom.online.sdk.samples.routes;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.utils.Locations;
 import com.tomtom.online.sdk.common.location.LatLng;
+
+import java.util.List;
 
 //tag::doc_amsterdam_to_rotterdam[]
 public class AmsterdamToRotterdamRouteConfig implements RouteConfigExample {
@@ -39,6 +42,12 @@ public class AmsterdamToRotterdamRouteConfig implements RouteConfigExample {
     @Override
     public int getRouteDescription() {
         return R.string.amsterdam_to_rotterdam_desc;
+    }
+
+    @Nullable
+    @Override
+    public List<LatLng> getWaypoints() {
+        return null;
     }
 }
 //end::doc_amsterdam_to_rotterdam[]
