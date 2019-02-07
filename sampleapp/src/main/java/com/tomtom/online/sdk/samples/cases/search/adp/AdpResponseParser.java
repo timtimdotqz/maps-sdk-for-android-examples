@@ -21,6 +21,7 @@ import com.tomtom.online.sdk.search.data.additionaldata.AdditionalDataSearchResp
 import com.tomtom.online.sdk.search.data.additionaldata.result.AdditionalDataSearchResult;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import timber.log.Timber;
@@ -35,7 +36,7 @@ class AdpResponseParser {
 
     @SuppressLint("CheckResult")
     public void parseAdpResponse(AdditionalDataSearchResponse additionalDataResponse) {
-        Observable.just(additionalDataResponse)
+        Single.just(additionalDataResponse)
                 .filter(nonEmptyResults())
                 .map(firstAdpResult())
                 .subscribe(adpResult -> parseAdpResult(adpResult),
@@ -55,7 +56,7 @@ class AdpResponseParser {
 
     @SuppressLint("CheckResult")
     public void parseFeatureCollection(FeatureCollection featureCollection) {
-        Observable.just(featureCollection)
+        Single.just(featureCollection)
                 .filter(nonEmptyFeatures())
                 .map(firstAdpFeature())
                 .subscribe(consumer);

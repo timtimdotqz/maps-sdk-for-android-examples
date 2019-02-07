@@ -159,10 +159,10 @@ public class RadioModifierView extends LinearLayout {
 
     private void findViews(Context context) {
         inflate(context, R.layout.view_radio_modifier, this);
-        leftBtn = (Button) findViewById(R.id.leftButton);
-        firstMiddleBtn = (Button) findViewById(R.id.firstMiddleButton);
-        secondMiddleBtn = (Button) findViewById(R.id.secondMiddleButton);
-        rightBtn = (Button) findViewById(R.id.rightButton);
+        leftBtn = findViewById(R.id.leftButton);
+        firstMiddleBtn = findViewById(R.id.firstMiddleButton);
+        secondMiddleBtn = findViewById(R.id.secondMiddleButton);
+        rightBtn = findViewById(R.id.rightButton);
     }
 
     public void setRadioNames(String leftRadioButtonName, String rightRadioButtonName) {

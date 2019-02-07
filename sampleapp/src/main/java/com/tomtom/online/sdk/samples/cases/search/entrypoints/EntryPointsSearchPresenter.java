@@ -16,37 +16,31 @@ import android.widget.Toast;
 import com.tomtom.online.sdk.map.CameraPosition;
 import com.tomtom.online.sdk.map.Icon;
 import com.tomtom.online.sdk.map.MapConstants;
-import com.tomtom.online.sdk.map.MarkerBuilder;
-import com.tomtom.online.sdk.map.SimpleMarkerBalloon;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
-import com.tomtom.online.sdk.search.OnlineSearchApi;
-import com.tomtom.online.sdk.search.SearchApi;
 import com.tomtom.online.sdk.search.api.SearchError;
 import com.tomtom.online.sdk.search.api.fuzzy.FuzzySearchResultListener;
-import com.tomtom.online.sdk.search.data.common.EntryPoint;
-import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQueryBuilder;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResponse;
-import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResult;
 
 public class EntryPointsSearchPresenter extends BaseFunctionalExamplePresenter {
 
     private static final int ZOOM_LEVEL_FOR_EXAMPLE = 10;
     private static final int DEFAULT_MAP_PADDING = 0;
-    public static final String IDX_POI = "POI";
 
     protected Context context;
     protected FunctionalExampleFragment fragment;
+    private EntryPointsSearchRequester searchRequester;
 
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
         super.bind(view, map);
         context = view.getContext();
         fragment = view;
+        searchRequester = new EntryPointsSearchRequester(view.getContext(), resultListener);
 
         if (!view.isMapRestored()) {
             centerOnDefaultLocation();
@@ -92,53 +86,36 @@ public class EntryPointsSearchPresenter extends BaseFunctionalExamplePresenter {
     }
 
     public void performSearch(String term) {
-
         fragment.disableOptionsView();
 
-        SearchApi searchAPI = OnlineSearchApi.create(context);
-        searchAPI.search(FuzzySearchQueryBuilder.create(term).withIdx(IDX_POI).build(), new FuzzySearchResultListener() {
-            @Override
-            public void onSearchResult(FuzzySearchResponse response) {
-
-                fragment.enableOptionsView();
-                tomtomMap.clear();
-
-                if (response.getResults().isEmpty()) {
-                    view.showInfoText(R.string.entry_points_no_results, Toast.LENGTH_LONG);
-                    return;
-                }
-
-                Icon icon = Icon.Factory.fromResources(
-                        view.getContext(), R.drawable.ic_marker_entry_point);
-
-                FuzzySearchResult fuzzySearchResult = response.getResults().get(0);
-
-                tomtomMap.addMarker(new MarkerBuilder(fuzzySearchResult.getPosition())
-                        .markerBalloon(new SimpleMarkerBalloon(fuzzySearchResult.getPoi().getName()))
-                );
-
-                //tag::doc_entry_points_search_request[]
-                for (EntryPoint entryPoint : fuzzySearchResult.getEntryPoints()) {
-                    SimpleMarkerBalloon balloon = new SimpleMarkerBalloon(
-                            String.format(view.getString(R.string.entry_points_type),
-                                    entryPoint.getType())
-                    );
-                    tomtomMap.addMarker(new MarkerBuilder(entryPoint.getPosition())
-                            .markerBalloon(balloon)
-                            .icon(icon));
-                }
-                //end::doc_entry_points_search_request[]
-
-                tomtomMap.getMarkerSettings().zoomToAllMarkers();
-            }
-
-            @Override
-            public void onSearchError(SearchError error) {
-                view.showInfoText(error.getMessage(), Toast.LENGTH_LONG);
-                fragment.enableOptionsView();
-                tomtomMap.clear();
-            }
-        });
+        searchRequester.performSearch(term);
     }
 
+    private FuzzySearchResultListener resultListener = new FuzzySearchResultListener() {
+        @Override
+        public void onSearchResult(FuzzySearchResponse fuzzySearchResponse) {
+
+            view.enableOptionsView();
+            tomtomMap.clear();
+
+            if (fuzzySearchResponse.getResults().isEmpty()) {
+                view.showInfoText(R.string.entry_points_no_results, Toast.LENGTH_LONG);
+                return;
+            }
+
+            Icon icon = Icon.Factory.fromResources(
+                    context, R.drawable.ic_marker_entry_point);
+
+            String markerBalloonText = context.getString(R.string.entry_points_type);
+
+            new EntryPointsMarkerDrawer(tomtomMap, markerBalloonText).handleResultsFromFuzzy(fuzzySearchResponse, icon);
+        }
+
+        @Override
+        public void onSearchError(SearchError error) {
+            view.showInfoText(error.getMessage(), Toast.LENGTH_LONG);
+            view.enableOptionsView();
+            tomtomMap.clear();
+        }
+    };
 }

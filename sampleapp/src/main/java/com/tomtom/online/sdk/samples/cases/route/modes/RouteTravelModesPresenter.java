@@ -13,14 +13,12 @@ package com.tomtom.online.sdk.samples.cases.route.modes;
 import android.support.annotation.VisibleForTesting;
 
 import com.tomtom.online.sdk.map.TomtomMap;
-import com.tomtom.online.sdk.routing.data.InstructionsType;
-import com.tomtom.online.sdk.routing.data.Report;
 import com.tomtom.online.sdk.routing.data.RouteQuery;
-import com.tomtom.online.sdk.routing.data.RouteQueryBuilder;
 import com.tomtom.online.sdk.routing.data.TravelMode;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.RoutePlannerPresenter;
 import com.tomtom.online.sdk.samples.cases.RoutingUiListener;
+import com.tomtom.online.sdk.samples.cases.route.RouteQueryFactory;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.routes.AmsterdamToRotterdamRouteConfig;
 import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
@@ -46,11 +44,6 @@ public class RouteTravelModesPresenter extends RoutePlannerPresenter {
         return new RouteTravelModesFunctionalExample();
     }
 
-    @Override
-    public RouteConfigExample getRouteConfig() {
-        return new AmsterdamToRotterdamRouteConfig();
-    }
-
     void displayRoute(TravelMode travelMode) {
         tomtomMap.clearRoute();
         viewModel.showRoutingInProgressDialog();
@@ -59,15 +52,7 @@ public class RouteTravelModesPresenter extends RoutePlannerPresenter {
 
     @VisibleForTesting
     protected RouteQuery getRouteQuery(TravelMode travelMode) {
-        //tag::doc_route_travel_mode[]
-        RouteQuery queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
-                .withMaxAlternatives(0)
-                .withReport(Report.EFFECTIVE_SETTINGS)
-                .withInstructionsType(InstructionsType.TEXT)
-                .withTravelMode(travelMode)
-                .withConsiderTraffic(false).build();
-        //end::doc_route_travel_mode[]
-        return queryBuilder;
+        return RouteQueryFactory.createRouteTravelModesQuery(travelMode, new AmsterdamToRotterdamRouteConfig());
     }
 
     public void startTravelModeTruck() {

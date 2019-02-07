@@ -13,15 +13,10 @@ package com.tomtom.online.sdk.samples.cases.map.markers.balloons;
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.map.BaseMarkerBalloon;
 import com.tomtom.online.sdk.map.MapConstants;
-import com.tomtom.online.sdk.map.Marker;
-import com.tomtom.online.sdk.map.MarkerBuilder;
-import com.tomtom.online.sdk.map.SimpleMarkerBalloon;
-import com.tomtom.online.sdk.map.SingleLayoutBalloonViewAdapter;
-import com.tomtom.online.sdk.map.TextBalloonViewAdapter;
 import com.tomtom.online.sdk.map.TomtomMap;
-import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
+import com.tomtom.online.sdk.samples.cases.map.markers.MarkerDrawer;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
 
@@ -29,12 +24,16 @@ public class BalloonCustomPresenter extends BaseFunctionalExamplePresenter {
 
     private final static LatLng location = Locations.AMSTERDAM_LOCATION;
 
+    private MarkerDrawer markerDrawer;
+
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
         super.bind(view, map);
         if (!view.isMapRestored()) {
             centerMapOnLocation();
         }
+
+        markerDrawer = new MarkerDrawer(view.getContext(), tomtomMap);
     }
 
     @Override
@@ -55,30 +54,15 @@ public class BalloonCustomPresenter extends BaseFunctionalExamplePresenter {
         BaseMarkerBalloon markerBalloon = new BaseMarkerBalloon();
         markerBalloon.addProperty("key", "value");
         //end::doc_marker_balloon_model[]
-        //tag::doc_init_popup_layout[]
-        tomtomMap.getMarkerSettings().setMarkerBalloonViewAdapter(new TextBalloonViewAdapter());
-        SimpleMarkerBalloon balloon = new SimpleMarkerBalloon("Welcome to TomTom");
-        MarkerBuilder markerBuilder = new MarkerBuilder(Locations.AMSTERDAM_LOCATION)
-                .markerBalloon(balloon);
 
-        Marker m = tomtomMap.addMarker(markerBuilder);
-        balloon.setText("Welcome to TomTom");
-        //end::doc_init_popup_layout[]
-        m.select();
+        markerDrawer.createMarkerWithSimpleBalloon(Locations.AMSTERDAM_LOCATION);
     }
 
     public void createCustomBalloon() {
         centerMapOnLocation();
         tomtomMap.removeMarkers();
 
-        //tag::doc_show_popup_layout[]
-        tomtomMap.getMarkerSettings().setMarkerBalloonViewAdapter(new SingleLayoutBalloonViewAdapter(R.layout.custom_balloon_layout));
-        MarkerBuilder markerBuilder = new MarkerBuilder(Locations.AMSTERDAM_LOCATION)
-                .markerBalloon(new BaseMarkerBalloon());
-        Marker m = tomtomMap.addMarker(markerBuilder);
-        //end::doc_show_popup_layout[]
-        m.select();
-
+        markerDrawer.createMarkerWithCustomBalloon(Locations.AMSTERDAM_LOCATION);
     }
 
     public void centerMapOnLocation() {

@@ -12,6 +12,7 @@ package com.tomtom.online.sdk.samples.cases.driving.matching.route;
 
 import com.google.common.base.Preconditions;
 import com.tomtom.online.sdk.common.location.LatLng;
+import com.tomtom.online.sdk.map.driving.LatLngTraceMatchingDataProvider;
 import com.tomtom.online.sdk.map.driving.Matcher;
 import com.tomtom.online.sdk.map.driving.MatcherFactory;
 import com.tomtom.online.sdk.routing.data.FullRoute;
@@ -23,8 +24,6 @@ import com.tomtom.online.sdk.samples.cases.driving.utils.RouteSimulator;
 import com.tomtom.online.sdk.samples.cases.driving.utils.interpolator.RandomizeInterpolator;
 
 public class RouteMatchingPresenter extends AbstractRoutingPresenter {
-
-    private final static LatLng LODZ_CENTER_POSITION = new LatLng(51.776495, 19.440739);
 
     private Matcher matcher;
 
@@ -44,7 +43,10 @@ public class RouteMatchingPresenter extends AbstractRoutingPresenter {
 
     @Override
     public void cleanup() {
-        matcher.dispose();
+        if (matcher != null) {
+            //Matcher may be null if routing request failed
+            matcher.dispose();
+        }
         super.cleanup();
     }
 
@@ -78,7 +80,7 @@ public class RouteMatchingPresenter extends AbstractRoutingPresenter {
     private void createMatcher() {
         Preconditions.checkArgument(tomtomMap.getRoutes().size() > 0);
         //tag::doc_create_route_matcher[]
-        matcher = MatcherFactory.createRouteMatcher(tomtomMap, getFirstRouteFromMap());
+        matcher = MatcherFactory.createMatcher(LatLngTraceMatchingDataProvider.fromPoints(getFirstRouteFromMap()));
         matcher.setMatcherListener(new ChevronMatcherUpdater(getChevron(), tomtomMap));
         //end::doc_create_route_matcher[]
     }

@@ -16,6 +16,8 @@ import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
 
 public class TrafficLayersFragment extends ExampleFragment<TrafficLayersPresenter> {
 
+
+    ButtonStrategy buttonPressStrategy = new ButtonStrategy.NoPressAnyButtons();
     @Override
     protected TrafficLayersPresenter createPresenter() {
         return new TrafficLayersPresenter();
@@ -27,35 +29,21 @@ public class TrafficLayersFragment extends ExampleFragment<TrafficLayersPresente
         view.addOption(getString(R.string.traffic_incidents));
         view.addOption(getString(R.string.traffic_flow));
         view.addOption(getString(R.string.traffic_off_btn));
-        optionsView.selectItem(2, true);
+        optionsView.selectLast();
+        if (presenter instanceof TrafficPresenter){
+            buttonPressStrategy = new LastButtonPressedByDefault(presenter, optionsView);
+        }
     }
 
     @Override
     public void onChange(boolean[] oldValues, boolean[] newValues) {
-        if(!oldValues[2] && newValues[2]) {
-                optionsView.selectItem(0, false);
-                optionsView.selectItem(1, false);
-                optionsView.selectItem(2, true);
-                presenter.hideTrafficInformation();
-            } else if(newValues[0] && newValues[1]) {
-                optionsView.selectItem(2, false);
-                presenter.showTrafficFlowAndIncidentsTiles();
-            } else if(newValues[0]) {
-                optionsView.selectItem(2, false);
-                presenter.showTrafficIncidents();
-            } else if(newValues[1]) {
-                optionsView.selectItem(2, false);
-                presenter.showTrafficFlowTiles();
-            } else {
-                presenter.hideTrafficInformation();
-                optionsView.selectItem(2, true);
-        }
+        buttonPressStrategy.manageButtons(oldValues, newValues);
     }
 
     @Override
     public boolean isMapRestored() {
 
-        final boolean[] previousState = new boolean[] {
+        final boolean[] previousState = new boolean[]{
                 optionsView.isSelected(0),
                 optionsView.isSelected(1),
                 optionsView.isSelected(2)

@@ -14,13 +14,11 @@ import android.support.annotation.VisibleForTesting;
 
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.routing.data.Avoid;
-import com.tomtom.online.sdk.routing.data.InstructionsType;
-import com.tomtom.online.sdk.routing.data.Report;
 import com.tomtom.online.sdk.routing.data.RouteQuery;
-import com.tomtom.online.sdk.routing.data.RouteQueryBuilder;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.RoutePlannerPresenter;
 import com.tomtom.online.sdk.samples.cases.RoutingUiListener;
+import com.tomtom.online.sdk.samples.cases.route.RouteQueryFactory;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.routes.AmsterdamToOsloRouteConfig;
 import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
@@ -28,7 +26,6 @@ import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
 public class RouteAvoidsPresenter extends RoutePlannerPresenter {
 
     private Avoid avoidOnRoute;
-
 
     public RouteAvoidsPresenter(RoutingUiListener viewModel) {
         super(viewModel);
@@ -55,22 +52,8 @@ public class RouteAvoidsPresenter extends RoutePlannerPresenter {
 
     @VisibleForTesting
     protected RouteQuery getRouteQuery(Avoid routeAvoid) {
-        //tag::doc_route_avoids[]
-        RouteQuery queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
-                .withMaxAlternatives(0)
-                .withReport(Report.NONE)
-                .withInstructionsType(InstructionsType.NONE)
-                .withAvoidType(routeAvoid)
-                .withConsiderTraffic(false).build();
-        //end::doc_route_avoids[]
-        return queryBuilder;
+       return RouteQueryFactory.createAvoidRouteQuery(routeAvoid,  new AmsterdamToOsloRouteConfig());
     }
-
-    @Override
-    public RouteConfigExample getRouteConfig() {
-        return new AmsterdamToOsloRouteConfig();
-    }
-
 
     public void startRoutingAvoidTollRoads() {
         displayRoute(Avoid.TOLL_ROADS);

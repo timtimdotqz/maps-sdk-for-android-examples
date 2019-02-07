@@ -92,11 +92,6 @@ public class RouteSupportingPointsPresenter extends RoutePlannerPresenter {
         return queryBuilder;
     }
 
-    @Override
-    public RouteConfigExample getRouteConfig() {
-        return null;
-    }
-
     private TomtomMapCallback.OnRouteClickListener onRouteClickListener = route -> {
         long routeId = route.getId();
         tomtomMap.getRouteSettings().setRoutesInactive();

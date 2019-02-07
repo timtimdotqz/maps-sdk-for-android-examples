@@ -21,7 +21,7 @@ import com.tomtom.online.sdk.samples.utils.Locations;
 
 import static com.tomtom.online.sdk.map.TrafficFlowType.*;
 
-public class TrafficLayersPresenter extends BaseFunctionalExamplePresenter {
+public class TrafficLayersPresenter extends BaseFunctionalExamplePresenter implements TrafficPresenter {
 
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {

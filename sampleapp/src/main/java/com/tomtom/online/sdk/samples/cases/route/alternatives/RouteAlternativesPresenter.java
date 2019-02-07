@@ -15,13 +15,11 @@ import android.support.annotation.VisibleForTesting;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.TomtomMapCallback;
 import com.tomtom.online.sdk.routing.data.FullRoute;
-import com.tomtom.online.sdk.routing.data.InstructionsType;
-import com.tomtom.online.sdk.routing.data.Report;
 import com.tomtom.online.sdk.routing.data.RouteQuery;
-import com.tomtom.online.sdk.routing.data.RouteQueryBuilder;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.RoutePlannerPresenter;
 import com.tomtom.online.sdk.samples.cases.RoutingUiListener;
+import com.tomtom.online.sdk.samples.cases.route.RouteQueryFactory;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.routes.AmsterdamToRotterdamRouteConfig;
 import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
@@ -58,19 +56,7 @@ public class RouteAlternativesPresenter extends RoutePlannerPresenter {
 
     @VisibleForTesting
     protected RouteQuery getRouteQuery(int maxAlternatives) {
-        //tag::doc_route_alternatives[]
-        RouteQuery queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
-                .withMaxAlternatives(maxAlternatives)
-                .withReport(Report.EFFECTIVE_SETTINGS)
-                .withInstructionsType(InstructionsType.TEXT)
-                .withConsiderTraffic(false).build();
-        //end::doc_route_alternatives[]
-        return queryBuilder;
-    }
-
-    @Override
-    public RouteConfigExample getRouteConfig() {
-        return new AmsterdamToRotterdamRouteConfig();
+        return  RouteQueryFactory.createRouteAlternativesQuery(maxAlternatives, new AmsterdamToRotterdamRouteConfig());
     }
 
     private TomtomMapCallback.OnRouteClickListener onRouteClickListener = route -> {

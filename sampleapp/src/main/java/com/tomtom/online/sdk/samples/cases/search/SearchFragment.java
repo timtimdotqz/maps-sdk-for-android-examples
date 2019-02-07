@@ -51,7 +51,7 @@ public class SearchFragment extends SearchFunctionalFragment implements SearchVi
     public static final String SEARCH_REQUEST_CODE_KEY = "SEARCH_REQUEST_CODE";
     public static final String ARE_LIST_ITEMS_CLICKABLE_KEY = "ARE_LIST_ITEMS_CLICKABLE";
 
-    protected ImmutableList<FuzzySearchResult> searchResults = ImmutableList.<FuzzySearchResult>of();
+    protected ImmutableList<FuzzySearchResult> searchResults = ImmutableList.of();
     protected SearchPresenter searchPresenter; //Available for category search
 
     protected EditText searchTextView;
@@ -84,7 +84,7 @@ public class SearchFragment extends SearchFunctionalFragment implements SearchVi
         initSearchList(view);
         initSearchFieldView(view);
         initSearchModifiersView(view);
-        searchProgressBar = (ProgressBar) view.findViewById(R.id.search_progress_bar);
+        searchProgressBar = view.findViewById(R.id.search_progress_bar);
 
         restoreArguments();
         restoreSavedInstanceState(savedInstanceState);
@@ -120,7 +120,8 @@ public class SearchFragment extends SearchFunctionalFragment implements SearchVi
     }
 
     private SearchServiceConnectionCallback searchServiceConnectionCallback() {
-        return (SearchFragmentPresenter) searchPresenter;
+        SearchFragmentPresenter presenter = (SearchFragmentPresenter) searchPresenter;
+        return presenter.getSearchFragmentService();
     }
 
     @Override
@@ -152,7 +153,7 @@ public class SearchFragment extends SearchFunctionalFragment implements SearchVi
     }
 
     private void initSearchList(View view) {
-        searchResultsListView = (ListView) view.findViewById(R.id.search_results_list);
+        searchResultsListView = view.findViewById(R.id.search_results_list);
 
         searchAdapter = new SearchAdapter(getContext());
         searchResultsListView.setAdapter(searchAdapter);
@@ -161,7 +162,7 @@ public class SearchFragment extends SearchFunctionalFragment implements SearchVi
     }
 
     protected void initSearchModifiersView(View view) {
-        searchModifiersView = (RadioModifierView) view.findViewById(R.id.search_modifier_tabs);
+        searchModifiersView = view.findViewById(R.id.search_modifier_tabs);
         searchModifiersView.selectItem(RadioModifierView.ModifierButton.LEFT);
         searchModifiersView.setRadioNames(getString(R.string.global_search), getString(R.string.near_me_search));
         searchModifiersView.setSearchModifiersLViewListener(this);
@@ -169,7 +170,7 @@ public class SearchFragment extends SearchFunctionalFragment implements SearchVi
     }
 
     private void initSearchFieldView(View view) {
-        searchTextView = (EditText) view.findViewById(R.id.search_text);
+        searchTextView = view.findViewById(R.id.search_text);
 
         if (getArguments() != null) {
             setSearchFieldText(getArguments().getString(PASSED_TEXT));
@@ -376,7 +377,7 @@ public class SearchFragment extends SearchFunctionalFragment implements SearchVi
                 convertView = LayoutInflater.from(getContext()).inflate(android.R.layout.simple_list_item_1, parent, false);
             }
 
-            final TextView title = (TextView) convertView.findViewById(android.R.id.text1);
+            final TextView title = convertView.findViewById(android.R.id.text1);
             title.setText(formatResults(resultItem));
 
             return convertView;

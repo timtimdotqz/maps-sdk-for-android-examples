@@ -16,7 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 
 import com.tomtom.online.sdk.samples.R;
-import com.tomtom.online.sdk.samples.cases.FunctionalExamplesFactory;
+import com.tomtom.online.sdk.samples.cases.factory.FunctionalExamplesFactory;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 
 public class FunctionalExamplesNavigationManager implements NavigationView.OnNavigationItemSelectedListener {

@@ -63,5 +63,8 @@
     <dimen name="compass_bigger_margin_top">55dp</dimen>
     <dimen name="compass_default_margin_right">0dp</dimen>
     <dimen name="compass_default_margin_bottom">0dp</dimen>
+    <dimen name="mini_map_size">150dp</dimen>
+    <dimen name="mini_map_border">2dp</dimen>
+    <dimen name="mini_map_margin">10dp</dimen>
 
 </resources>

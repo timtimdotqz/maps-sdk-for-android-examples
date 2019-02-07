@@ -10,16 +10,8 @@
  */
 package com.tomtom.online.sdk.samples.cases.map.layers.shapes;
 
-import android.graphics.Color;
-
 import com.tomtom.online.sdk.common.location.LatLng;
-import com.tomtom.online.sdk.map.Circle;
-import com.tomtom.online.sdk.map.CircleBuilder;
 import com.tomtom.online.sdk.map.MapConstants;
-import com.tomtom.online.sdk.map.Polygon;
-import com.tomtom.online.sdk.map.PolygonBuilder;
-import com.tomtom.online.sdk.map.Polyline;
-import com.tomtom.online.sdk.map.PolylineBuilder;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.TomtomMapCallback;
 import com.tomtom.online.sdk.samples.R;
@@ -35,7 +27,9 @@ import java.util.Random;
 public class ShapesCustomPresenter extends BaseFunctionalExamplePresenter {
 
     private static final int TOAST_DURATION = 2000; //milliseconds
-    private final int POLYLINE_POINTS = 24;
+    private final static int POLYLINE_POINTS = 24;
+
+    private ShapesDrawer shapesDrawer;
 
     @Override
     public void bind(final FunctionalExampleFragment view, final TomtomMap map) {
@@ -43,12 +37,14 @@ public class ShapesCustomPresenter extends BaseFunctionalExamplePresenter {
         if (!view.isMapRestored()) {
             centerMapOnLocation();
         }
+        shapesDrawer = new ShapesDrawer(tomtomMap);
 
         //tag::doc_register_shape_listeners[]
         tomtomMap.addOnCircleClickListener(onCircleClickListener);
         tomtomMap.addOnPolygonClickListener(onPolygonClickListener);
         tomtomMap.addOnPolylineClickListener(onPolylineClickListener);
         //end::doc_register_shape_listeners[]
+
     }
 
     @Override
@@ -74,47 +70,25 @@ public class ShapesCustomPresenter extends BaseFunctionalExamplePresenter {
         cleanup();
         centerMapOnLocation();
         List<LatLng> coordinates = randomCoordinates(Locations.AMSTERDAM_LOCATION, 360.0f);
-        int color = randomColor();
 
-        //tag::doc_shape_polygon[]
-        Polygon polygon = PolygonBuilder.create()
-                .coordinates(coordinates)
-                .color(color)
-                .build();
-        tomtomMap.getOverlaySettings().addOverlay(polygon);
+        shapesDrawer.drawShapePolygon(coordinates);
         //end::doc_shape_polygon[]
     }
-
+//
     public void drawShapePolyline() {
         cleanup();
         centerMapOnLocation();
         List<LatLng> coordinates = randomCoordinates(Locations.AMSTERDAM_LOCATION, 270.0f);
-        int color = randomColor();
 
-        //tag::doc_shape_polyline[]
-        Polyline polyline = PolylineBuilder.create()
-                .coordinates(coordinates)
-                .color(color)
-                .build();
-        tomtomMap.getOverlaySettings().addOverlay(polyline);
-        //end::doc_shape_polyline[]
+        shapesDrawer.drawShapePolyline(coordinates);
     }
 
     public void drawShapeCircle() {
         cleanup();
         centerMapOnLocation();
-        int color = randomColor();
-        LatLng position = Locations.AMSTERDAM_LOCATION;
-        double radius = 5000.0;
 
         //tag::doc_shape_circle[]
-        Circle circle = CircleBuilder.create()
-                .fill(true)
-                .radius(radius)
-                .position(position)
-                .color(color)
-                .build();
-        tomtomMap.getOverlaySettings().addOverlay(circle);
+        shapesDrawer.drawShapeCircle();
         //end::doc_shape_circle[]
     }
 
@@ -149,12 +123,6 @@ public class ShapesCustomPresenter extends BaseFunctionalExamplePresenter {
 
     private float suitableRadiusToZoomLevel() {
         return 128.0f / (1 << ((int)tomtomMap.getUiSettings().getCameraPosition().getZoom()));
-    }
-
-    private int randomColor() {
-        Random random = new Random();
-        int alpha = random.nextInt(255), red = random.nextInt(255), green = random.nextInt(255), blue = random.nextInt(255);
-        return Color.argb(alpha, red, green, blue);
     }
 
     private float randomRation() {

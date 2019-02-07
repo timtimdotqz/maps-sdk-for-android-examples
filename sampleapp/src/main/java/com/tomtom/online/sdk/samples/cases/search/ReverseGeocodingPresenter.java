@@ -12,12 +12,7 @@ package com.tomtom.online.sdk.samples.cases.search;
 
 import android.content.Context;
 
-import com.google.common.base.Strings;
-import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.map.MapConstants;
-import com.tomtom.online.sdk.map.Marker;
-import com.tomtom.online.sdk.map.MarkerBuilder;
-import com.tomtom.online.sdk.map.SimpleMarkerBalloon;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.TomtomMapCallback;
 import com.tomtom.online.sdk.samples.R;
@@ -25,29 +20,23 @@ import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
-import com.tomtom.online.sdk.search.OnlineSearchApi;
-import com.tomtom.online.sdk.search.SearchApi;
 import com.tomtom.online.sdk.search.api.SearchError;
 import com.tomtom.online.sdk.search.api.revgeo.RevGeoSearchResultListener;
-import com.tomtom.online.sdk.search.data.common.Address;
-import com.tomtom.online.sdk.search.data.reversegeocoder.ReverseGeocoderSearchQuery;
-import com.tomtom.online.sdk.search.data.reversegeocoder.ReverseGeocoderSearchQueryBuilder;
 import com.tomtom.online.sdk.search.data.reversegeocoder.ReverseGeocoderSearchResponse;
 
-import io.reactivex.functions.Consumer;
-import timber.log.Timber;
-
-public class ReverseGeocodingPresenter extends BaseFunctionalExamplePresenter {
+public class ReverseGeocodingPresenter extends BaseFunctionalExamplePresenter implements RevGeoSearchResultListener {
 
     private ReverseGeoMarker revGeoMarker;
+    private ReverseGeocodingRequester revGeoSearch;
     protected Context context;
 
     private final TomtomMapCallback.OnMapLongClickListener onMapLongClickListener =
             latLng -> {
-                    revGeoMarker = new ReverseGeoMarker(getContext(), tomtomMap);
+                revGeoMarker = new ReverseGeoMarker(getContext(), tomtomMap);
                 tomtomMap.removeMarkers();
-                    revGeoMarker.createMarker(latLng);
-                    reverseGeocode(latLng);
+                revGeoMarker.createMarker(latLng);
+                revGeoSearch = new ReverseGeocodingRequester(context, this);
+                revGeoSearch.performReverseGeocode(latLng);
             };
 
     private final TomtomMapCallback.OnMarkerClickListener onMarkerClickListener = marker -> tomtomMap.centerOn(marker.getPosition());
@@ -86,44 +75,14 @@ public class ReverseGeocodingPresenter extends BaseFunctionalExamplePresenter {
         tomtomMap.addOnMapLongClickListener(onMapLongClickListener);
     }
 
-    protected SearchApi createSearchAPI() {
-        //tag::doc_create_search_object[]
-        SearchApi searchApi = OnlineSearchApi.create(context);
-        //end::doc_create_search_object[]
-        return searchApi;
+    @Override
+    public void onSearchResult(ReverseGeocoderSearchResponse response) {
+        String address = new AddressResponseFormatter(context).format(response);
+        revGeoMarker.updateMarkerBalloon(address);
     }
 
-    protected ReverseGeocoderSearchQuery createReverseGeocoderQuery(LatLng latLng) {
-        return ReverseGeocoderSearchQueryBuilder.create(latLng.getLatitude(), latLng.getLongitude()).build();
+    @Override
+    public void onSearchError(SearchError error) {
+        revGeoMarker.updateMarkerBalloon(context.getString(R.string.reverse_geocoding_error));
     }
-
-    protected void reverseGeocode(LatLng latLng) {
-
-        //tag::doc_reverse_geocoding_request[]
-        SearchApi searchAPI = createSearchAPI();
-        ReverseGeocoderSearchQuery reverseGeocoderQuery =
-                createReverseGeocoderQuery(latLng);
-
-        searchAPI.reverseGeocoding(reverseGeocoderQuery, new RevGeoSearchResultListener() {
-            @Override
-            public void onSearchResult(ReverseGeocoderSearchResponse response) {
-                String address = new AddressResponseFormatter(getContext()).format(response);
-                revGeoMarker.updateMarkerBalloon(address);
-            }
-
-            @Override
-            public void onSearchError(SearchError error) {
-                revGeoMarker.updateMarkerBalloon(context.getString(R.string.reverse_geocoding_error));
-            }
-        });
-        //end::doc_reverse_geocoding_request[]
-        //tag::doc_reverse_geocoding_request_rx[]
-        searchAPI.reverseGeocoding(reverseGeocoderQuery).subscribe(response -> {
-            Timber.i("Response address " + response.getSummary());
-        }, throwable -> {
-            Timber.i(throwable, "reverseGeocoding error ");
-        });
-        //end::doc_reverse_geocoding_request_rx[]
-    }
-
 }

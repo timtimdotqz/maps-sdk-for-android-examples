@@ -48,15 +48,11 @@ public class RouteCustomizationPresenter extends RoutePlannerPresenter {
 
     @VisibleForTesting
     protected RouteQuery getRouteQuery() {
-        return RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
+        AmsterdamToRotterdamRouteConfig routeConfig = new AmsterdamToRotterdamRouteConfig();
+        return RouteQueryBuilder.create(routeConfig.getOrigin(), routeConfig.getDestination())
                 .withMaxAlternatives(0)
                 .withConsiderTraffic(false)
                 .build();
-    }
-
-    @Override
-    public RouteConfigExample getRouteConfig() {
-        return new AmsterdamToRotterdamRouteConfig();
     }
 
     public void startRoutingWithCustomRoute() {

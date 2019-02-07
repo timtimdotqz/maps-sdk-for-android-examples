@@ -40,7 +40,9 @@
     <string name="menu_markers_balloons">Balloons</string>
     <string name="menu_map_centering">Map centering</string>
     <string name="reverse_geocoding_title">Reverse geocoding</string>
+    <string name="polygons_reverse_geocoding_title">Polygons for rev geo</string>
     <string name="reverse_geocoding_subtitle">Drop a pin</string>
+    <string name="reverse_geocoding_polygon_subtitle">Drop a pin to get a polygon</string>
     <string name="about_menu">About</string>
     <string name="static_image_title">Static map image</string>
     <string name="static_image_help">Press map image for details</string>

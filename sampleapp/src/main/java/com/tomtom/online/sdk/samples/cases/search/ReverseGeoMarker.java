@@ -11,6 +11,8 @@
 package com.tomtom.online.sdk.samples.cases.search;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.map.Marker;
@@ -19,7 +21,7 @@ import com.tomtom.online.sdk.map.SimpleMarkerBalloon;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.samples.R;
 
-class ReverseGeoMarker {
+public class ReverseGeoMarker {
 
     private final Context context;
     private final TomtomMap tomtomMap;
@@ -29,10 +31,16 @@ class ReverseGeoMarker {
     public ReverseGeoMarker(Context context, TomtomMap tomtomMap) {
         this.context = context;
         this.tomtomMap = tomtomMap;
-        balloon = new SimpleMarkerBalloon("Welcome to TomTom");
+        balloon = createSimpleMarkerBallon();
     }
 
-    void createMarker(LatLng latLng) {
+    @NonNull
+    @VisibleForTesting
+    SimpleMarkerBalloon createSimpleMarkerBallon() {
+        return new SimpleMarkerBalloon("Welcome to TomTom");
+    }
+
+    public void createMarker(LatLng latLng) {
         MarkerBuilder markerBuilder = new MarkerBuilder(latLng).markerBalloon(balloon);
         balloon.setText(context.getString(R.string.reverse_geocoding_fetching));
         marker = tomtomMap.addMarker(markerBuilder);

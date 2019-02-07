@@ -16,6 +16,8 @@ import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
 
 public class VectorTrafficLayersFragment extends ExampleFragment<VectorTrafficLayersPresenter> {
 
+    ButtonStrategy buttonPressStrategy = new ButtonStrategy.NoPressAnyButtons();
+
     @Override
     protected VectorTrafficLayersPresenter createPresenter() {
         return new VectorTrafficLayersPresenter();
@@ -27,29 +29,15 @@ public class VectorTrafficLayersFragment extends ExampleFragment<VectorTrafficLa
         view.addOption(getString(R.string.traffic_incidents));
         view.addOption(getString(R.string.traffic_flow));
         view.addOption(getString(R.string.traffic_off_btn));
-        optionsView.selectItem(2, true);
+        optionsView.selectLast();
+        if (presenter instanceof TrafficPresenter){
+            buttonPressStrategy = new LastButtonPressedByDefault(presenter, optionsView);
+        }
     }
 
     @Override
     public void onChange(boolean[] oldValues, boolean[] newValues) {
-        if(!oldValues[2] && newValues[2]) {
-            optionsView.selectItem(0, false);
-            optionsView.selectItem(1, false);
-            optionsView.selectItem(2, true);
-            presenter.hideTrafficInformation();
-        } else if(newValues[0] && newValues[1]) {
-            optionsView.selectItem(2, false);
-            presenter.showTrafficFlowAndIncidentsTiles();
-        } else if (newValues[0]) {
-            optionsView.selectItem(2, false);
-            presenter.showTrafficIncidents();
-        } else if (newValues[1]) {
-            optionsView.selectItem(2, false);
-            presenter.showTrafficFlowTiles();
-        } else {
-            presenter.hideTrafficInformation();
-            optionsView.selectItem(2, true);
-        }
+        buttonPressStrategy.manageButtons(oldValues, newValues);
     }
 
     @Override

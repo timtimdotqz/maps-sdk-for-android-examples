@@ -5,7 +5,7 @@ ext {
     releaseProps.load(new FileInputStream("release.properties"))
 
     androidBuildToolsVersion = '28.0.3'
-    androidCompileSdkVersion = 27
+    androidCompileSdkVersion = 28
     androidTargetSdkVersion = 26
     libraryMinSdkVersion = 16
     xplorerMinSdkVersion = 16

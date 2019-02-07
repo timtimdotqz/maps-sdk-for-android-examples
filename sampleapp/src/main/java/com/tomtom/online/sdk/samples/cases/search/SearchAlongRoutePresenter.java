@@ -11,41 +11,24 @@
 package com.tomtom.online.sdk.samples.cases.search;
 
 import android.content.Context;
-import android.widget.Toast;
 
-import com.tomtom.online.sdk.common.location.LatLng;
-import com.tomtom.online.sdk.map.MarkerBuilder;
-import com.tomtom.online.sdk.map.SimpleMarkerBalloon;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.routing.data.FullRoute;
-import com.tomtom.online.sdk.routing.data.InstructionsType;
-import com.tomtom.online.sdk.routing.data.Report;
 import com.tomtom.online.sdk.routing.data.RouteQuery;
-import com.tomtom.online.sdk.routing.data.RouteQueryBuilder;
-import com.tomtom.online.sdk.routing.data.RouteType;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.RoutePlannerPresenter;
 import com.tomtom.online.sdk.samples.cases.RoutingUiListener;
+import com.tomtom.online.sdk.samples.cases.route.RouteQueryFactory;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.routes.AmsterdamToHaarlemRouteConfig;
-import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
-import com.tomtom.online.sdk.search.OnlineSearchApi;
-import com.tomtom.online.sdk.search.SearchApi;
-import com.tomtom.online.sdk.search.api.SearchError;
-import com.tomtom.online.sdk.search.api.alongroute.AlongRouteSearchResultListener;
-import com.tomtom.online.sdk.search.data.alongroute.AlongRouteSearchQueryBuilder;
-import com.tomtom.online.sdk.search.data.alongroute.AlongRouteSearchResponse;
-import com.tomtom.online.sdk.search.data.alongroute.AlongRouteSearchResult;
 
 import timber.log.Timber;
 
 public class SearchAlongRoutePresenter extends RoutePlannerPresenter {
 
-    private static final int SEARCH_MAX_DETOUR_TIME = 3600;
-    private static final int SEARCH_MAX_LIMIT = 10;
-
     protected Context context;
     protected FunctionalExampleFragment fragment;
+    private SearchAlongRouteRequester searchRequester;
 
     public SearchAlongRoutePresenter(RoutingUiListener viewModel) {
         super(viewModel);
@@ -56,6 +39,8 @@ public class SearchAlongRoutePresenter extends RoutePlannerPresenter {
         super.bind(view, map);
         context = view.getContext();
         fragment = view;
+
+        searchRequester = new SearchAlongRouteRequester(view.getContext(), new SearchAlongRouteResultDisplay(tomtomMap, view));
         displayRoute();
     }
 
@@ -71,17 +56,7 @@ public class SearchAlongRoutePresenter extends RoutePlannerPresenter {
     }
 
     protected RouteQuery getRouteQuery() {
-        RouteQuery queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
-                .withMaxAlternatives(0)
-                .withReport(Report.EFFECTIVE_SETTINGS)
-                .withInstructionsType(InstructionsType.TEXT)
-                .withRouteType(RouteType.FASTEST).build();
-        return queryBuilder;
-    }
-
-    @Override
-    public RouteConfigExample getRouteConfig() {
-        return new AmsterdamToHaarlemRouteConfig();
+        return RouteQueryFactory.createRouteForAlongRouteSearch(new AmsterdamToHaarlemRouteConfig());
     }
 
     public void performSearch(String term) {
@@ -89,47 +64,12 @@ public class SearchAlongRoutePresenter extends RoutePlannerPresenter {
         fragment.disableOptionsView();
 
         if (routesMap.isEmpty()) {
-            Timber.d("performSearch(): no routes available");
+            Timber.d("performSearch(): no routes available for term " + term);
             return;
         }
 
         FullRoute route = (FullRoute) routesMap.values().toArray()[0];
 
-        //tag::doc_search_along_route_request[]
-        AlongRouteSearchQueryBuilder query = new AlongRouteSearchQueryBuilder(
-                term,
-                route.getCoordinates(),
-                SEARCH_MAX_DETOUR_TIME
-        );
-        query.withLimit(SEARCH_MAX_LIMIT);
-
-        SearchApi searchAPI = OnlineSearchApi.create(context);
-        searchAPI.alongRouteSearch(query.build(), alongRouteSearchCallback);
-        //end::doc_search_along_route_request[]
+        searchRequester.performSearch(term, route);
     }
-
-    private AlongRouteSearchResultListener alongRouteSearchCallback = new AlongRouteSearchResultListener() {
-        @Override
-        public void onSearchResult(AlongRouteSearchResponse alongRouteSearchResponse) {
-            tomtomMap.getMarkerSettings().removeMarkers();
-            for (AlongRouteSearchResult result : alongRouteSearchResponse.getResults()) {
-                createMarker(result.getPoi().getName(), result.getPosition());
-            }
-            fragment.enableOptionsView();
-        }
-
-        @Override
-        public void onSearchError(SearchError error) {
-            view.showInfoText(error.getMessage(), Toast.LENGTH_LONG);
-            tomtomMap.getMarkerSettings().removeMarkers();
-            fragment.enableOptionsView();
-        }
-    };
-
-    private void createMarker(String name, LatLng position) {
-        MarkerBuilder markerBuilder = new MarkerBuilder(position)
-                .markerBalloon(new SimpleMarkerBalloon(name));
-        tomtomMap.addMarker(markerBuilder);
-    }
-
 }

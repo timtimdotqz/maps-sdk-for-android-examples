@@ -15,13 +15,11 @@ import android.support.annotation.VisibleForTesting;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.routing.data.FullRoute;
 import com.tomtom.online.sdk.routing.data.Instruction;
-import com.tomtom.online.sdk.routing.data.InstructionsType;
-import com.tomtom.online.sdk.routing.data.Report;
 import com.tomtom.online.sdk.routing.data.RouteQuery;
-import com.tomtom.online.sdk.routing.data.RouteQueryBuilder;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.RoutePlannerPresenter;
 import com.tomtom.online.sdk.samples.cases.RoutingUiListener;
+import com.tomtom.online.sdk.samples.cases.route.RouteQueryFactory;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.routes.AmsterdamToBerlinRouteConfig;
 import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
@@ -42,11 +40,6 @@ public class ManeuversPresenter extends RoutePlannerPresenter {
         super.bind(view, map);
         maneuversFragment = (ManeuversFragment) view;
         maneuversFragment.onMapReady();
-    }
-
-    @Override
-    public RouteConfigExample getRouteConfig() {
-        return new AmsterdamToBerlinRouteConfig();
     }
 
     @Override
@@ -71,13 +64,6 @@ public class ManeuversPresenter extends RoutePlannerPresenter {
 
     @VisibleForTesting
     protected RouteQuery getRouteQuery(String language) {
-        //tag::doc_route_language[]
-        RouteQuery queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
-                .withLanguage(language)
-                .withReport(Report.EFFECTIVE_SETTINGS)
-                .withInstructionsType(InstructionsType.TEXT)
-                .withConsiderTraffic(false).build();
-        //end::doc_route_language[]
-        return queryBuilder;
+        return RouteQueryFactory.createRouteManeuversQuery(language, new AmsterdamToBerlinRouteConfig());
     }
 }

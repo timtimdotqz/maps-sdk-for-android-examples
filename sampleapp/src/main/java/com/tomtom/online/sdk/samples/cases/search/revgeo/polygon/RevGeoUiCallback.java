@@ -8,17 +8,8 @@
  * licensee then you are not authorised to use this software in any manner and should
  * immediately return it to TomTom N.V.
  */
-package com.tomtom.online.sdk.samples.utils;
+package com.tomtom.online.sdk.samples.cases.search.revgeo.polygon;
 
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
-
-public class DimensionUtils {
-
-    public static int fromDpToPx(float value, DisplayMetrics displayMetrics) {
-       return  (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                value, displayMetrics);
-    }
-
+public interface RevGeoUiCallback {
+    void updateUiWithResponse(RevGeoWithAdpResponse revGeoWithAdpResponse);
 }

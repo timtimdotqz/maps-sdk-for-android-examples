@@ -24,15 +24,15 @@ import timber.log.Timber;
 
 public class CsvLocationsProvider implements LocationsProvider {
 
-    private final int TIME_COL_IDX = 0;
-    private final int PROVIDER_COL_IDX = 1;
-    private final int LATITUDE_COL_IDX = 2;
-    private final int LONGITUDE_COL_IDX = 3;
-    private final int ACCURACY_COL_IDX = 4;
-    private final int BEARING_COL_IDX = 5;
-    private final int SPEED_COL_IDX = 7;
-    private final int ALTITUDE_COL_IDX = 9;
-    private final String CSV_SEPARATOR = ",";
+    private final static int TIME_COL_IDX = 0;
+    private final static int PROVIDER_COL_IDX = 1;
+    private final static int LATITUDE_COL_IDX = 2;
+    private final static int LONGITUDE_COL_IDX = 3;
+    private final static int ACCURACY_COL_IDX = 4;
+    private final static int BEARING_COL_IDX = 5;
+    private final static int SPEED_COL_IDX = 7;
+    private final static int ALTITUDE_COL_IDX = 9;
+    private final static String CSV_SEPARATOR = ",";
     private final Context context;
     private final String assetFileName;
     private final int numberOfHeaderLines;
@@ -51,7 +51,7 @@ public class CsvLocationsProvider implements LocationsProvider {
 
     private List<Location> parseFromAssets() {
 
-        List result = new ArrayList<Location>();
+        List<Location> result = new ArrayList<>();
 
         try (InputStream fileStream = context.getAssets().open(assetFileName);
              BufferedReader fileReader = new BufferedReader(new InputStreamReader(fileStream))) {

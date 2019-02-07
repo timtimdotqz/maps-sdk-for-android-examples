@@ -10,7 +10,6 @@
  */
 package com.tomtom.online.sdk.samples.cases.search;
 
-
 import android.support.annotation.VisibleForTesting;
 
 import com.tomtom.online.sdk.common.location.LatLng;

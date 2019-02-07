@@ -90,15 +90,18 @@ public class AboutFragment extends Fragment implements FunctionalExampleFragment
         List<String> modules = new ArrayList<>();
         try {
             String[] list = getContext().getAssets().list(dir);
+            if (list == null) {
+                return modules;
+            }
             for (String file : list) {
                 String module = file.replace(HTML_EXT, "");
                 Timber.d("module name loaded " + module);
                 modules.add(module);
             }
-            return ImmutableList.<String>copyOf(modules);
+            return ImmutableList.copyOf(modules);
         } catch (IOException e) {
             Timber.e(e);
-            return ImmutableList.<String>of();
+            return ImmutableList.of();
         }
     }
 

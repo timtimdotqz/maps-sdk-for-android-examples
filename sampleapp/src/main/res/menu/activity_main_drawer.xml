@@ -45,6 +45,11 @@
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/menu_static_image" />
 
+            <item
+                android:id="@+id/map_multiple_maps"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/multiple_maps" />
+
         </menu>
     </item>
 
@@ -247,6 +252,11 @@
                 android:id="@+id/reverse_geocoding"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/reverse_geocoding" />
+
+            <item
+                android:id="@+id/polygon_reverse_geocoding"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/polygons_reverse_geocoding_title" />
 
             <item
                 android:id="@+id/search_along_route"

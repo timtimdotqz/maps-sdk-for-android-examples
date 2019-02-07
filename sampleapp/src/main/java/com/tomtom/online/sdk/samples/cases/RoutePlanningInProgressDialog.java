@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.tomtom.online.sdk.samples.R;
@@ -24,7 +25,7 @@ import timber.log.Timber;
 
 public class RoutePlanningInProgressDialog extends DialogFragment {
 
-    public static final String ROUTING_IN_PROGRESS_DIALOG_TAG = "ROUTING_IN_PROGRESS";
+    public static final String OPERATION_IN_PROGRESS_DIALOG_TAG = "OPERATION_IN_PROGRESS";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,12 +47,24 @@ public class RoutePlanningInProgressDialog extends DialogFragment {
         if (manager == null) {
             return;
         }
+        removeDialogFragment(manager);
+        showWhenNotAdded(manager);
+    }
+
+    void showWhenNotAdded(FragmentManager manager) {
         if (!isAdded()) {
             try {
-                super.show(manager, ROUTING_IN_PROGRESS_DIALOG_TAG);
+                super.show(manager, OPERATION_IN_PROGRESS_DIALOG_TAG);
             } catch (IllegalStateException e) {
                 Timber.d(e, "dialog not displayed problem with support library");
             }
+        }
+    }
+
+    void removeDialogFragment(FragmentManager manager) {
+        final Fragment fragment = manager.findFragmentByTag(OPERATION_IN_PROGRESS_DIALOG_TAG);
+        if (fragment != null) {
+            getFragmentManager().beginTransaction().remove(fragment).commit();
         }
     }
 

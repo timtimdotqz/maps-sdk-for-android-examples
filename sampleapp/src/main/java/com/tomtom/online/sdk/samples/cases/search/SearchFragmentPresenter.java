@@ -13,7 +13,6 @@ package com.tomtom.online.sdk.samples.cases.search;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,48 +21,43 @@ import com.google.common.collect.ImmutableList;
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.common.location.LatLngAcc;
 import com.tomtom.online.sdk.common.util.Contextable;
-import com.tomtom.online.sdk.location.LocationRequestsFactory;
-import com.tomtom.online.sdk.location.LocationSource;
-import com.tomtom.online.sdk.location.LocationSourceFactory;
 import com.tomtom.online.sdk.location.LocationUpdateListener;
-import com.tomtom.online.sdk.location.Locations;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQueryBuilder;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQuery;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResponse;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResult;
-import com.tomtom.online.sdk.search.extensions.SearchService;
-import com.tomtom.online.sdk.search.extensions.SearchServiceConnectionCallback;
-import com.tomtom.online.sdk.common.rx.RxContext;
 
-import java.util.concurrent.Executors;
+import java.io.Serializable;
 
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class SearchFragmentPresenter implements SearchPresenter, LocationUpdateListener, SearchServiceConnectionCallback, Contextable, RxContext {
+public class SearchFragmentPresenter implements SearchPresenter, LocationUpdateListener, Contextable {
 
     protected final static String LAST_SEARCH_QUERY_BUNDLE_KEY = "LAST_SEARCH_QUERY_BUNDLE_KEY";
     public static final int STANDARD_RADIUS = 30 * 1000; //30 km
-    private static final int NETWORK_THREADS_NUMBER = 4;
 
     protected SearchView searchView;
-    protected SearchService searchService;
     protected ImmutableList<FuzzySearchResult> lastSearchResult;
 
-    protected LocationSource locationSource;
+    private SearchFragmentService searchFragmentService;
+    private LocationProvider locationProvider;
+
 
     public SearchFragmentPresenter(SearchView searchView) {
         Timber.d("SearchFragmentPresenter()");
         this.searchView = searchView;
+        this.searchFragmentService = new SearchFragmentService();
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            lastSearchResult =  (ImmutableList<FuzzySearchResult>) savedInstanceState.getSerializable(LAST_SEARCH_QUERY_BUNDLE_KEY);
+            Serializable serializable = savedInstanceState.getSerializable(LAST_SEARCH_QUERY_BUNDLE_KEY);
+            if (serializable instanceof ImmutableList) {
+                lastSearchResult = (ImmutableList<FuzzySearchResult>) serializable;
+            }
             if (lastSearchResult != null) {
                 searchView.updateSearchResults(lastSearchResult);
             }
@@ -73,16 +67,7 @@ public class SearchFragmentPresenter implements SearchPresenter, LocationUpdateL
     @Override
     public void onCreate(Context context) {
         Timber.d("onCreate()");
-        locationSource = getLocationSource(context);
-    }
-
-    @NonNull
-    public LocationSource getLocationSource(Context context) {
-        return new LocationSourceFactory().createDefaultLocationSource(
-                context,
-                this,
-                LocationRequestsFactory.create().createSearchLocationRequest()
-        );
+        locationProvider = new LocationProvider(context, this);
     }
 
 
@@ -90,7 +75,7 @@ public class SearchFragmentPresenter implements SearchPresenter, LocationUpdateL
     public void onResume() {
         Timber.d("onResume()");
         //tag::doc_location_source_activation[]
-        locationSource.activate();
+        locationProvider.activateLocationSource();
         //end::doc_location_source_activation[]
     }
 
@@ -98,7 +83,7 @@ public class SearchFragmentPresenter implements SearchPresenter, LocationUpdateL
     public void onPause() {
         Timber.d("onPause()");
         //tag::doc_location_source_deactivation[]
-        locationSource.deactivate();
+        locationProvider.deactivateLocationSource();
         //end::doc_location_source_deactivation[]
     }
 
@@ -132,7 +117,7 @@ public class SearchFragmentPresenter implements SearchPresenter, LocationUpdateL
             return;
         }
 
-        performSearch(createQueryWithPosition(text, getLastKnownPosition()));
+        performSearch(createQueryWithPosition(text, locationProvider.getLastKnownPosition()));
     }
 
 
@@ -156,31 +141,28 @@ public class SearchFragmentPresenter implements SearchPresenter, LocationUpdateL
 
         lastSearchResult = null;
 
-        //tag::doc_perform_search[]
-        getSearchProvider()
-                .search(query)
-                .subscribeOn(getWorkingScheduler())
-                .observeOn(getResultScheduler())
-                .subscribe(new DisposableSingleObserver<FuzzySearchResponse>() {
-                    @Override
-                    public void onSuccess(FuzzySearchResponse fuzzySearchResponse) {
-                        lastSearchResult = fuzzySearchResponse.getResults();
-                        searchView.updateSearchResults(fuzzySearchResponse.getResults());
-                        searchFinished();
-                    }
+        searchFragmentService.performSearch(query,
+                //tag::doc_create_search_callback[]
+                new DisposableSingleObserver<FuzzySearchResponse>() {
+            @Override
+            public void onSuccess(FuzzySearchResponse fuzzySearchResponse) {
+                lastSearchResult = fuzzySearchResponse.getResults();
+                searchView.updateSearchResults(fuzzySearchResponse.getResults());
+                searchFinished();
+            }
 
-                    @Override
-                    public void onError(Throwable throwable) {
-                        searchView.showSearchFailedMessage(throwable.getMessage());
-                        searchView.updateSearchResults(ImmutableList.<FuzzySearchResult>of());
-                        searchFinished();
-                    }
-                });
-        //end::doc_perform_search[]
+            @Override
+            public void onError(Throwable throwable) {
+                searchView.showSearchFailedMessage(throwable.getMessage());
+                searchView.updateSearchResults(ImmutableList.of());
+                searchFinished();
+            }
+            //end::doc_create_search_callback[]
+        });
     }
 
-    protected SearchService getSearchProvider() {
-        return searchService;
+    protected SearchFragmentService getSearchFragmentService() {
+        return searchFragmentService;
     }
 
     protected FuzzySearchQuery createSimpleQuery(String text) {
@@ -215,11 +197,7 @@ public class SearchFragmentPresenter implements SearchPresenter, LocationUpdateL
 
     @Override
     public LatLng getLastKnownPosition() {
-        Location location = locationSource.getLastKnownLocation();
-        if (location == null) {
-            location = Locations.AMSTERDAM;
-        }
-        return new LatLng(location);
+        return locationProvider.getLastKnownPosition();
     }
 
     @Override
@@ -247,34 +225,13 @@ public class SearchFragmentPresenter implements SearchPresenter, LocationUpdateL
         searchView.refreshSearchResults();
     }
 
-    //tag::doc_search_service_connection_callback[]
-    @Override
-    public void onBindSearchService(SearchService service) {
-        searchService = service;
-    }
-    //end::doc_search_service_connection_callback[]
-
     public void cancelPreviousSearch() {
-        //tag::doc_cancel_search[]
-        getSearchProvider().cancelSearchIfRunning();
-        //end::doc_cancel_search[]
+        searchFragmentService.cancelSearchIfRunning();
     }
 
     @Override
     public Context getContext() {
         return searchView.getContext();
-    }
-
-    @NonNull
-    @Override
-    public Scheduler getWorkingScheduler() {
-        return Schedulers.from(Executors.newFixedThreadPool(NETWORK_THREADS_NUMBER));
-    }
-
-    @NonNull
-    @Override
-    public Scheduler getResultScheduler() {
-        return AndroidSchedulers.mainThread();
     }
 
 }

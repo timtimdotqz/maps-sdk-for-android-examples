@@ -55,11 +55,6 @@ public class RouteWaypointsPresenter extends RoutePlannerPresenter {
         return new RouteWaypointsFunctionalExample();
     }
 
-    @Override
-    public RouteConfigExample getRouteConfig() {
-        return new AmsterdamToBerlinRouteConfig();
-    }
-
     public void bestOrder() {
         clearMap();
         addDefaultWaypoints();
@@ -113,9 +108,10 @@ public class RouteWaypointsPresenter extends RoutePlannerPresenter {
 
     @VisibleForTesting
     protected RouteQuery getRouteQuery(boolean computeBestOrder) {
+        AmsterdamToBerlinRouteConfig routeConfig = new AmsterdamToBerlinRouteConfig();
         //tag::doc_route_waypoints[]
         LatLng[] wayPointsArray = wayPoints.toArray(new LatLng[wayPoints.size()]);
-        RouteQuery routeQuery = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
+        RouteQuery routeQuery = RouteQueryBuilder.create(routeConfig.getOrigin(), routeConfig.getDestination())
                 .withWayPoints(wayPointsArray)
                 .withComputeBestOrder(computeBestOrder)
                 .withConsiderTraffic(false).build();

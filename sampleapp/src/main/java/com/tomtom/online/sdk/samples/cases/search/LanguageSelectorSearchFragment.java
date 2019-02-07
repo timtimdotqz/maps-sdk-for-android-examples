@@ -32,7 +32,7 @@ public class LanguageSelectorSearchFragment extends SearchFragment {
 
     @Override
     protected void initSearchModifiersView(View view) {
-        searchModifiersView = (RadioModifierView) view.findViewById(R.id.search_modifier_tabs);
+        searchModifiersView = view.findViewById(R.id.search_modifier_tabs);
         searchModifiersView.setRadioNames(
                 LanguageSelector.EN.getDecoratedName(),
                 LanguageSelector.FR.getDecoratedName(),

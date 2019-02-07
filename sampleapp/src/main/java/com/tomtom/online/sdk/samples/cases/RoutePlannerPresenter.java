@@ -252,8 +252,4 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
         float batteryConsumption = route.getSummary().getBatteryConsumptionInkWh();
         return Math.max(fuelConsumption, batteryConsumption);
     }
-
-
-    public abstract RouteConfigExample getRouteConfig();
-
 }

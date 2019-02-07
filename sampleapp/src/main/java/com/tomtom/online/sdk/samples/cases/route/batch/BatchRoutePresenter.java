@@ -21,10 +21,7 @@ import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.TomtomMapCallback;
 import com.tomtom.online.sdk.routing.data.Avoid;
 import com.tomtom.online.sdk.routing.data.FullRoute;
-import com.tomtom.online.sdk.routing.data.InstructionsType;
-import com.tomtom.online.sdk.routing.data.Report;
 import com.tomtom.online.sdk.routing.data.RouteQuery;
-import com.tomtom.online.sdk.routing.data.RouteQueryBuilder;
 import com.tomtom.online.sdk.routing.data.RouteResponse;
 import com.tomtom.online.sdk.routing.data.RouteType;
 import com.tomtom.online.sdk.routing.data.TravelMode;
@@ -35,6 +32,7 @@ import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.RoutePlannerPresenter;
 import com.tomtom.online.sdk.samples.cases.RoutingUiListener;
+import com.tomtom.online.sdk.samples.cases.route.RouteQueryFactory;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.routes.AmsterdamToOsloRouteConfig;
 import com.tomtom.online.sdk.samples.routes.AmsterdamToRotterdamRouteConfig;
@@ -163,12 +161,7 @@ public class BatchRoutePresenter extends RoutePlannerPresenter {
     @NonNull
     private RouteQuery getTravelModeQuery(TravelMode travelMode) {
         //tag::doc_common_params_for_travel_mode[]
-        return RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
-                .withTravelMode(travelMode).withMaxAlternatives(0)
-                .withReport(Report.EFFECTIVE_SETTINGS)
-                .withInstructionsType(InstructionsType.TEXT)
-                .withConsiderTraffic(false)
-                .build();
+        return RouteQueryFactory.createRouteTravelModesQuery(travelMode, getRouteConfig());
         //end::doc_common_params_for_travel_mode[]
     }
 
@@ -184,12 +177,7 @@ public class BatchRoutePresenter extends RoutePlannerPresenter {
 
     @NonNull
     private RouteQuery getRouteTypeQuery(RouteType type) {
-        return RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination()).withRouteType(type)
-                .withMaxAlternatives(0)
-                .withReport(Report.EFFECTIVE_SETTINGS)
-                .withInstructionsType(InstructionsType.TEXT)
-                .withConsiderTraffic(false)
-                .build();
+        return RouteQueryFactory.createRouteTypesQuery(type, getRouteConfig());
     }
 
     @VisibleForTesting
@@ -204,20 +192,13 @@ public class BatchRoutePresenter extends RoutePlannerPresenter {
 
     @NonNull
     private RouteQuery getAvoidRouteQuery(Avoid avoidType) {
-        return RouteQueryBuilder.create(getRouteOsloConfig().getOrigin(), getRouteOsloConfig().getDestination())
-                .withAvoidType(avoidType)
-                .withMaxAlternatives(0)
-                .withReport(Report.NONE)
-                .withInstructionsType(InstructionsType.NONE)
-                .withConsiderTraffic(false)
-                .build();
+        return RouteQueryFactory.createAvoidRouteQuery(avoidType, getRouteOsloConfig());
     }
 
     public RouteConfigExample getRouteOsloConfig() {
         return new AmsterdamToOsloRouteConfig();
     }
 
-    @Override
     public RouteConfigExample getRouteConfig() {
         return new AmsterdamToRotterdamRouteConfig();
     }

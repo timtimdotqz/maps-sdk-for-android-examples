@@ -35,14 +35,13 @@ public class RandomizeInterpolator implements LocationInterpolator {
         double v = random.nextDouble();
         double w = radiusInDegrees * Math.sqrt(u);
         double t = 2 * Math.PI * v;
-        double x = w * Math.cos(t);
-        double y = w * Math.sin(t);
+        double new_x = Math.abs(w * Math.cos(t));
+        double new_y = Math.abs(w * Math.sin(t));
+        double yS = Math.sin(Math.toRadians(location.getBearing()));
+        double xS = - Math.cos(Math.toRadians(location.getBearing()));
 
-        // Adjust the x-coordinate for the shrinking of the east-west distances
-        double new_x = x / Math.cos(Math.toRadians(location.getLatitude()));
-
-        double foundLongitude = new_x + location.getLongitude();
-        double foundLatitude = y + location.getLatitude();
+        double foundLongitude = new_x * xS + location.getLongitude();
+        double foundLatitude = new_y * yS + location.getLatitude();
 
         result.setLatitude(foundLatitude);
         result.setLongitude(foundLongitude);

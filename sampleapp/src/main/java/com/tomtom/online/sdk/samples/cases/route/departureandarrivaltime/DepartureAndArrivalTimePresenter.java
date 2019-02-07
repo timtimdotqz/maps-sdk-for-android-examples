@@ -12,13 +12,11 @@ package com.tomtom.online.sdk.samples.cases.route.departureandarrivaltime;
 
 import android.support.annotation.VisibleForTesting;
 
-import com.tomtom.online.sdk.routing.data.InstructionsType;
-import com.tomtom.online.sdk.routing.data.Report;
 import com.tomtom.online.sdk.routing.data.RouteQuery;
-import com.tomtom.online.sdk.routing.data.RouteQueryBuilder;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.RoutePlannerPresenter;
 import com.tomtom.online.sdk.samples.cases.RoutingUiListener;
+import com.tomtom.online.sdk.samples.cases.route.RouteQueryFactory;
 import com.tomtom.online.sdk.samples.routes.AmsterdamToRotterdamRouteConfig;
 import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
 
@@ -37,12 +35,6 @@ public class DepartureAndArrivalTimePresenter extends RoutePlannerPresenter {
         return new DepartureAndArrivalTimeFunctionalExample();
     }
 
-    @Override
-    public RouteConfigExample getRouteConfig() {
-        return new AmsterdamToRotterdamRouteConfig();
-    }
-
-
     public void clearRoute() {
         tomtomMap.clearRoute();
     }
@@ -54,13 +46,7 @@ public class DepartureAndArrivalTimePresenter extends RoutePlannerPresenter {
 
     @VisibleForTesting
     protected RouteQuery getArrivalRouteQuery(Date arrivalTime) {
-        //tag::doc_route_arrival_time[]
-        return RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
-                .withReport(Report.EFFECTIVE_SETTINGS)
-                .withInstructionsType(InstructionsType.TEXT)
-                .withArriveAt(arrivalTime)
-                .withConsiderTraffic(false).build();
-        //end::doc_route_arrival_time[]
+        return RouteQueryFactory.createArrivalRouteQuery(arrivalTime, new AmsterdamToRotterdamRouteConfig());
     }
 
     public void displayDepartureAtRoute(DateTime departureDate) {
@@ -69,15 +55,7 @@ public class DepartureAndArrivalTimePresenter extends RoutePlannerPresenter {
     }
 
     protected RouteQuery getDepartureRouteQuery(Date departureTime) {
-        //tag::doc_route_departure_time[]
-        return RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
-                .withReport(Report.EFFECTIVE_SETTINGS)
-                .withInstructionsType(InstructionsType.TEXT)
-                .withDepartAt(departureTime)
-                .withConsiderTraffic(false).build();
-        //end::doc_route_departure_time[]
+        return RouteQueryFactory.createDepartureRouteQuery(departureTime, new AmsterdamToRotterdamRouteConfig());
     }
-
-
 
 }

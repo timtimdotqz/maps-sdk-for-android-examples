@@ -24,7 +24,7 @@ import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
 
-public class VectorTrafficLayersPresenter extends BaseFunctionalExamplePresenter {
+public class VectorTrafficLayersPresenter extends BaseFunctionalExamplePresenter implements TrafficPresenter {
 
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
@@ -63,6 +63,7 @@ public class VectorTrafficLayersPresenter extends BaseFunctionalExamplePresenter
     }
 
 
+    @Override
     public void showTrafficFlowTiles() {
         //tag::doc_traffic_vector_flow_on[]
         tomtomMap.getTrafficSettings().turnOnVectorTrafficFlowTiles();
@@ -82,6 +83,7 @@ public class VectorTrafficLayersPresenter extends BaseFunctionalExamplePresenter
         //end::doc_get_style_info[]
     }
 
+    @Override
     public void hideTrafficInformation() {
         //tag::doc_traffic_off[]
         tomtomMap.getTrafficSettings().turnOffTraffic();
@@ -98,6 +100,7 @@ public class VectorTrafficLayersPresenter extends BaseFunctionalExamplePresenter
         );
     }
 
+    @Override
     public void showTrafficIncidents() {
         tomtomMap.getTrafficSettings().turnOffTraffic();
         //tag::doc_traffic_vector_incidents_on[]
@@ -106,6 +109,7 @@ public class VectorTrafficLayersPresenter extends BaseFunctionalExamplePresenter
     }
 
 
+    @Override
     public void showTrafficFlowAndIncidentsTiles() {
         tomtomMap.getTrafficSettings().turnOffTraffic();
         tomtomMap.getTrafficSettings().turnOnVectorTrafficIncidents();

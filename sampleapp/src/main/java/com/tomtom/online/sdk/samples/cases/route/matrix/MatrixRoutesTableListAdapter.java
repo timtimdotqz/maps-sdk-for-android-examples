@@ -47,16 +47,23 @@ class MatrixRoutesTableListAdapter extends RecyclerView.Adapter<MatrixRoutesTabl
     public void onBindViewHolder(@NonNull MatrixRouteItemViewHolder holder, int position) {
         final MatrixRoutingResult item = itemList.get(position);
         String etaString = "N/A";
-        DateTime arrivalTime = item.getSummary().getArrivalTimeWithZone();
-        Timber.d("raw arrival time " + item.getSummary().getRawArrivalTime());
-        if (arrivalTime != null) {
-            etaString = arrivalTime.toString("HH:mm");
+        Timber.d("summary " + item.getSummary());
+        if (item.getSummary() != null) {
+            Timber.d("raw arrival time " + item.getSummary().getRawArrivalTime());
+            DateTime arrivalTime = item.getSummary().getArrivalTimeWithZone();
+            if (arrivalTime != null) {
+                etaString = arrivalTime.toString("HH:mm");
+            }
         }
         holder.no.setText(String.format("%s%d", AmsterdamPoi.EMPTY_STRING, position + 1));
         holder.eta.setText(etaString);
         holder.destination.setText(AmsterdamPoi.getName(holder.destination.getContext(), item.getDestination()));
         holder.origin.setText(AmsterdamPoi.getName(holder.origin.getContext(), item.getOrigin()));
-        holder.distance.setText(DistanceFormatter.format(item.getSummary().getLengthInMeters()));
+        String distanceInfo = "N/A";
+        if (item.getSummary() == null) {
+            distanceInfo = DistanceFormatter.format(item.getSummary().getLengthInMeters());
+        }
+        holder.distance.setText(distanceInfo);
     }
 
     @Override

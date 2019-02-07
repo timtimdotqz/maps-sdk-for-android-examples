@@ -82,19 +82,19 @@ Add service keys, taken from http://developer.tomtom.com, inside <application> t
 * Modify build.gradle (app/build.gradle)
 
 +
-[source,shell,indent=0]
+[source,shell,indent=0, subs="attributes"]
 ----
 //library required to display map
-api "com.tomtom.online:sdk-maps:2.+"
+api "com.tomtom.online:sdk-maps:{libversion}"
 
 //library required for search
-api "com.tomtom.online:sdk-search:2.+"
+api "com.tomtom.online:sdk-search:{libversion}"
 
 //library required for routing
-api "com.tomtom.online:sdk-routing:2.+"
+api "com.tomtom.online:sdk-routing:{libversion}"
 
 //library required for traffic
-api "com.tomtom.online:sdk-traffic:2.+"
+api "com.tomtom.online:sdk-traffic:{libversion}"
 ----
 
 * Enable Java 8 Support in build.gradle (app/build.gradle)

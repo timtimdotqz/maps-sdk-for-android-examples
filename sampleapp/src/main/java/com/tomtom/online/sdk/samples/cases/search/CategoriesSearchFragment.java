@@ -35,7 +35,7 @@ public class CategoriesSearchFragment extends SearchFragment {
 
     @Override
     protected void initSearchModifiersView(View view) {
-        searchModifiersView = (RadioModifierView) view.findViewById(R.id.search_modifier_tabs);
+        searchModifiersView = view.findViewById(R.id.search_modifier_tabs);
         searchModifiersView.setRadioNames(getString(R.string.parking), getString(R.string.atm), getString(R.string.gas));
         searchModifiersView.setSearchModifiersLViewListener(this);
         searchModifiersView.setFirstMiddleRadioVisible(true);

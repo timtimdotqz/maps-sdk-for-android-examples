@@ -13,7 +13,7 @@ android {
         versionName buildVersionName
         multiDexEnabled true
         dimension "locale"
-        buildConfigField("String[]", "BUILT_IN_LOCALE", '{"en-US","es-ES","fr-FR","de-DE"}');
+        buildConfigField("String[]", "BUILT_IN_LOCALE", '{"en-US","es-ES","fr-FR","de-DE"}')
         applicationId 'com.tomtom.mapssdk.examplesapp'
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

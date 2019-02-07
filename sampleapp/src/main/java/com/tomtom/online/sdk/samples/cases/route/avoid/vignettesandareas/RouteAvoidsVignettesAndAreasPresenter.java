@@ -11,7 +11,6 @@
 package com.tomtom.online.sdk.samples.cases.route.avoid.vignettesandareas;
 
 import android.graphics.Color;
-import android.support.annotation.VisibleForTesting;
 
 import com.tomtom.online.sdk.common.location.BoundingBox;
 import com.tomtom.online.sdk.common.location.LatLng;
@@ -19,15 +18,13 @@ import com.tomtom.online.sdk.map.CameraPosition;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.PolylineBuilder;
 import com.tomtom.online.sdk.map.RouteStyleBuilder;
-import com.tomtom.online.sdk.routing.data.InstructionsType;
-import com.tomtom.online.sdk.routing.data.Report;
 import com.tomtom.online.sdk.routing.data.RouteQuery;
-import com.tomtom.online.sdk.routing.data.RouteQueryBuilder;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.MultiRoutesPlannerPresenter;
 import com.tomtom.online.sdk.samples.cases.MultiRoutesQueryAdapter;
 import com.tomtom.online.sdk.samples.cases.MultiRoutesRoutingUiListener;
+import com.tomtom.online.sdk.samples.cases.route.RouteQueryFactory;
 import com.tomtom.online.sdk.samples.routes.CzechRepublicToRomaniaRouteConfig;
 import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
 
@@ -41,14 +38,11 @@ public class RouteAvoidsVignettesAndAreasPresenter extends MultiRoutesPlannerPre
     private final LatLng ARAD_BOTTOM_LEFT_NEIGHBORHOOD = new LatLng(45.861624, 21.012896);
     private final LatLng ARAD_TOP_RIGHT_NEIGHBORHOOD = new LatLng(46.241223, 21.506465);
     private final LatLng BUDAPEST_LOCATION = new LatLng(47.498733, 19.072646);
+    private final RouteConfigExample routeConfig;
 
     RouteAvoidsVignettesAndAreasPresenter(MultiRoutesRoutingUiListener viewModel) {
         super(viewModel);
-    }
-
-    @Override
-    public RouteConfigExample getRouteConfig() {
-        return new CzechRepublicToRomaniaRouteConfig();
+        routeConfig = new CzechRepublicToRomaniaRouteConfig();
     }
 
     @Override
@@ -61,23 +55,10 @@ public class RouteAvoidsVignettesAndAreasPresenter extends MultiRoutesPlannerPre
         viewModel.showRoutingInProgressDialog();
     }
 
-    @VisibleForTesting
-    private RouteQueryBuilder createRouteQueryBuilderWithChosenParams(LatLng origin, LatLng destination) {
-        return RouteQueryBuilder.create(origin, destination)
-                .withMaxAlternatives(0)
-                .withReport(Report.NONE)
-                .withInstructionsType(InstructionsType.NONE)
-                .withConsiderTraffic(false);
-    }
-
     public void startRoutingNoAvoids() {
         setupRouteDisplay();
 
-        LatLng origin = getRouteConfig().getOrigin();
-        LatLng destination = getRouteConfig().getDestination();
-
-        RouteQuery baseRouteQuery = createRouteQueryBuilderWithChosenParams(origin, destination)
-                .build();
+        RouteQuery baseRouteQuery = RouteQueryFactory.createBaseRouteForAvoidsVignettesAndAreas(routeConfig);
 
         MultiRoutesQueryAdapter baseQueryAdapter = new MultiRoutesQueryAdapter(baseRouteQuery);
         baseQueryAdapter.setRouteTag(view.getString(R.string.label_no_avoids));
@@ -97,22 +78,15 @@ public class RouteAvoidsVignettesAndAreasPresenter extends MultiRoutesPlannerPre
     public void startRoutingAvoidVignettes() {
         setupRouteDisplay();
 
-        LatLng origin = getRouteConfig().getOrigin();
-        LatLng destination = getRouteConfig().getDestination();
-
         //tag::doc_route_avoid_vignettes[]
         List<String> avoidVignettesList = new ArrayList<>();
         avoidVignettesList.add("HUN");
         avoidVignettesList.add("CZE");
         avoidVignettesList.add("SVK");
 
-        RouteQuery routeQuery = createRouteQueryBuilderWithChosenParams(origin, destination)
-                .withAvoidVignettes(avoidVignettesList)
-                .build();
+        RouteQuery routeQuery = RouteQueryFactory.createRouteForAvoidsVignettesAndAreas(avoidVignettesList, routeConfig);
         //end::doc_route_avoid_vignettes[]
-
-        RouteQuery baseRouteQuery = createRouteQueryBuilderWithChosenParams(origin, destination)
-                .build();
+        RouteQuery baseRouteQuery = RouteQueryFactory.createBaseRouteForAvoidsVignettesAndAreas(routeConfig);
 
         MultiRoutesQueryAdapter baseQueryAdapter = new MultiRoutesQueryAdapter(baseRouteQuery);
         baseQueryAdapter.setRouteTag(view.getString(R.string.label_no_avoids));
@@ -129,9 +103,6 @@ public class RouteAvoidsVignettesAndAreasPresenter extends MultiRoutesPlannerPre
     public void startRoutingAvoidArea() {
         setupRouteDisplay();
 
-        LatLng origin = getRouteConfig().getOrigin();
-        LatLng destination = getRouteConfig().getDestination();
-
         tomtomMap.getOverlaySettings().addOverlay(PolylineBuilder.create()
                 .coordinate(ARAD_TOP_LEFT_NEIGHBORHOOD)
                 .coordinate(ARAD_BOTTOM_LEFT_NEIGHBORHOOD)
@@ -144,13 +115,10 @@ public class RouteAvoidsVignettesAndAreasPresenter extends MultiRoutesPlannerPre
         //tag::doc_route_avoid_area[]
         BoundingBox boundingBox = new BoundingBox(ARAD_TOP_LEFT_NEIGHBORHOOD, ARAD_BOTTOM_RIGHT_NEIGHBORHOOD);
 
-        RouteQuery routeQuery = createRouteQueryBuilderWithChosenParams(origin, destination)
-                .withAvoidArea(boundingBox)
-                .build();
+        RouteQuery routeQuery = RouteQueryFactory.createRouteForAvoidsArea(boundingBox, routeConfig);
         //end::doc_route_avoid_area[]
 
-        RouteQuery baseRouteQuery = createRouteQueryBuilderWithChosenParams(origin, destination)
-                .build();
+        RouteQuery baseRouteQuery = RouteQueryFactory.createBaseRouteForAvoidsVignettesAndAreas(routeConfig);
 
         MultiRoutesQueryAdapter baseQueryAdapter = new MultiRoutesQueryAdapter(baseRouteQuery);
         baseQueryAdapter.setRouteTag(view.getString(R.string.label_no_avoids));

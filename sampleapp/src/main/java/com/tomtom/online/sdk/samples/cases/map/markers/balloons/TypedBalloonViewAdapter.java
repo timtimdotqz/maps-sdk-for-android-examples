@@ -52,7 +52,7 @@ public class TypedBalloonViewAdapter extends BaseBalloonViewAdapter<BaseMarkerBa
     public void onBindView(View view, Marker marker, BaseMarkerBalloon markerBalloon) {
         if (isTextBalloon(markerBalloon)){
             TextView textView = view.findViewById(R.id.text);
-            textView.setText((CharSequence) markerBalloon.getProperty(BaseMarkerBalloon.KEY_TEXT));
+            textView.setText(markerBalloon.getProperty(BaseMarkerBalloon.KEY_TEXT));
         }
     }
 

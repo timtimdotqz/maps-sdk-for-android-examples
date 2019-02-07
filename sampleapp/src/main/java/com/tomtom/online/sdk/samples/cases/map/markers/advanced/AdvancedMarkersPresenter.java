@@ -13,24 +13,18 @@ package com.tomtom.online.sdk.samples.cases.map.markers.advanced;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 
-import com.tomtom.online.sdk.common.location.LatLng;
-import com.tomtom.online.sdk.map.Icon;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.Marker;
-import com.tomtom.online.sdk.map.MarkerBuilder;
-import com.tomtom.online.sdk.map.SimpleMarkerBalloon;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.TomtomMapCallback;
 import com.tomtom.online.sdk.map.rx.RxTomtomMap;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
+import com.tomtom.online.sdk.samples.cases.map.markers.MarkerDrawer;
 import com.tomtom.online.sdk.samples.cases.map.markers.balloons.TypedBalloonViewAdapter;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
-import com.tomtom.online.sdk.samples.utils.formatter.LatLngFormatter;
-
-import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -38,12 +32,11 @@ import timber.log.Timber;
 
 public class AdvancedMarkersPresenter extends BaseFunctionalExamplePresenter {
 
-    private static final String SAMPLE_GIF_ASSET_PATH = "images/racing_car.gif";
-
     private static final String TOAST_MESSAGE = "%s : %f, %f";
     private static final int TOAST_DURATION_MS = 2000; //milliseconds
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     private RxTomtomMap rxTomtomMap;
+    private MarkerDrawer markerDrawer;
 
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
@@ -57,6 +50,8 @@ public class AdvancedMarkersPresenter extends BaseFunctionalExamplePresenter {
         if (!view.isMapRestored()) {
             centerMapOnLocation();
         }
+
+        markerDrawer = new MarkerDrawer(view.getContext(), tomtomMap);
 
         //tag::doc_register_rx_disposable[]
         rxTomtomMap = new RxTomtomMap(tomtomMap);
@@ -100,27 +95,14 @@ public class AdvancedMarkersPresenter extends BaseFunctionalExamplePresenter {
 
     public void createAnimatedMarkers() {
         resetMap();
-        List<LatLng> list = Locations.randomLocation(Locations.AMSTERDAM_LOCATION, 5, 0.2f);
-        for (LatLng position : list) {
-            //tag::doc_create_animated_marker[]
-            MarkerBuilder markerBuilder = new MarkerBuilder(position)
-                .icon(Icon.Factory.fromAssets(view.getContext(), SAMPLE_GIF_ASSET_PATH));
-            tomtomMap.addMarker(markerBuilder);
-            //end::doc_create_animated_marker[]
-        }
+
+        markerDrawer.createRandomAnimatedMarkers(5);
     }
 
     public void createDraggableMarkers() {
         resetMap();
-        List<LatLng> list = Locations.randomLocation(Locations.AMSTERDAM_LOCATION, 5, 0.2f);
-        for (LatLng position : list) {
-            //tag::doc_create_simple_draggable_marker[]
-            MarkerBuilder markerBuilder = new MarkerBuilder(position)
-                    .markerBalloon(new SimpleMarkerBalloon(positionToText(position)))
-                    .draggable(true);
-            tomtomMap.addMarker(markerBuilder);
-            //end::doc_create_simple_draggable_marker[]
-        }
+
+        markerDrawer.createRandomDraggableMarkers(5);
     }
 
     //tag::doc_create_draggable_marker_listener[]
@@ -143,11 +125,6 @@ public class AdvancedMarkersPresenter extends BaseFunctionalExamplePresenter {
         }
     };
     //end::doc_create_draggable_marker_listener[]
-
-    @NonNull
-    private String positionToText(LatLng position) {
-        return LatLngFormatter.toSimpleString(position);
-    }
 
     private void displayMessage(@StringRes int titleId, double lat, double lon) {
         String title = view.getContext().getString(titleId);

@@ -181,10 +181,4 @@ public class BatchReachableRangePresenter extends RoutePlannerPresenter {
         //end::doc_create_batch_reachable_range_query[]
     }
 
-    @Override
-    public RouteConfigExample getRouteConfig() {
-        return null; // This example doesn't actually do any routing so the route config is not needed.
-    }
-
-
 }

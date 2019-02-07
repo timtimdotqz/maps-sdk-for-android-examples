@@ -34,10 +34,10 @@ ext {
     androidVersions = [
             room_version : "1.1.1",
             androidarch : '1.1.1',
-            support     : '27.1.1',
-            design      : '27.1.1',
+            support     : '28.0.0',
+            design      : '28.0.0',
             playservices: '15.0.1',
-            multidex    : '1.0.2',
+            multidex    : '1.0.3',
             constraint_layout: '1.1.0',
             test        : [
                     instrument_test: '1.0.1',
@@ -78,6 +78,7 @@ ext {
             glide                  : '4.7.1',
             androidgifdrawable     : '1.2.15',
             sdkannotations         : '1.0.1',
+            gesture                : '0.0.8',
             detekt                 : '1.0.0-RC12',
             ktlint                 : '6.3.1',
             test                   : [
@@ -97,7 +98,8 @@ ext {
                     mockito_kotlin     : '1.5.0',
                     kluent             : '1.30',
                     support            : '0.5',
-                    mockk              : '1.7.15'
+                    mockk              : '1.7.15',
+                    bouncycastle: '1.56',
 
 
             ],

@@ -16,7 +16,7 @@ import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
 
 public class MapCenteringFragment extends ExampleFragment<MapCenteringPresenter> {
 
-    private final int NUMBER_OF_ACTIONS = 3;
+    private final static int NUMBER_OF_ACTIONS = 3;
 
     @Override
     public void onChange(boolean[] oldValues, boolean[] newValues) {

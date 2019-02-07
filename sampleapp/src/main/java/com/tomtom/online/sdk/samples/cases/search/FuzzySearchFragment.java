@@ -35,7 +35,7 @@ public class FuzzySearchFragment extends SearchFragment {
 
     @Override
     protected void initSearchModifiersView(View view) {
-        searchModifiersView = (RadioModifierView) view.findViewById(R.id.search_modifier_tabs);
+        searchModifiersView = view.findViewById(R.id.search_modifier_tabs);
         searchModifiersView.setRadioNames(getString(R.string.fuzzy_max_first_label), getString(R.string.fuzzy_max_third_label), getString(R.string.fuzzy_max_second_label));
         searchModifiersView.setSearchModifiersLViewListener(this);
         searchModifiersView.setFirstMiddleRadioVisible(true);

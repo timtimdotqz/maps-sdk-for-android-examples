@@ -36,6 +36,9 @@
     <string name="menu_shapes_circle">Circle</string>
     <string name="menu_shapes_polyline">Polyline</string>
 
+    <string name="menu_polygon_revgeo_country">Country</string>
+    <string name="menu_polygon_revgeo_municipality">Municipality</string>
+
     <string name="menu_markers_balloon_simple">Simple</string>
     <string name="menu_markers_balloon_detailed">Detailed</string>
     <string name="menu_markers_balloon_custom">Custom</string>
@@ -198,6 +201,7 @@
     <string name="map_ui_extensions_custom">Custom</string>
     <string name="choose_module">Choose module</string>
     <string name="dialog_routing_in_progress_msg">Routing in progress...</string>
+    <string name="dialog_search_in_progress_msg">Search in progress...</string>
 
     <string name="btn_text_initial_order">Initial order</string>
     <string name="btn_text_best_order">Best order</string>
@@ -344,5 +348,9 @@
     <string name="map_layers_tiles_type_select">Select map tiles type:</string>
     <string name="map_layers_layers_type_select">Select map layers type:</string>
     <string name="map_layers_status">Tiles: %1$s \t Labels: %2$s</string>
+
+    <string name="multiple_maps">Multiple maps</string>
+    <string name="multiple_maps_subtitle">Display more than one map at the time</string>
+
 
 </resources>

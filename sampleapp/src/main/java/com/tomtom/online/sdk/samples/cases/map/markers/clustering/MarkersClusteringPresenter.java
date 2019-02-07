@@ -10,34 +10,32 @@
  */
 package com.tomtom.online.sdk.samples.cases.map.markers.clustering;
 
-import android.support.annotation.NonNull;
-
-import com.tomtom.online.sdk.common.location.LatLng;
-import com.tomtom.online.sdk.map.MarkerBuilder;
-import com.tomtom.online.sdk.map.SimpleMarkerBalloon;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
+import com.tomtom.online.sdk.samples.cases.map.markers.MarkerDrawer;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
-import com.tomtom.online.sdk.samples.utils.formatter.LatLngFormatter;
-
-import java.util.List;
 
 public class MarkersClusteringPresenter extends BaseFunctionalExamplePresenter {
 
     private static final double ZOOM_LEVEL_FOR_EXAMPLE = 7.5;
     private static final int DEFAULT_MAP_PADDING = 0;
 
+    private MarkerDrawer markerDrawer;
+
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
         super.bind(view, map);
+        markerDrawer = new MarkerDrawer(view.getContext(), tomtomMap);
+
         if (!view.isMapRestored()) {
             createMarkers();
             centerOnMarkers();
         }
         confMapPadding();
+
     }
 
     @Override
@@ -77,27 +75,8 @@ public class MarkersClusteringPresenter extends BaseFunctionalExamplePresenter {
         tomtomMap.getMarkerSettings().setMarkersClustering(true);
         //end::doc_enable_markers_clustering[]
 
-        List<LatLng> amsterdamLocations = Locations.randomLocation(Locations.AMSTERDAM_LOCATION, 90, 0.5f);
-        List<LatLng> rotterdamLocations = Locations.randomLocation(Locations.ROTTERDAM_LOCATION, 150, 0.1f);
-
-        addMarkers(amsterdamLocations);
-        addMarkers(rotterdamLocations);
-    }
-
-    private void addMarkers(List<LatLng> positions) {
-        for (LatLng position : positions) {
-            //tag::doc_add_marker_to_cluster[]
-            MarkerBuilder markerBuilder = new MarkerBuilder(position)
-                    .shouldCluster(true)
-                    .markerBalloon(new SimpleMarkerBalloon(positionToText(position)));
-            //end::doc_add_marker_to_cluster[]
-            tomtomMap.addMarker(markerBuilder);
-        }
-    }
-
-    @NonNull
-    private String positionToText(LatLng position) {
-        return LatLngFormatter.toSimpleString(position);
+        markerDrawer.createRandomMarkersWithClustering(Locations.AMSTERDAM_LOCATION, 90, 0.5f);
+        markerDrawer.createRandomMarkersWithClustering(Locations.ROTTERDAM_LOCATION, 150, 0.1f);
     }
 
     public void centerOnMarkers() {

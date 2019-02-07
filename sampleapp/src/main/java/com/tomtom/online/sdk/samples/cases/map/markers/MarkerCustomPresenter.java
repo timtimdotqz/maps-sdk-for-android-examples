@@ -13,31 +13,24 @@ package com.tomtom.online.sdk.samples.cases.map.markers;
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 
-import com.tomtom.online.sdk.common.location.LatLng;
-import com.tomtom.online.sdk.map.Icon.Factory;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.Marker;
-import com.tomtom.online.sdk.map.MarkerAnchor;
-import com.tomtom.online.sdk.map.MarkerBuilder;
-import com.tomtom.online.sdk.map.SimpleMarkerBalloon;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.TomtomMapCallback;
 import com.tomtom.online.sdk.map.rx.RxTomtomMap;
-import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.map.markers.balloons.TypedBalloonViewAdapter;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
-import com.tomtom.online.sdk.samples.utils.formatter.LatLngFormatter;
-
-import java.util.List;
 
 import timber.log.Timber;
 
 import static com.tomtom.online.sdk.map.MapConstants.ORIENTATION_SOUTH;
 
 public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implements TomtomMapCallback.OnMarkerClickListener {
+
+    private MarkerDrawer markerDrawer;
 
     @SuppressLint("CheckResult")
     @Override
@@ -59,6 +52,8 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
         if (!view.isMapRestored()) {
             centerMapOnLocation();
         }
+
+        markerDrawer = new MarkerDrawer(view.getContext(), tomtomMap);
     }
 
     @Override
@@ -100,14 +95,8 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
         //tag::doc_remove_id_markers[]
         tomtomMap.removeMarkerByID(1);
         //end::doc_remove_id_markers[]
-        List<LatLng> list = Locations.randomLocation(Locations.AMSTERDAM_LOCATION, 5, 0.2f);
-        for (LatLng position : list) {
-            //tag::doc_create_simple_marker[]
-            MarkerBuilder markerBuilder = new MarkerBuilder(position)
-                    .markerBalloon(new SimpleMarkerBalloon(positionToText(position)));
-            tomtomMap.addMarker(markerBuilder);
-            //end::doc_create_simple_marker[]
-        }
+
+        markerDrawer.createSimpleMarkers(Locations.AMSTERDAM_LOCATION, 5, 0.2f);
     }
 
     public void createDecalMarker() {
@@ -117,18 +106,8 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
                 DEFAULT_ZOOM_LEVEL, ORIENTATION_SOUTH);
 
         tomtomMap.removeMarkers();
-        List<LatLng> list = Locations.randomLocation(Locations.AMSTERDAM_LOCATION, 5, 0.2f);
-        for (LatLng position : list) {
-            //tag::doc_create_decal_marker[]
-            MarkerBuilder markerBuilder = new MarkerBuilder(position)
-                    .icon(Factory.fromResources(getContext(), R.drawable.ic_favourites))
-                    .markerBalloon(new SimpleMarkerBalloon(positionToText(position)))
-                    .tag("more information in tag").iconAnchor(MarkerAnchor.Bottom)
-                    .decal(true); //By default is false
-            tomtomMap.addMarker(markerBuilder);
-            //end::doc_create_decal_marker[]
-        }
 
+        markerDrawer.createDecalMarkers(Locations.AMSTERDAM_LOCATION, 5, 0.2f);
     }
 
     public void centerMapOnLocation() {
@@ -145,10 +124,4 @@ public class MarkerCustomPresenter extends BaseFunctionalExamplePresenter implem
     public void onMarkerClick(@NonNull Marker m) {
         Timber.d("marker selected " + m.getTag());
     }
-
-    @NonNull
-    private String positionToText(LatLng position) {
-        return LatLngFormatter.toSimpleString(position);
-    }
-
 }

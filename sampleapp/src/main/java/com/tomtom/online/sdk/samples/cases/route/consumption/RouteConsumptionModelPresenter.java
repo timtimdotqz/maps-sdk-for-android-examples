@@ -10,17 +10,14 @@
  */
 package com.tomtom.online.sdk.samples.cases.route.consumption;
 
-import com.google.common.collect.ImmutableMap;
-import com.tomtom.online.sdk.data.SpeedToConsumptionMap;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.TomtomMapCallback;
 import com.tomtom.online.sdk.routing.data.FullRoute;
 import com.tomtom.online.sdk.routing.data.RouteQuery;
-import com.tomtom.online.sdk.routing.data.RouteQueryBuilder;
-import com.tomtom.online.sdk.routing.data.VehicleEngineType;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.RoutePlannerPresenter;
 import com.tomtom.online.sdk.samples.cases.RoutingUiListener;
+import com.tomtom.online.sdk.samples.cases.route.RouteQueryFactory;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.routes.AmsterdamToUtrechtRouteConfig;
 import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
@@ -62,65 +59,11 @@ public class RouteConsumptionModelPresenter extends RoutePlannerPresenter {
     }
 
     protected RouteQuery getRouteQueryElectric() {
-        //tag::doc_consumption_model_electric[]
-        RouteQuery queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
-                .withConsiderTraffic(false)
-                .withMaxAlternatives(2)
-                .withVehicleWeightInKg(1600) //vehicle weight in kilograms
-                .withCurrentChargeInKWh(43.0)
-                .withMaxChargeInKWh(85.0)
-                .withAuxiliaryPowerInKW(1.7)
-                .withAccelerationEfficiency(0.33) //e.g. KineticEnergyGained/ChemicalEnergyConsumed
-                .withDecelerationEfficiency(0.33) //e.g. ChemicalEnergySaved/KineticEnergyLost
-                .withUphillEfficiency(0.33) //e.g. PotentialEnergyGained/ChemicalEnergyConsumed
-                .withDownhillEfficiency(0.33) //e.g. ChemicalEnergySaved/PotentialEnergyLost
-                .withVehicleEngineType(VehicleEngineType.ELECTRIC)
-                .withConstantSpeedConsumptionInKWhPerHundredKm(SpeedToConsumptionMap.create(ImmutableMap.<Integer, Double>builder()
-                        //vehicle specific consumption model <speed, consumption in kWh>
-                        .put(10, 5.0)
-                        .put(30, 10.0)
-                        .put(50, 15.0)
-                        .put(70, 20.0)
-                        .put(90, 25.0)
-                        .put(120, 30.0)
-                        .build())
-                ).build();
-        //end::doc_consumption_model_electric[]
-        return queryBuilder;
+        return RouteQueryFactory.createRouteConsumptionElectricQuery(new AmsterdamToUtrechtRouteConfig());
     }
 
     protected RouteQuery getRouteQueryCombustion() {
-        //tag::doc_consumption_model_combustion[]
-        RouteQuery queryBuilder = RouteQueryBuilder.create(getRouteConfig().getOrigin(), getRouteConfig().getDestination())
-                .withConsiderTraffic(false)
-                .withMaxAlternatives(2)
-                .withVehicleWeightInKg(1600) //vehicle weight in kilograms
-                .withCurrentFuelInLiters(50.0)
-                .withAuxiliaryPowerInLitersPerHour(0.2)
-                .withFuelEnergyDensityInMJoulesPerLiter(34.2)
-                .withAccelerationEfficiency(0.33) //e.g. KineticEnergyGained/ChemicalEnergyConsumed
-                .withDecelerationEfficiency(0.33) //e.g. ChemicalEnergySaved/KineticEnergyLost
-                .withUphillEfficiency(0.33) //e.g. PotentialEnergyGained/ChemicalEnergyConsumed
-                .withDownhillEfficiency(0.33) //e.g. ChemicalEnergySaved/PotentialEnergyLost
-                .withVehicleEngineType(VehicleEngineType.COMBUSTION)
-                .withConstantSpeedConsumptionInLitersPerHundredKm(SpeedToConsumptionMap.create(ImmutableMap.<Integer, Double>builder()
-                        //vehicle specific consumption model <speed, consumption in liters>
-                        .put(10, 6.5)
-                        .put(30, 7.0)
-                        .put(50, 8.0)
-                        .put(70, 8.4)
-                        .put(90, 7.7)
-                        .put(120, 7.5)
-                        .put(150, 9.0)
-                        .build())
-                ).build();
-        //end::doc_consumption_model_combustion[]
-        return queryBuilder;
-    }
-
-    @Override
-    public RouteConfigExample getRouteConfig() {
-        return new AmsterdamToUtrechtRouteConfig();
+        return  RouteQueryFactory.createRouteConsumptionCombustionQuery(new AmsterdamToUtrechtRouteConfig());
     }
 
     private TomtomMapCallback.OnRouteClickListener onRouteClickListener = route -> {

@@ -12,10 +12,7 @@ package com.tomtom.online.sdk.samples.cases.search.adp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.NonNull;
 
-import com.google.common.base.Optional;
-import com.tomtom.online.sdk.common.rx.RxContext;
 import com.tomtom.online.sdk.map.CameraPosition;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.TomtomMap;
@@ -23,28 +20,19 @@ import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
-import com.tomtom.online.sdk.search.OnlineSearchApi;
-import com.tomtom.online.sdk.search.SearchApi;
-import com.tomtom.online.sdk.search.data.additionaldata.AdditionalDataSearchQueryBuilder;
-import com.tomtom.online.sdk.search.data.common.additionaldata.GeometryDataSource;
+import com.tomtom.online.sdk.search.data.additionaldata.AdditionalDataSearchResponse;
+import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQuery;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQueryBuilder;
-import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResponse;
-import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchResult;
 
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.functions.Consumer;
 
-public class AdditionalDataSearchPresenter extends BaseFunctionalExamplePresenter implements RxContext {
+public class AdditionalDataSearchPresenter extends BaseFunctionalExamplePresenter {
 
     private static final int ZOOM_LEVEL_FOR_EXAMPLE = 10;
 
     protected Context context;
     protected FunctionalExampleFragment fragment;
-    private Disposable observableWork;
+    private AdditionalDataSearchRequester searchRequester;
 
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
@@ -52,6 +40,7 @@ public class AdditionalDataSearchPresenter extends BaseFunctionalExamplePresente
 
         fragment = view;
         context = view.getContext();
+        searchRequester = new AdditionalDataSearchRequester(context);
 
         if (!view.isMapRestored()) {
             centerOnDefaultLocation();
@@ -72,9 +61,7 @@ public class AdditionalDataSearchPresenter extends BaseFunctionalExamplePresente
     @Override
     public void onPause() {
         super.onPause();
-        if (observableWork != null) {
-            observableWork.dispose();
-        }
+        searchRequester.disposeObservable();
     }
 
     public void centerOnDefaultLocation() {
@@ -91,79 +78,17 @@ public class AdditionalDataSearchPresenter extends BaseFunctionalExamplePresente
         fragment.disableOptionsView();
 
         //tag::doc_adp_search_request[]
-        FuzzySearchQueryBuilder fuzzySearchQuery = FuzzySearchQueryBuilder.create(term);
+        FuzzySearchQuery fuzzySearchQuery = FuzzySearchQueryBuilder.create(term).build();
 
-        final SearchApi searchApi = OnlineSearchApi.create(view.getContext());
-        observableWork = searchApi.search(fuzzySearchQuery.build())
-                .observeOn(getWorkingScheduler())
-                .filter(nonEmptyResponse())
-                .map(firstResultWithAdditionalData())
-                .filter(nonEmptyResult())
-                .map(whenResultPresent())
-                .filter(whenGeometrySourcePresent())
-                .map(firstAvailableGeometryData())
-                .flatMap(geometryDataSource -> {
-                    AdditionalDataSearchQueryBuilder adpQuery = AdditionalDataSearchQueryBuilder.create();
-                    adpQuery.withGeometryDataSource(geometryDataSource);
-                    return searchApi.additionalDataSearch(adpQuery.build()).toMaybe();
-                })
-                .subscribeOn(getResultScheduler())
-                .subscribe(adpResponse -> {
-                    fragment.enableOptionsView();
-                    new AdpResponseParser(new GeoDataConsumer(tomtomMap)).parseAdpResponse(adpResponse);
-                });
+        searchRequester.performAdpSearch(fuzzySearchQuery, responseConsumer);
         //end::doc_adp_search_request[]
     }
 
-    @NonNull
-    private Function<FuzzySearchResult, GeometryDataSource> firstAvailableGeometryData() {
-        return fuzzySearchResult -> fuzzySearchResult.getAdditionalDataSources().getGeometryDataSource().get();
-    }
-
-    @NonNull
-    private Predicate<FuzzySearchResult> whenGeometrySourcePresent() {
-        return fuzzySearchResult -> fuzzySearchResult.getAdditionalDataSources() != null &&
-                fuzzySearchResult.getAdditionalDataSources().getGeometryDataSource().isPresent();
-    }
-
-    @NonNull
-    private Function<FuzzySearchResponse, Optional<FuzzySearchResult>> firstResultWithAdditionalData() {
-        return fuzzySearchResponse -> {
-            for (FuzzySearchResult result : fuzzySearchResponse.getResults()) {
-                if (result.getAdditionalDataSources() == null) {
-                    continue;
-                }
-                return Optional.of(result);
-            }
-            return Optional.absent();
-        };
-    }
-
-    @NonNull
-    private Predicate<FuzzySearchResponse> nonEmptyResponse() {
-        return fuzzySearchResponse -> !fuzzySearchResponse.getResults().isEmpty();
-    }
-
-    @NonNull
-    private Predicate<Optional<FuzzySearchResult>> nonEmptyResult() {
-        return fuzzySearchResult -> fuzzySearchResult.isPresent();
-    }
-
-    private Function<Optional<FuzzySearchResult>, FuzzySearchResult> whenResultPresent() {
-        return fuzzySearchResultOptional -> fuzzySearchResultOptional.get();
-    }
-
-
-    @NonNull
-    @Override
-    public Scheduler getWorkingScheduler() {
-        return Schedulers.newThread();
-    }
-
-    @NonNull
-    @Override
-    public Scheduler getResultScheduler() {
-        return AndroidSchedulers.mainThread();
-    }
-
+    private Consumer<AdditionalDataSearchResponse> responseConsumer = new Consumer<AdditionalDataSearchResponse>() {
+        @Override
+        public void accept(AdditionalDataSearchResponse adpResponse) {
+            fragment.enableOptionsView();
+            new AdpResponseParser(new GeoDataConsumer(tomtomMap)).parseAdpResponse(adpResponse);
+        }
+    };
 }

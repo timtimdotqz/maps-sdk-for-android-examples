@@ -11,73 +11,37 @@
 package com.tomtom.online.sdk.samples.cases.search.geometry;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.widget.Toast;
 
-import com.google.common.collect.ImmutableList;
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.map.CameraPosition;
-import com.tomtom.online.sdk.map.CircleBuilder;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.MarkerBuilder;
-import com.tomtom.online.sdk.map.PolygonBuilder;
 import com.tomtom.online.sdk.map.SimpleMarkerBalloon;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
-import com.tomtom.online.sdk.search.OnlineSearchApi;
-import com.tomtom.online.sdk.search.SearchApi;
 import com.tomtom.online.sdk.search.api.SearchError;
 import com.tomtom.online.sdk.search.api.geometry.GeometrySearchResultListener;
-import com.tomtom.online.sdk.search.data.geometry.Geometry;
-import com.tomtom.online.sdk.search.data.geometry.GeometrySearchQuery;
-import com.tomtom.online.sdk.search.data.geometry.GeometrySearchQueryBuilder;
 import com.tomtom.online.sdk.search.data.geometry.GeometrySearchResponse;
 import com.tomtom.online.sdk.search.data.geometry.GeometrySearchResult;
-import com.tomtom.online.sdk.search.data.geometry.query.CircleGeometry;
-import com.tomtom.online.sdk.search.data.geometry.query.PolygonGeometry;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class GeometrySearchPresenter extends BaseFunctionalExamplePresenter {
+public class GeometrySearchPresenter extends BaseFunctionalExamplePresenter{
 
     private static final LatLng MAP_CENTER_FOR_EXAMPLE = new LatLng(52.3691851, 4.8505632);
     private static final int ZOOM_LEVEL_FOR_EXAMPLE = 10;
 
-    private static final int OVERLAYS_COLOR = Color.rgb(255, 0, 0);
-    private static final float OVERLAYS_OPACITY = 0.5f;
-
-    private static final LatLng CIRCLE_CENTER = new LatLng(52.3639871, 4.7953232);
-    private static final int CIRCLE_RADIUS = 2000;
-
-    private static final List<LatLng> POLYGON_POINTS = ImmutableList.of(
-            new LatLng(52.37874, 4.90482),
-            new LatLng(52.37664, 4.92559),
-            new LatLng(52.37497, 4.94877),
-            new LatLng(52.36805, 4.97246),
-            new LatLng(52.34918, 4.95993),
-            new LatLng(52.34016, 4.95169),
-            new LatLng(52.32894, 4.91392),
-            new LatLng(52.34048, 4.88611),
-            new LatLng(52.33953, 4.84388),
-            new LatLng(52.37067, 4.8432),
-            new LatLng(52.38492, 4.84663),
-            new LatLng(52.40011, 4.85058),
-            new LatLng(52.38995, 4.89075)
-    );
-
-    private static final int SEARCH_RESULTS_LIMIT = 50;
-
     protected Context context;
     protected FunctionalExampleFragment fragment;
+    private GeometrySearchRequester searchRequester;
 
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
         super.bind(view, map);
         context = view.getContext();
         fragment = view;
+        searchRequester = new GeometrySearchRequester(context);
 
         if (!view.isMapRestored()) {
             centerOnDefaultLocation();
@@ -103,40 +67,14 @@ public class GeometrySearchPresenter extends BaseFunctionalExamplePresenter {
     }
 
     private void showShapesOnMap() {
-        tomtomMap.getOverlaySettings().addOverlay(
-                CircleBuilder.create()
-                        .position(CIRCLE_CENTER)
-                        .radius(CIRCLE_RADIUS)
-                        .color(OVERLAYS_COLOR)
-                        .opacity(OVERLAYS_OPACITY)
-                        .fill(true)
-                        .build()
-        );
-
-        tomtomMap.getOverlaySettings().addOverlay(
-                PolygonBuilder.create()
-                        .coordinates(POLYGON_POINTS)
-                        .color(OVERLAYS_COLOR)
-                        .opacity(OVERLAYS_OPACITY)
-                        .build()
-        );
+        tomtomMap.getOverlaySettings().addOverlay(DefaultGeometries.createDefaultCircleOverlay());
+        tomtomMap.getOverlaySettings().addOverlay(DefaultGeometries.createDefaultPolygonOverlay());
     }
 
     public void performSearch(String term) {
-
         fragment.disableOptionsView();
 
-        //tag::doc_geometry_search_request[]
-        List<Geometry> geometries = new ArrayList<>();
-        geometries.add(new Geometry(new PolygonGeometry(POLYGON_POINTS)));
-        geometries.add(new Geometry(new CircleGeometry(CIRCLE_CENTER, CIRCLE_RADIUS)));
-
-        GeometrySearchQuery query = new GeometrySearchQueryBuilder(term, geometries)
-                .withLimit(SEARCH_RESULTS_LIMIT).build();
-
-        SearchApi searchAPI = OnlineSearchApi.create(context);
-        searchAPI.geometrySearch(query, searchResultListener);
-        //end::doc_geometry_search_request[]
+        searchRequester.performGeometrySearch(term, searchResultListener);
     }
 
     private GeometrySearchResultListener searchResultListener = new GeometrySearchResultListener() {
@@ -170,5 +108,4 @@ public class GeometrySearchPresenter extends BaseFunctionalExamplePresenter {
                 .markerBalloon(new SimpleMarkerBalloon(name));
         tomtomMap.addMarker(markerBuilder);
     }
-
 }

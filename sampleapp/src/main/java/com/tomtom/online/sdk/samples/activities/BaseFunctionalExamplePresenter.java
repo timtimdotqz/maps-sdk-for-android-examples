@@ -91,4 +91,5 @@ public abstract class BaseFunctionalExamplePresenter implements FunctionalExampl
         return view.getContext();
     }
 
+
 }

@@ -80,6 +80,10 @@ public class OptionsButtonsView extends LinearLayout {
         getChildAt(index).setSelected(selected);
     }
 
+    public void selectLast() {
+        getChildAt(getChildCount()-1).setSelected(true);
+    }
+
     public void unSelectAll() {
         for(int i = 0; i < getChildCount(); i++) {
             getChildAt(i).setSelected(false);
