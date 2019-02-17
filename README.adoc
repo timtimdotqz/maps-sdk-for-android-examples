@@ -1,5 +1,7 @@
 = Maps SDK For Android Examples
 
+image:https://api.codacy.com/project/badge/Grade/71f8f85e269c4ff9970f47c5707f7b98[link="https://app.codacy.com/app/mariopce/maps-sdk-for-android-examples?utm_source=github.com&utm_medium=referral&utm_content=tomtom-international/maps-sdk-for-android-examples&utm_campaign=Badge_Grade_Dashboard"]
+
 image:https://circleci.com/gh/tomtom-international/maps-sdk-for-android-examples/tree/master.svg?style=svg["CircleCI", link="https://circleci.com/gh/tomtom-international/maps-sdk-for-android-examples/tree/master"]
 
 Clone repository and build the Maps SDK Examples app to see key features of the Maps SDK.
