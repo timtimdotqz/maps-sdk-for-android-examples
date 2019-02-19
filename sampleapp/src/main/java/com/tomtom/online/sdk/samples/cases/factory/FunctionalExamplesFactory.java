@@ -30,6 +30,7 @@ public class FunctionalExamplesFactory implements ExampleFactory {
         factories.add(new MapsExampleFactory());
         factories.add(new SearchExampleFactory());
         factories.add(new RoutingExampleFactory());
+        factories.add(new GeofencingExampleFactory());
     }
 
     public FunctionalExampleFragment create(@IdRes int itemId) {

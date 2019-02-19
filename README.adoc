@@ -1,7 +1,5 @@
 = Maps SDK For Android Examples
 
-image:https://api.codacy.com/project/badge/Grade/71f8f85e269c4ff9970f47c5707f7b98[link="https://app.codacy.com/app/mariopce/maps-sdk-for-android-examples?utm_source=github.com&utm_medium=referral&utm_content=tomtom-international/maps-sdk-for-android-examples&utm_campaign=Badge_Grade_Dashboard"]
-
 image:https://circleci.com/gh/tomtom-international/maps-sdk-for-android-examples/tree/master.svg?style=svg["CircleCI", link="https://circleci.com/gh/tomtom-international/maps-sdk-for-android-examples/tree/master"]
 
 Clone repository and build the Maps SDK Examples app to see key features of the Maps SDK.
@@ -18,6 +16,7 @@ More informations how to start are available on: https://developer.tomtom.com/ma
 * https://developer.tomtom.com/maps-android-sdk/search[Search]
 * https://developer.tomtom.com/maps-android-sdk/routing[Routing]
 * https://developer.tomtom.com/maps-sdk-android/traffic[Traffic]
+* https://developer.tomtom.com/maps-sdk-android/geofencing[Geofencing]
 * https://developer.tomtom.com/maps-sdk-android/release-notes[Release notes]
 * https://developer.tomtom.com/maps-sdk-android/migrate-google-maps-tomtom[Migration guide from Google Maps SDK]
 
@@ -79,6 +78,7 @@ Add service keys, taken from http://developer.tomtom.com, inside <application> t
 <meta-data android:name="OnlineTraffic.Key" android:value="undefined" />
 <meta-data android:name="OnlineSearch.Key" android:value="undefined" />
 <meta-data android:name="OnlineRouting.Key" android:value="undefined" />
+<meta-data android:name="GeofencingApi.Key" android:value="undefined" />
 ----
 
 * Modify build.gradle (app/build.gradle)
@@ -97,6 +97,9 @@ api "com.tomtom.online:sdk-routing:{libversion}"
 
 //library required for traffic
 api "com.tomtom.online:sdk-traffic:{libversion}"
+
+//library required for geofencing
+api "com.tomtom.online:sdk-geofencing:{libversion}"
 ----
 
 * Enable Java 8 Support in build.gradle (app/build.gradle)

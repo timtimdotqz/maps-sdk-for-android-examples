@@ -32,9 +32,9 @@
                 android:title="@string/menu_lang_param" />
 
             <item
-                    android:id="@+id/mapgeopoliticalview"
-                    android:icon="@drawable/ic_menu_send"
-                    android:title="@string/menu_geopolitical_view" />
+                android:id="@+id/mapgeopoliticalview"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/menu_geopolitical_view" />
             <item
                 android:id="@+id/map_custom_style"
                 android:icon="@drawable/ic_menu_send"
@@ -126,21 +126,21 @@
             <item
                 android:id="@+id/route_matching"
                 android:icon="@drawable/ic_menu_send"
-                android:title="@string/route_matching"/>
+                android:title="@string/route_matching" />
 
             <item
                 android:id="@+id/map_matching"
                 android:icon="@drawable/ic_menu_send"
-                android:title="@string/map_matching"/>
+                android:title="@string/map_matching" />
         </menu>
     </item>
 
     <item android:title="@string/menu_traffic">
         <menu>
             <item
-                    android:id="@+id/traffic_incident"
-                    android:icon="@drawable/ic_menu_send"
-                    android:title="@string/traffic_incident_list_title" />
+                android:id="@+id/traffic_incident"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/traffic_incident_list_title" />
 
         </menu>
     </item>
@@ -285,6 +285,18 @@
 
         </menu>
     </item>
+
+    <item
+        android:checkableBehavior="single"
+        android:title="@string/geofencing">
+        <menu>
+            <item
+                android:id="@+id/obtain_report"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/menu_report_service" />
+        </menu>
+    </item>
+
     <item
         android:checkableBehavior="single"
         android:title="@string/other">

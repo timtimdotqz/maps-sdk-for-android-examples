@@ -352,5 +352,15 @@
     <string name="multiple_maps">Multiple maps</string>
     <string name="multiple_maps_subtitle">Display more than one map at the time</string>
 
-
+    <string name="geofencing">GEOFENCING</string>
+    <string name="menu_report_service">Report service</string>
+    <string name="report_service_title">Report service</string>
+    <string name="report_service_subtitle">Drag a pin inside/outside of a fence</string>
+    <string name="btn_one_fence">One fence</string>
+    <string name="btn_two_fences">Two fences</string>
+    <string name="report_service_request_error">Request could not be completed</string>
+    <string name="report_service_only_inside_fences">The location is \ninside of fences: %1$s</string>
+    <string name="report_service_only_outside_fences">The location is \noutside of fences: %1$s</string>
+    <string name="report_service_both_types_of_fences">The location is \ninside of fences: %1$s \noutside of fences: %2$s</string>
+    <string name="report_service_fence_marker_balloon">This is the closest location to \n%1$s border</string>
 </resources>

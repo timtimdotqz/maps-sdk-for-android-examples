@@ -90,6 +90,9 @@ dependencies {
 
         //dependency for driving extensions
         implementation("com.tomtom.online:sdk-maps-driving-extensions:$rootProject.internalVersions.sdk")
+
+        //dependency for geofencing
+        implementation("com.tomtom.online:sdk-geofencing:$rootProject.internalVersions.sdk")
         //doc_dependencies_sample_app_stop
 
     implementation "com.github.florent37:singledateandtimepicker:$rootProject.libVersions.singledateandtimepicker"

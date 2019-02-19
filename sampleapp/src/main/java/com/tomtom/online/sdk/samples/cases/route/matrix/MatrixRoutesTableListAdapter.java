@@ -60,7 +60,7 @@ class MatrixRoutesTableListAdapter extends RecyclerView.Adapter<MatrixRoutesTabl
         holder.destination.setText(AmsterdamPoi.getName(holder.destination.getContext(), item.getDestination()));
         holder.origin.setText(AmsterdamPoi.getName(holder.origin.getContext(), item.getOrigin()));
         String distanceInfo = "N/A";
-        if (item.getSummary() == null) {
+        if (item.getSummary() != null) {
             distanceInfo = DistanceFormatter.format(item.getSummary().getLengthInMeters());
         }
         holder.distance.setText(distanceInfo);
