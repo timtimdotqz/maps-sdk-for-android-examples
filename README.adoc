@@ -16,7 +16,7 @@ More informations how to start are available on: https://developer.tomtom.com/ma
 * https://developer.tomtom.com/maps-android-sdk/search[Search]
 * https://developer.tomtom.com/maps-android-sdk/routing[Routing]
 * https://developer.tomtom.com/maps-sdk-android/traffic[Traffic]
-* https://developer.tomtom.com/maps-sdk-android/geofencing[Geofencing]
+* https://developer.tomtom.com/maps-sdk-android/geofencing-public-preview[Geofencing]
 * https://developer.tomtom.com/maps-sdk-android/release-notes[Release notes]
 * https://developer.tomtom.com/maps-sdk-android/migrate-google-maps-tomtom[Migration guide from Google Maps SDK]
 
@@ -26,6 +26,7 @@ More informations how to start are available on: https://developer.tomtom.com/ma
 * https://developer.tomtom.com/maps-android-sdk/api-reference-1[Javadocs for Search]
 * https://developer.tomtom.com/maps-android-sdk/api-reference[Javadocs for Routing]
 * https://developer.tomtom.com/maps-sdk-android/api-reference-0[Javadocs for Traffic]
+* https://developer.tomtom.com/maps-sdk-android/api-reference-1[Javadocs for Geofencing]
 
 == Project set up
 
