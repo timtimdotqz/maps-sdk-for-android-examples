@@ -28,8 +28,20 @@ import java.util.UUID;
 
 public class GeofencingReportPresenter extends BaseFunctionalExamplePresenter implements TomtomMapCallback.OnMarkerDragListener {
 
+    /**
+     * This project ID's are related to the API key that you are using.
+     * To make this example working, you must create a proper structure for your API Key by running
+     * TomTomGeofencingProjectGenerator.sh script which is located in the sampleapp/scripts folder.
+     * Script takes an API Key and Admin Key that you generated from
+     * https://developer.tomtom.com/geofencing-api-public-preview/geofencing-documentation-configuration-service/register-admin-key
+     * and creates two projects with fences like in this example. Use project ID's returned by the
+     * script and update this two fields.
+     */
+
+    //tag::doc_projects_ID[]
     private static final UUID PROJECT_UUID_TWO_FENCES = UUID.fromString("fcf6d609-550d-49ff-bcdf-02bba08baa28");
     private static final UUID PROJECT_UUID_ONE_FENCE = UUID.fromString("57287023-a968-492c-8473-7e049a606425");
+    //end::doc_projects_ID[]
 
     private static final LatLng DEFAULT_MAP_POSITION = new LatLng(52.372144, 4.899115);
     private static final double DEFAULT_ZOOM_LEVEL = 12D;

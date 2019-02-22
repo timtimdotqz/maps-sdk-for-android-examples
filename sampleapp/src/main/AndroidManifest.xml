@@ -66,6 +66,9 @@
         <meta-data
             android:name="OnlineTraffic.Key"
             android:value="undefined" />
+        <meta-data
+            android:name="GeofencingApi.Key"
+            android:value="undefined" />
         end::doc_config_services[]
 
         -->
