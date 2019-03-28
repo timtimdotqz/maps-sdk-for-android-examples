@@ -27,6 +27,8 @@ public class MultipleMapsPresenter extends BaseFunctionalExamplePresenter {
     final static int MAP_ZOOM_LEVEL_FOR_SECOND_MAP_DIFF = 4;
     final static int DEFAULT_MAP_ZOOM_LEVEL_FOR_EXAMPLE = 12;
 
+    private static final String NIGHT_STYLE_URL_PATH = "asset://styles/night.json";
+
     private TomtomMap miniTomtomMap;
 
     public void bindMiniMap(final TomtomMap map) {
@@ -67,6 +69,8 @@ public class MultipleMapsPresenter extends BaseFunctionalExamplePresenter {
         miniTomtomMap.setMyLocationEnabled(true);
         miniTomtomMap.getUiSettings().getCompassView().hide();
         miniTomtomMap.getUiSettings().getCurrentLocationView().hide();
+        miniTomtomMap.getUiSettings().setStyleUrl(NIGHT_STYLE_URL_PATH);
+        miniTomtomMap.getLogoSettings().applyInvertedLogo();
         miniTomtomMap.updateGesturesDetectionSettings(GesturesDetectionSettingsBuilder.create()
                 .zoomEnabled(false)
                 .panningEnabled(false)

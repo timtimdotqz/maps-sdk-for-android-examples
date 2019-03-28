@@ -14,6 +14,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
+import com.tomtom.core.maps.gestures.GesturesDetectionSettings;
+import com.tomtom.core.maps.gestures.GesturesDetectionSettingsBuilder;
 import com.tomtom.online.sdk.common.func.FuncUtils;
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.map.MapConstants;
@@ -126,6 +128,7 @@ public class ReverseGeoPolygonPresenter extends BaseFunctionalExamplePresenter i
         clearMap();
         tomtomMap.removeOnMarkerClickListener(onMarkerClickListener);
         tomtomMap.removeOnMapLongClickListener(onMapLongClickListener);
+        tomtomMap.updateGesturesDetectionSettings(GesturesDetectionSettings.createDefault());
     }
 
     public void centerOnDefaultLocation() {
@@ -140,6 +143,10 @@ public class ReverseGeoPolygonPresenter extends BaseFunctionalExamplePresenter i
     protected void setupTomtomMap() {
         tomtomMap.addOnMarkerClickListener(onMarkerClickListener);
         tomtomMap.addOnMapLongClickListener(onMapLongClickListener);
+        GesturesDetectionSettings gestureSettings = GesturesDetectionSettingsBuilder.create()
+                .enableEventsIntercepting(true)
+                .build();
+        tomtomMap.updateGesturesDetectionSettings(gestureSettings);
     }
 
     protected void createSearchAPI() {
@@ -215,8 +222,6 @@ public class ReverseGeoPolygonPresenter extends BaseFunctionalExamplePresenter i
                         }, error -> getProgressDisplayable().hideInProgressDialog())
                 //end::doc_reverse_geocoding_to_polygon_observable[]
         );
-
-
     }
 
     @VisibleForTesting

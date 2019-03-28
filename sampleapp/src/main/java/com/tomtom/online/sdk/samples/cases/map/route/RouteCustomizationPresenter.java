@@ -60,7 +60,7 @@ public class RouteCustomizationPresenter extends RoutePlannerPresenter {
         RouteStyle routeStyle = createCustomRouteStyle();
 
         Icon startIcon = loadStartIcon();
-        Icon endIcon = loadEndIconForBasicStyle();
+        Icon endIcon = loadEndIconForCustomStyle();
 
         displayRoute(routeStyle, startIcon, endIcon);
     }
@@ -79,7 +79,7 @@ public class RouteCustomizationPresenter extends RoutePlannerPresenter {
 
     public void startRoutingWithBasicRoute() {
         Icon startIcon = loadStartIcon();
-        Icon endIcon = loadEndIconForCustomStyle();
+        Icon endIcon = loadEndIconForBasicStyle();
 
         displayRoute(RouteStyle.DEFAULT_ROUTE_STYLE, startIcon, endIcon);
     }

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.geofencing.ReportServiceResultListener;
 import com.tomtom.online.sdk.geofencing.data.report.ReportServiceResponse;
+import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.Marker;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.TomtomMapCallback;
@@ -57,7 +58,7 @@ public class GeofencingReportPresenter extends BaseFunctionalExamplePresenter im
         super.bind(view, map);
 
         if (!view.isMapRestored()) {
-            tomtomMap.centerOn(DEFAULT_MAP_POSITION, DEFAULT_ZOOM_LEVEL);
+            centerOnDefaultWithOrientationNorth();
         }
 
         tomtomMap.addOnMarkerDragListener(this);
@@ -70,6 +71,8 @@ public class GeofencingReportPresenter extends BaseFunctionalExamplePresenter im
     public void cleanup() {
         super.cleanup();
         clearMap();
+
+        tomtomMap.removeOnMarkerDragListener(this);
     }
 
     @Override
@@ -152,6 +155,11 @@ public class GeofencingReportPresenter extends BaseFunctionalExamplePresenter im
 
     private void clearMapAndCenterOnDefault() {
         clearMap();
-        tomtomMap.centerOn(DEFAULT_MAP_POSITION, DEFAULT_ZOOM_LEVEL);
+        centerOnDefaultWithOrientationNorth();
+    }
+
+    private void centerOnDefaultWithOrientationNorth() {
+        tomtomMap.centerOn(DEFAULT_MAP_POSITION.getLatitude(), DEFAULT_MAP_POSITION.getLongitude(),
+                DEFAULT_ZOOM_LEVEL, MapConstants.ORIENTATION_NORTH);
     }
 }

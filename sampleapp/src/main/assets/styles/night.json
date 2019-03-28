@@ -30269,6 +30269,6 @@
       "type": "vector"
     }
   },
-  "sprite": "asset://styles/sprite/tt/sprite",
+  "sprite": "asset://styles/sprite/lite/sprite",
   "version": 8
 }

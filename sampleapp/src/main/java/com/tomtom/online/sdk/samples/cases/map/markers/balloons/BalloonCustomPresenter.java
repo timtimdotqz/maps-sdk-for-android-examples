@@ -29,11 +29,11 @@ public class BalloonCustomPresenter extends BaseFunctionalExamplePresenter {
     @Override
     public void bind(FunctionalExampleFragment view, TomtomMap map) {
         super.bind(view, map);
+        markerDrawer = new MarkerDrawer(view.getContext(), tomtomMap);
+
         if (!view.isMapRestored()) {
             centerMapOnLocation();
         }
-
-        markerDrawer = new MarkerDrawer(view.getContext(), tomtomMap);
     }
 
     @Override

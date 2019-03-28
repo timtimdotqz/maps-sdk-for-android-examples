@@ -1,7 +1,14 @@
 import java.text.SimpleDateFormat
 
+
+def dependenciesVersionsDirPath = project.findProperty('dependenciesVersionsDirPath')
 def releaseProps = new Properties()
-releaseProps.load(new FileInputStream("$rootProject.rootDir/release.properties"))
+
+if (dependenciesVersionsDirPath == null) {
+    releaseProps.load(file("$rootProject.rootDir/release.properties").newInputStream())
+} else {
+    releaseProps.load(file("${dependenciesVersionsDirPath}/release.properties").newInputStream())
+}
 
 ext {
     releaseBuild = false
@@ -51,9 +58,21 @@ ext {
 
     ]
 
+    androidXVersions = [
+            recyclerview            : '1.0.0',
+            activityktx             : '1.0.0-alpha04',
+            appcompat               : '1.1.0-alpha02',
+            legacysupportv4         : '1.0.0',
+            lifecycleextensions     : '2.1.0-alpha02',
+            lifecycleviewmodelktx   : '2.0.0',
+            cardview                : '1.0.0',
+            material                : '1.0.0',
+            navigationuiktx         : '1.0.0-rc02'
+    ]
+
     //doc_start_dependencies_version_config
     libVersions = [
-            timber                 : '4.6.0',
+            timber                 : '4.7.1',
             crashlytics            : '2.9.5',
             leakcanary             : '1.6.1',
             corektx                : '0.3',
@@ -64,7 +83,8 @@ ext {
             guava                  : '25.0-android',
             dtool                  : '1.0',
             rxjava                 : '2.1.0',
-            rxandroid              : '2.0.1',
+            rxandroid              : '2.1.0',
+            rxbinding              : '2.2.0',
             retrofit               : '2.5.0',
             retrofitrxjava         : '1.0.0',
             okhttp                 : '3.9.1',
@@ -77,7 +97,7 @@ ext {
             anko_version           : '0.10.4',
             glide                  : '4.7.1',
             androidgifdrawable     : '1.2.15',
-            sdkannotations         : '1.0.1',
+            sdkannotations         : '1.0.2',
             gesture                : '0.0.8',
             detekt                 : '1.0.0-RC12',
             ktlint                 : '6.3.1',
