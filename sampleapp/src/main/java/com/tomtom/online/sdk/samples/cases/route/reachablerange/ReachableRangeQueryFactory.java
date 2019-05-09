@@ -71,7 +71,7 @@ public class ReachableRangeQueryFactory {
                 .withDownhillEfficiency(0.33)
                 .withConstantSpeedConsumptionInLitersPerHundredKm(consumption)
                 .withVehicleEngineType(VehicleEngineType.COMBUSTION)
-                //tag::doc_reachable_range_common_params_combustion[]
+                //end::doc_reachable_range_common_params_combustion[]
                 .build();
     }
 
