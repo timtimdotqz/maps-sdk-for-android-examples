@@ -15,12 +15,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.widget.Toast;
 
+import com.google.common.base.Optional;
+import com.tomtom.online.sdk.common.location.BoundingBox;
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.data.reachablerange.ReachableRangeResponse;
 import com.tomtom.online.sdk.map.CameraPosition;
 import com.tomtom.online.sdk.map.Icon;
 import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.MarkerBuilder;
+import com.tomtom.online.sdk.map.Overlay;
+import com.tomtom.online.sdk.map.Polygon;
 import com.tomtom.online.sdk.map.PolygonBuilder;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.routing.OnlineRoutingApi;
@@ -33,12 +37,14 @@ import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.utils.Locations;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ReachableRangePresenter extends BaseFunctionalExamplePresenter {
 
     protected static final int DEFAULT_MAP_PADDING = 0;
     private static final int OVERLAYS_COLOR = Color.rgb(255, 0, 0);
     private static final float OVERLAYS_OPACITY = 0.5f;
+    private static final String OVERLAY_TAG = "RANGE_OVERLAY";
 
     private ReachableRangeQueryFactory reachableRangeQueryFactory;
     private RoutingApi routingApi;
@@ -49,8 +55,9 @@ public class ReachableRangePresenter extends BaseFunctionalExamplePresenter {
         routingApi = provideOnlineRoutingApi(view);
         reachableRangeQueryFactory = provideReachableRangeQueryFactory();
         if (!view.isMapRestored()) {
-            centerOnDefaultLocation();
+            centerOnLocation(Locations.AMSTERDAM_CENTER_LOCATION, MapConstants.DEFAULT_ZOOM_LEVEL);
         }
+        adjustZoomLevel();
         confMapPadding();
     }
 
@@ -80,11 +87,12 @@ public class ReachableRangePresenter extends BaseFunctionalExamplePresenter {
         return new ReachableRangeFunctionalExample();
     }
 
-    public void centerOnDefaultLocation() {
-        tomtomMap.centerOn(CameraPosition.builder(Locations.AMSTERDAM_CENTER_LOCATION)
+    private void centerOnLocation(LatLng location, double zoomLevel) {
+        tomtomMap.centerOn(CameraPosition.builder(location)
                 .bearing(MapConstants.ORIENTATION_NORTH)
-                .zoom(MapConstants.DEFAULT_ZOOM_LEVEL)
-                .build());
+                .zoom(zoomLevel)
+                .build()
+        );
     }
 
     public void startReachableRangeCalculationForElectric() {
@@ -106,12 +114,14 @@ public class ReachableRangePresenter extends BaseFunctionalExamplePresenter {
     }
 
     @VisibleForTesting
-    protected void drawPolygonFromReachableRangeResponse(ReachableRangeResponse response) {
+    protected void drawPolygonForReachableRange(List<LatLng> coordinates) {
+        getTomtomMap().getOverlaySettings().removeOverlays();
         getTomtomMap().getOverlaySettings().addOverlay(
                 PolygonBuilder.create()
-                        .coordinates(Arrays.asList(response.getResult().getBoundary()))
+                        .coordinates(coordinates)
                         .color(OVERLAYS_COLOR)
                         .opacity(OVERLAYS_OPACITY)
+                        .tag(OVERLAY_TAG)
                         .build()
         );
     }
@@ -142,8 +152,9 @@ public class ReachableRangePresenter extends BaseFunctionalExamplePresenter {
     }
 
     private void doActionOnReachableRangeResponse(ReachableRangeResponse response) {
-        drawPolygonFromReachableRangeResponse(response);
-        createMarkersOnTheReachableRangeEdges(response);
+        List<LatLng> coordinates = Arrays.asList(response.getResult().getBoundary());
+        drawPolygonForReachableRange(coordinates);
+        centerOnBoundingBox(coordinates);
     }
 
     protected void confMapPadding() {
@@ -162,6 +173,22 @@ public class ReachableRangePresenter extends BaseFunctionalExamplePresenter {
                 .icon(Icon.Factory.fromResources(getView().getContext(), R.drawable.ic_favourites)));
     }
 
+    protected void centerOnBoundingBox(List<LatLng> coordinates) {
+        BoundingBox boundingBox = BoundingBox.fromCoordinates(coordinates);
+
+        double zoomLevel = tomtomMap.getZoomLevelForBounds(boundingBox.getTopLeft(), boundingBox.getBottomRight());
+        centerOnLocation(boundingBox.getCenter(), zoomLevel);
+    }
+
+    protected void adjustZoomLevel() {
+        Optional<Overlay> overlay = tomtomMap.getOverlaySettings().findOverlayByTag(OVERLAY_TAG);
+
+        if (overlay.isPresent()) {
+            Polygon polygon = (Polygon) overlay.get();
+            centerOnBoundingBox(polygon.getCoordinates());
+        }
+    }
+
     @VisibleForTesting
     TomtomMap getTomtomMap() {
         return tomtomMap;
@@ -170,14 +197,5 @@ public class ReachableRangePresenter extends BaseFunctionalExamplePresenter {
     @VisibleForTesting
     FunctionalExampleFragment getView() {
         return view;
-    }
-
-    private void createMarkersOnTheReachableRangeEdges(ReachableRangeResponse response) {
-        if (!response.hasError()) {
-            for (LatLng latLng : response.getResult().getBoundary()) {
-                createMarker(latLng);
-            }
-            getTomtomMap().zoomToAllMarkers();
-        }
     }
 }

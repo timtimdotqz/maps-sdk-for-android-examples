@@ -23,7 +23,7 @@ public final class Locations {
     public final static LatLng BERLIN_LOCATION = new LatLng(52.520007, 13.404954);
     public final static LatLng ROTTERDAM_LOCATION = new LatLng(51.935966, 4.482865);
     public final static LatLng AMSTERDAM_LOCATION = new LatLng(52.377271, 4.909466);
-    public final static LatLng AMSTERDAM_CENTER_LOCATION = new LatLng(52.373154,4.890659);
+    public final static LatLng AMSTERDAM_CENTER_LOCATION = new LatLng(52.373154, 4.890659);
     public final static LatLng OSLO_LOCATION = new LatLng(59.911491, 10.757933);
     public final static LatLng LONDON_LOCATION = new LatLng(51.507351, -0.127758);
     public final static LatLng AMSTERDAM_HENK_SNEEVLIETWEG = new LatLng(52.345971, 4.844899);
@@ -31,8 +31,17 @@ public final class Locations {
     public final static LatLng AMSTERDAM_BERLIN_CENTER_LOCATION = new LatLng(52.575119, 9.149708);
     public static final LatLng LODZ_LOCATION = new LatLng(51.759434, 19.449011);
     public static final LatLng AMSTERDAM_HAARLEM = new LatLng(52.381222, 4.637558);
-    public static final LatLng UTRECHT_LOCATION = new LatLng(52.09179,5.11457);
-    public static final LatLng HOOFDDORP_LOCATION = new LatLng(52.3058782,4.6483191);
+    public static final LatLng UTRECHT_LOCATION = new LatLng(52.09179, 5.11457);
+    public static final LatLng HOOFDDORP_LOCATION = new LatLng(52.3058782, 4.6483191);
+    public final static LatLng BUCKINGHAM_PALACE_LOCATION = new LatLng(51.501197, -0.1436497);
+
+    public static final LatLng SAN_FRANCISCO = new LatLng(37.7793, -122.419);
+    public static final LatLng SANTA_CRUZ = new LatLng(36.9749416, -122.0285259);
+
+    public static final LatLng SAN_JOSE_9RD = new LatLng(37.176238, -122.139924);
+    public static final LatLng SAN_JOSE_IMG1 = new LatLng(37.76028, -122.454246);
+    public static final LatLng SAN_JOSE_IMG2 = new LatLng(36.926304, -121.967966);
+    public static final LatLng SAN_JOSE_IMG3 = new LatLng(37.455662, -122.492698);
 
     static Random r = new Random(System.currentTimeMillis());
 

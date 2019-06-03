@@ -40,12 +40,11 @@ class TrafficIncidentListRequester {
     }
 
     private IncidentDetailsQuery createSampleQuery() {
-        return //tag::doc_traffic_query[]
-                IncidentDetailsQueryBuilder.create(IncidentStyle.S1, LONDON_BOUNDING_BOX, DEFAULT_ZOOM_LEVEL_FOR_EXAMPLE, "-1")
+        //tag::doc_traffic_query[]
+        return IncidentDetailsQueryBuilder.create(IncidentStyle.S1, LONDON_BOUNDING_BOX, DEFAULT_ZOOM_LEVEL_FOR_EXAMPLE, "-1")
                 .withExpandCluster(true)
                 .build();
         //end::doc_traffic_query[]
-
     }
 
 }

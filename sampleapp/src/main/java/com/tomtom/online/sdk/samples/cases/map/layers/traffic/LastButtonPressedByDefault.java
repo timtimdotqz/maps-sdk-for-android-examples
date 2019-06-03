@@ -10,9 +10,10 @@
  */
 package com.tomtom.online.sdk.samples.cases.map.layers.traffic;
 
+import com.tomtom.online.sdk.samples.cases.ButtonStrategy;
 import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
 
-class LastButtonPressedByDefault implements ButtonStrategy {
+class LastButtonPressedByDefault extends ButtonStrategy {
 
     private final TrafficPresenter presenter;
     private final OptionsButtonsView optionsView;

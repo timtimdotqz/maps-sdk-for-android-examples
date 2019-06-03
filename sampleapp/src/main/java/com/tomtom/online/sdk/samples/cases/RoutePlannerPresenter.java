@@ -33,7 +33,6 @@ import com.tomtom.online.sdk.routing.data.RouteResponse;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.BaseFunctionalExamplePresenter;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
-import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
 import com.tomtom.online.sdk.samples.utils.CheckedButtonCleaner;
 
 import java.util.LinkedHashMap;
@@ -168,14 +167,14 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
         Disposable subscribe = routePlannerAPI.planRoute(routeQuery).subscribeOn(getWorkingScheduler())
                 .observeOn(getResultScheduler())
                 .subscribe(
-                        routeResult -> displayRoutes(routeResult, RouteStyle.DEFAULT_ROUTE_STYLE, defaultStartIcon, defaultEndIcon),
+                        routeResult -> displayRoutes(routeResult),
                         throwable -> proceedWithError(throwable.getMessage()));
         //end::doc_execute_routing[]
         compositeDisposable.add(subscribe);
     }
 
     protected void displayRoutes(RouteResponse routeResponse) {
-        displayFullRoutes(routeResponse, RouteStyle.DEFAULT_ROUTE_STYLE, defaultStartIcon, defaultEndIcon);
+        displayRoutes(routeResponse, RouteStyle.DEFAULT_ROUTE_STYLE, defaultStartIcon, defaultEndIcon);
     }
 
     protected void displayRoutes(RouteResponse routeResponse, RouteStyle routeStyle, Icon startIcon, Icon endIcon) {
@@ -195,19 +194,22 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
         List<FullRoute> routes = routeResponse.getRoutes();
 
         for (FullRoute route : routes) {
-
-            //tag::doc_display_route[]
-            RouteBuilder routeBuilder = new RouteBuilder(route.getCoordinates())
-                    .endIcon(endIcon)
-                    .startIcon(startIcon)
-                    .style(routeStyle);
-            final Route mapRoute = tomtomMap.addRoute(routeBuilder);
-            //end::doc_display_route[]
-
-            routesMap.put(mapRoute.getId(), route);
+            addMapRoute(routeStyle, startIcon, endIcon, route);
         }
 
         processAddedRoutes(routeStyle, routes);
+    }
+
+    protected void addMapRoute(RouteStyle routeStyle, Icon startIcon, Icon endIcon, FullRoute route) {
+        //tag::doc_display_route[]
+        RouteBuilder routeBuilder = new RouteBuilder(route.getCoordinates())
+                .endIcon(endIcon)
+                .startIcon(startIcon)
+                .style(routeStyle);
+        final Route mapRoute = tomtomMap.addRoute(routeBuilder);
+        //end::doc_display_route[]
+
+        routesMap.put(mapRoute.getId(), route);
     }
 
     protected void processAddedRoutes(RouteStyle routeStyle, List<FullRoute> routes) {
@@ -216,7 +218,6 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
             displayInfoAboutRoute(routes.get(0));
         }
     }
-
 
     protected void selectFirstRouteAsActive(RouteStyle routeStyle) {
         if (!tomtomMap.getRouteSettings().getRoutes().isEmpty() && routeStyle.equals(RouteStyle.DEFAULT_ROUTE_STYLE)) {

@@ -11,13 +11,14 @@
 package com.tomtom.online.sdk.samples.cases.map.layers.traffic;
 
 import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.cases.ButtonStrategy;
 import com.tomtom.online.sdk.samples.cases.ExampleFragment;
 import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
 
 public class TrafficLayersFragment extends ExampleFragment<TrafficLayersPresenter> {
 
-
     ButtonStrategy buttonPressStrategy = new ButtonStrategy.NoPressAnyButtons();
+
     @Override
     protected TrafficLayersPresenter createPresenter() {
         return new TrafficLayersPresenter();
@@ -30,9 +31,7 @@ public class TrafficLayersFragment extends ExampleFragment<TrafficLayersPresente
         view.addOption(getString(R.string.traffic_flow));
         view.addOption(getString(R.string.traffic_off_btn));
         optionsView.selectLast();
-        if (presenter instanceof TrafficPresenter){
-            buttonPressStrategy = new LastButtonPressedByDefault(presenter, optionsView);
-        }
+        buttonPressStrategy = new LastButtonPressedByDefault(presenter, optionsView);
     }
 
     @Override

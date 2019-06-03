@@ -12,15 +12,19 @@ package com.tomtom.online.sdk.samples.activities;
 
 import android.content.Context;
 import android.content.res.Resources;
+
+import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.common.util.Contextable;
+import com.tomtom.online.sdk.map.MapConstants;
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.map.ui.MapComponentView;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
-import io.reactivex.Scheduler;
-import io.reactivex.schedulers.Schedulers;
 
 import java.util.concurrent.Executors;
+
+import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 
 public abstract class BaseFunctionalExamplePresenter implements FunctionalExamplePresenter, Contextable {
 
@@ -74,6 +78,22 @@ public abstract class BaseFunctionalExamplePresenter implements FunctionalExampl
 
     @Override
     public void onPause() {
+    }
+
+    protected void centerOn(LatLng location) {
+        tomtomMap.centerOn(
+                location.getLatitude(),
+                location.getLongitude(),
+                DEFAULT_ZOOM_LEVEL,
+                MapConstants.ORIENTATION_NORTH);
+    }
+
+    protected void centerOn(LatLng location, double zoom) {
+        tomtomMap.centerOn(
+                location.getLatitude(),
+                location.getLongitude(),
+                zoom,
+                MapConstants.ORIENTATION_NORTH);
     }
 
     protected void confMapPadding() {

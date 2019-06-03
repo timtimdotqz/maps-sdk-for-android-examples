@@ -31,6 +31,7 @@ public class FunctionalExamplesFactory implements ExampleFactory {
         factories.add(new SearchExampleFactory());
         factories.add(new RoutingExampleFactory());
         factories.add(new GeofencingExampleFactory());
+        factories.add(new RuntimeStyleExampleFactory());
     }
 
     public FunctionalExampleFragment create(@IdRes int itemId) {

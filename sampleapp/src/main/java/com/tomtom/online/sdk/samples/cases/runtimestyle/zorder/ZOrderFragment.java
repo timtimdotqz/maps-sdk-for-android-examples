@@ -8,42 +8,44 @@
  * licensee then you are not authorised to use this software in any manner and should
  * immediately return it to TomTom N.V.
  */
-package com.tomtom.online.sdk.samples.cases.map.layers.traffic;
+package com.tomtom.online.sdk.samples.cases.runtimestyle.zorder;
 
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.cases.ButtonStrategy;
-import com.tomtom.online.sdk.samples.cases.ExampleFragment;
+import com.tomtom.online.sdk.samples.cases.RoutePlannerFragment;
 import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
 
-public class VectorTrafficLayersFragment extends ExampleFragment<VectorTrafficLayersPresenter> {
+public class ZOrderFragment extends RoutePlannerFragment<ZOrderPresenter> {
 
     ButtonStrategy buttonPressStrategy = new ButtonStrategy.NoPressAnyButtons();
 
     @Override
-    protected VectorTrafficLayersPresenter createPresenter() {
-        return new VectorTrafficLayersPresenter();
+    protected ZOrderPresenter createPresenter() {
+        return new ZOrderPresenter(this);
     }
 
     @Override
     protected void onOptionsButtonsView(OptionsButtonsView view) {
-        view.setSelectMode(OptionsButtonsView.SelectMode.MULTI);
-        view.addOption(getString(R.string.traffic_incidents));
-        view.addOption(getString(R.string.traffic_flow));
-        view.addOption(getString(R.string.traffic_off_btn));
-        optionsView.selectLast();
-        if (presenter instanceof TrafficPresenter){
-            buttonPressStrategy = new LastButtonPressedByDefault(presenter, optionsView);
-        }
+        view.addOption(R.string.label_btn_images_layer);
+        view.addOption(R.string.label_btn_geojson_layer);
+        view.addOption(R.string.label_btn_roads_layer);
+        optionsView.selectItem(0, true);
     }
 
     @Override
     public void onChange(boolean[] oldValues, boolean[] newValues) {
+        lateInitButtonPressStrategy();
         buttonPressStrategy.manageButtons(oldValues, newValues);
     }
 
     @Override
-    public boolean isMapRestored() {
-        return super.isMapRestored();
+    public void repeatRequestWhenNotFinished() {
+        // Not needed to re-query for the route.
     }
 
+    private void lateInitButtonPressStrategy() {
+        if (buttonPressStrategy instanceof ButtonStrategy.NoPressAnyButtons) {
+            buttonPressStrategy = new ZOrderButtonsStrategy(presenter);
+        }
+    }
 }

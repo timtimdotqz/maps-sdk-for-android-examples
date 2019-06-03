@@ -8,41 +8,48 @@
  * licensee then you are not authorised to use this software in any manner and should
  * immediately return it to TomTom N.V.
  */
-package com.tomtom.online.sdk.samples.cases.map.layers.traffic;
+package com.tomtom.online.sdk.samples.cases.runtimestyle.sources;
 
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.cases.ButtonStrategy;
 import com.tomtom.online.sdk.samples.cases.ExampleFragment;
 import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
 
-public class VectorTrafficLayersFragment extends ExampleFragment<VectorTrafficLayersPresenter> {
+public class DynamicSourcesFragment extends ExampleFragment<DynamicSourcesPresenter> {
 
     ButtonStrategy buttonPressStrategy = new ButtonStrategy.NoPressAnyButtons();
 
     @Override
-    protected VectorTrafficLayersPresenter createPresenter() {
-        return new VectorTrafficLayersPresenter();
+    protected DynamicSourcesPresenter createPresenter() {
+        return new DynamicSourcesPresenter();
     }
 
     @Override
     protected void onOptionsButtonsView(OptionsButtonsView view) {
         view.setSelectMode(OptionsButtonsView.SelectMode.MULTI);
-        view.addOption(getString(R.string.traffic_incidents));
-        view.addOption(getString(R.string.traffic_flow));
-        view.addOption(getString(R.string.traffic_off_btn));
-        optionsView.selectLast();
-        if (presenter instanceof TrafficPresenter){
-            buttonPressStrategy = new LastButtonPressedByDefault(presenter, optionsView);
-        }
+        view.addOption(R.string.dynamic_map_sources_geojson_source);
+        view.addOption(R.string.dynamic_map_sources_image_source);
     }
 
     @Override
     public void onChange(boolean[] oldValues, boolean[] newValues) {
+        lateInitButtonPressStrategy();
         buttonPressStrategy.manageButtons(oldValues, newValues);
+    }
+
+    private void lateInitButtonPressStrategy() {
+        if (buttonPressStrategy instanceof ButtonStrategy.NoPressAnyButtons) {
+            buttonPressStrategy = new DynamicSourcesButtonsStrategy(presenter);
+        }
     }
 
     @Override
     public boolean isMapRestored() {
+        final boolean[] previousState = new boolean[]{
+                optionsView.isSelected(0),
+                optionsView.isSelected(1)
+        };
+        onChange(previousState, previousState);
         return super.isMapRestored();
     }
 

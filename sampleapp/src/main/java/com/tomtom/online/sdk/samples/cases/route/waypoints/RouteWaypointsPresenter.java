@@ -23,7 +23,6 @@ import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.RoutePlannerPresenter;
 import com.tomtom.online.sdk.samples.cases.RoutingUiListener;
 import com.tomtom.online.sdk.samples.routes.AmsterdamToBerlinRouteConfig;
-import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
 import com.tomtom.online.sdk.samples.utils.Locations;
 
 import java.util.ArrayList;

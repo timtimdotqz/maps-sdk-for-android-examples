@@ -116,6 +116,25 @@
         </menu>
     </item>
 
+    <item
+        android:checkableBehavior="single"
+        android:title="@string/runtime_style">
+        <menu>
+            <item
+                android:id="@+id/map_layers_visibility"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/map_layers_visibility" />
+            <item
+                android:id="@+id/dynamic_map_sources"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/dynamic_map_sources" />
+            <item
+                android:id="@+id/zorder_map_layers"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/label_title_dynamic_layer_ordering" />
+        </menu>
+    </item>
+
     <item android:title="@string/dynamic_map">
         <menu>
             <item

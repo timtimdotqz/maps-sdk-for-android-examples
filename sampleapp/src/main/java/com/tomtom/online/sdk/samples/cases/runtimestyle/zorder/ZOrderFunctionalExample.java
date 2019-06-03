@@ -8,17 +8,19 @@
  * licensee then you are not authorised to use this software in any manner and should
  * immediately return it to TomTom N.V.
  */
-package com.tomtom.online.sdk.samples.cases.map.layers.traffic;
+package com.tomtom.online.sdk.samples.cases.runtimestyle.zorder;
 
-import timber.log.Timber;
+import com.tomtom.online.sdk.samples.R;
+import com.tomtom.online.sdk.samples.activities.BaseFunctionalExampleModel;
 
-interface ButtonStrategy {
-    void manageButtons(boolean[] oldValues, boolean[] newValues);
+public class ZOrderFunctionalExample extends BaseFunctionalExampleModel {
 
-    class NoPressAnyButtons implements ButtonStrategy{
-        @Override
-        public void manageButtons(boolean[] oldValues, boolean[] newValues) {
-            Timber.w("Buttons don't works because default strategy is used for manage pressing buttons.");
-        }
+    public int getPlayableTitle() {
+        return R.string.label_title_dynamic_layer_ordering;
     }
+
+    public int getPlayableSubtitle() {
+        return R.string.empty;
+    }
+
 }

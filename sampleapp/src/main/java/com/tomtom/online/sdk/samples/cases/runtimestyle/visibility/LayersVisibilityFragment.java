@@ -8,41 +8,50 @@
  * licensee then you are not authorised to use this software in any manner and should
  * immediately return it to TomTom N.V.
  */
-package com.tomtom.online.sdk.samples.cases.map.layers.traffic;
+package com.tomtom.online.sdk.samples.cases.runtimestyle.visibility;
 
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.cases.ButtonStrategy;
 import com.tomtom.online.sdk.samples.cases.ExampleFragment;
 import com.tomtom.online.sdk.samples.utils.views.OptionsButtonsView;
 
-public class VectorTrafficLayersFragment extends ExampleFragment<VectorTrafficLayersPresenter> {
+public class LayersVisibilityFragment extends ExampleFragment<LayersVisibilityPresenter> {
 
     ButtonStrategy buttonPressStrategy = new ButtonStrategy.NoPressAnyButtons();
 
     @Override
-    protected VectorTrafficLayersPresenter createPresenter() {
-        return new VectorTrafficLayersPresenter();
+    protected LayersVisibilityPresenter createPresenter() {
+        return new LayersVisibilityPresenter();
     }
 
     @Override
     protected void onOptionsButtonsView(OptionsButtonsView view) {
         view.setSelectMode(OptionsButtonsView.SelectMode.MULTI);
-        view.addOption(getString(R.string.traffic_incidents));
-        view.addOption(getString(R.string.traffic_flow));
-        view.addOption(getString(R.string.traffic_off_btn));
-        optionsView.selectLast();
-        if (presenter instanceof TrafficPresenter){
-            buttonPressStrategy = new LastButtonPressedByDefault(presenter, optionsView);
-        }
+        view.addOption(R.string.label_visibility_road_network_btn);
+        view.addOption(R.string.label_visibility_woodland_btn);
+        view.addOption(R.string.label_visibility_build_up_btn);
     }
 
     @Override
     public void onChange(boolean[] oldValues, boolean[] newValues) {
+        lateInitButtonPressStrategy();
         buttonPressStrategy.manageButtons(oldValues, newValues);
+    }
+
+    private void lateInitButtonPressStrategy() {
+        if (buttonPressStrategy instanceof ButtonStrategy.NoPressAnyButtons) {
+            buttonPressStrategy = new LayersVisibilityButtonsStrategy(presenter);
+        }
     }
 
     @Override
     public boolean isMapRestored() {
+        final boolean[] previousState = new boolean[]{
+                optionsView.isSelected(0),
+                optionsView.isSelected(1),
+                optionsView.isSelected(2)
+        };
+        onChange(previousState, previousState);
         return super.isMapRestored();
     }
 
