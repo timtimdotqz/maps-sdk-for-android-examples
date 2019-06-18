@@ -11,7 +11,8 @@
 package com.tomtom.online.sdk.samples.cases.route.types;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.tomtom.online.sdk.routing.data.RouteType;
 import com.tomtom.online.sdk.samples.R;

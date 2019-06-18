@@ -11,8 +11,9 @@
 package com.tomtom.online.sdk.samples.cases.map.route;
 
 import android.graphics.Color;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.VisibleForTesting;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.VisibleForTesting;
 
 import com.tomtom.online.sdk.map.Icon;
 import com.tomtom.online.sdk.map.RouteStyle;
@@ -24,7 +25,6 @@ import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
 import com.tomtom.online.sdk.samples.cases.RoutePlannerPresenter;
 import com.tomtom.online.sdk.samples.cases.RoutingUiListener;
 import com.tomtom.online.sdk.samples.routes.AmsterdamToRotterdamRouteConfig;
-import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
 
 public class RouteCustomizationPresenter extends RoutePlannerPresenter {
 

@@ -10,11 +10,9 @@
  */
 package com.tomtom.online.sdk.samples.cases.factory;
 
-import android.support.annotation.IdRes;
+import androidx.annotation.IdRes;
 
 import com.tomtom.online.sdk.samples.R;
-import com.tomtom.online.sdk.samples.cases.driving.tracking.ChevronTrackingFragment;
-import com.tomtom.online.sdk.samples.cases.map.traffic.incident.TrafficIncidentListFragment;
 import com.tomtom.online.sdk.samples.fragments.CurrentLocationFragment;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.license.AboutFragment;

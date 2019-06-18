@@ -10,7 +10,7 @@
  */
 package com.tomtom.online.sdk.samples.utils.formatter;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.tomtom.online.sdk.common.location.LatLng;
 

@@ -10,7 +10,7 @@
  */
 package com.tomtom.online.sdk.samples.cases.search;
 
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQueryBuilder;

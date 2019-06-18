@@ -63,7 +63,7 @@ public class MarkersClusteringPresenter extends BaseFunctionalExamplePresenter {
         int offsetBig = view.getContext().getResources().getDimensionPixelSize(R.dimen.offset_super_big);
 
         int actionBarHeight = view.getContext().getResources().getDimensionPixelSize(
-                android.support.v7.appcompat.R.dimen.abc_action_bar_default_height_material);
+                R.dimen.abc_action_bar_default_height_material);
 
         int padding = actionBarHeight + offsetBig;
         tomtomMap.setPadding(padding, padding, padding, padding);

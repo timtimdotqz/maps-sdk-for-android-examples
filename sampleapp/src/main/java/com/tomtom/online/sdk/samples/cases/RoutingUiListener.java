@@ -10,7 +10,7 @@
  */
 package com.tomtom.online.sdk.samples.cases;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import com.tomtom.online.sdk.routing.data.FullRoute;
 

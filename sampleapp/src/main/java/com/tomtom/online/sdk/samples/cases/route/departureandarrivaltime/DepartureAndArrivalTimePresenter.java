@@ -10,7 +10,7 @@
  */
 package com.tomtom.online.sdk.samples.cases.route.departureandarrivaltime;
 
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 
 import com.tomtom.online.sdk.routing.data.RouteQuery;
 import com.tomtom.online.sdk.samples.activities.FunctionalExampleModel;
@@ -18,7 +18,6 @@ import com.tomtom.online.sdk.samples.cases.RoutePlannerPresenter;
 import com.tomtom.online.sdk.samples.cases.RoutingUiListener;
 import com.tomtom.online.sdk.samples.cases.route.RouteQueryFactory;
 import com.tomtom.online.sdk.samples.routes.AmsterdamToRotterdamRouteConfig;
-import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
 
 import org.joda.time.DateTime;
 

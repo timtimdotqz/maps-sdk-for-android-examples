@@ -11,9 +11,10 @@
 package com.tomtom.online.sdk.samples.cases.route.reachablerange;
 
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import com.google.common.base.Optional;
 import com.tomtom.online.sdk.common.location.BoundingBox;
@@ -161,7 +162,7 @@ public class ReachableRangePresenter extends BaseFunctionalExamplePresenter {
         int offsetBig = getView().getContext().getResources().getDimensionPixelSize(R.dimen.offset_extra_big);
 
         int actionBarHeight = getView().getContext().getResources().getDimensionPixelSize(
-                android.support.v7.appcompat.R.dimen.abc_action_bar_default_height_material);
+                R.dimen.abc_action_bar_default_height_material);
 
         int padding = actionBarHeight + offsetBig;
 

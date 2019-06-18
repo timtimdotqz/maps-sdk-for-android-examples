@@ -10,7 +10,7 @@
  */
 package com.tomtom.online.sdk.samples.cases.route.maneuvers;
 
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 
 import com.tomtom.online.sdk.map.TomtomMap;
 import com.tomtom.online.sdk.routing.data.FullRoute;
@@ -22,7 +22,6 @@ import com.tomtom.online.sdk.samples.cases.RoutingUiListener;
 import com.tomtom.online.sdk.samples.cases.route.RouteQueryFactory;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 import com.tomtom.online.sdk.samples.routes.AmsterdamToBerlinRouteConfig;
-import com.tomtom.online.sdk.samples.routes.RouteConfigExample;
 
 import java.util.Arrays;
 import java.util.List;

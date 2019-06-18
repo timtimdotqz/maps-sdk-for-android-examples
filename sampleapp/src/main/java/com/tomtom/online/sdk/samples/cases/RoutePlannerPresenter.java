@@ -12,7 +12,8 @@ package com.tomtom.online.sdk.samples.cases;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.location.Locations;
@@ -137,7 +138,7 @@ public abstract class RoutePlannerPresenter extends BaseFunctionalExamplePresent
         int offsetBig = view.getContext().getResources().getDimensionPixelSize(R.dimen.offset_super_big);
 
         int actionBarHeight = view.getContext().getResources().getDimensionPixelSize(
-                android.support.v7.appcompat.R.dimen.abc_action_bar_default_height_material);
+                R.dimen.abc_action_bar_default_height_material);
 
         int etaPanelHeight = view.getContext().getResources().getDimensionPixelSize(
                 R.dimen.eta_panel_height);

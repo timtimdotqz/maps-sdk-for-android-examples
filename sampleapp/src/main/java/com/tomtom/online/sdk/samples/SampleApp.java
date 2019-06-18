@@ -15,9 +15,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StrictMode;
-import android.support.annotation.RequiresApi;
-import android.support.multidex.MultiDexApplication;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
+import androidx.multidex.MultiDexApplication;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.tomtom.online.sdk.common.util.LogUtils;

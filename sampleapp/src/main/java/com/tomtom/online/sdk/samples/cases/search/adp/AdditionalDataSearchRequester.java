@@ -11,7 +11,8 @@
 package com.tomtom.online.sdk.samples.cases.search.adp;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.google.common.base.Optional;
 import com.tomtom.online.sdk.common.rx.RxContext;

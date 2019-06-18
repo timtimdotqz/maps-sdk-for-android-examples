@@ -11,7 +11,8 @@
 package com.tomtom.online.sdk.samples.utils.formatter;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.VisibleForTesting;
+
+import androidx.annotation.VisibleForTesting;
 
 import java.util.Locale;
 

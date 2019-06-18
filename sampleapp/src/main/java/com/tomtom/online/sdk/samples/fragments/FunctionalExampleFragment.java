@@ -11,7 +11,8 @@
 package com.tomtom.online.sdk.samples.fragments;
 
 import android.content.Context;
-import android.support.annotation.StringRes;
+
+import androidx.annotation.StringRes;
 
 import com.tomtom.online.sdk.samples.activities.ActionBarModel;
 import com.tomtom.online.sdk.samples.activities.InfoViewModel;

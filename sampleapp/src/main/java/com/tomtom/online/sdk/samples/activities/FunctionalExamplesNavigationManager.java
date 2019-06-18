@@ -10,11 +10,12 @@
  */
 package com.tomtom.online.sdk.samples.activities;
 
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.view.MenuItem;
 
+import com.google.android.material.navigation.NavigationView;
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.cases.factory.FunctionalExamplesFactory;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;

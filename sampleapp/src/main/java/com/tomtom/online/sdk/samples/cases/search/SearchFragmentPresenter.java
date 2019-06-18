@@ -13,9 +13,10 @@ package com.tomtom.online.sdk.samples.cases.search;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
 import com.tomtom.online.sdk.common.location.LatLng;

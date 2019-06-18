@@ -10,7 +10,7 @@
  */
 package com.tomtom.online.sdk.samples.cases.map.manipulation.events;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import com.tomtom.core.maps.gestures.GesturesDetectionSettings;
 import com.tomtom.core.maps.gestures.GesturesDetectionSettingsBuilder;

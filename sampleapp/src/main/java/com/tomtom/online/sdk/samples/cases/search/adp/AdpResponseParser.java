@@ -11,7 +11,8 @@
 package com.tomtom.online.sdk.samples.cases.search.adp;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.tomtom.online.sdk.common.func.FuncUtils;
 import com.tomtom.online.sdk.common.geojson.Feature;
@@ -20,7 +21,6 @@ import com.tomtom.online.sdk.common.geojson.GeoJsonObjectVisitorAdapter;
 import com.tomtom.online.sdk.search.data.additionaldata.AdditionalDataSearchResponse;
 import com.tomtom.online.sdk.search.data.additionaldata.result.AdditionalDataSearchResult;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;

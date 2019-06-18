@@ -13,7 +13,8 @@ package com.tomtom.online.sdk.samples.cases.search.revgeo.polygon;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.cases.RoutePlanningInProgressDialog;

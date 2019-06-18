@@ -11,7 +11,8 @@
 package com.tomtom.online.sdk.samples.cases.search.adp;
 
 import android.graphics.Color;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.tomtom.online.sdk.common.func.FuncUtils;
 import com.tomtom.online.sdk.common.geojson.Feature;

@@ -10,8 +10,8 @@
  */
 package com.tomtom.online.sdk.samples.cases.route.batch;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import com.google.common.base.Optional;
 import com.tomtom.online.sdk.common.func.FuncUtils;

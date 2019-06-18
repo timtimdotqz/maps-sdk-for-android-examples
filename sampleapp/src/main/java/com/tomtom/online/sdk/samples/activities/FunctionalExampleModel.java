@@ -10,7 +10,7 @@
  */
 package com.tomtom.online.sdk.samples.activities;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 public interface FunctionalExampleModel {
 

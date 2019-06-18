@@ -12,8 +12,9 @@ package com.tomtom.online.sdk.samples.cases.route.maneuvers;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.tomtom.online.sdk.routing.data.Instruction;
 import com.tomtom.online.sdk.samples.R;

@@ -11,10 +11,11 @@
 package com.tomtom.online.sdk.samples.cases.map.multiplemaps;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
 
 import com.tomtom.online.sdk.map.MapFragment;
 import com.tomtom.online.sdk.samples.R;

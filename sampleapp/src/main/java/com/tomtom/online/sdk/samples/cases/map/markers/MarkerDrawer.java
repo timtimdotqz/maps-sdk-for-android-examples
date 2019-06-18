@@ -11,7 +11,8 @@
 package com.tomtom.online.sdk.samples.cases.map.markers;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.map.BaseMarkerBalloon;

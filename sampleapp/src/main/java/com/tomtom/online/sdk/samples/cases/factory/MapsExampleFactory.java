@@ -10,7 +10,7 @@
  */
 package com.tomtom.online.sdk.samples.cases.factory;
 
-import android.support.annotation.IdRes;
+import androidx.annotation.IdRes;
 
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.cases.driving.tracking.ChevronTrackingFragment;

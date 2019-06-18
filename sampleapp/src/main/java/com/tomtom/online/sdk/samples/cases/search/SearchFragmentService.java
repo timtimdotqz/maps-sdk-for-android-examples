@@ -10,7 +10,7 @@
  */
 package com.tomtom.online.sdk.samples.cases.search;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.tomtom.online.sdk.common.rx.RxContext;
 import com.tomtom.online.sdk.search.data.fuzzy.FuzzySearchQuery;

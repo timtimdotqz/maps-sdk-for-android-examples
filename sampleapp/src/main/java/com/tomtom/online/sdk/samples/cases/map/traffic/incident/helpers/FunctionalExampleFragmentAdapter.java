@@ -10,7 +10,8 @@
  */
 package com.tomtom.online.sdk.samples.cases.map.traffic.incident.helpers;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
+
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;
 
 public class FunctionalExampleFragmentAdapter extends Fragment implements FunctionalExampleFragment {

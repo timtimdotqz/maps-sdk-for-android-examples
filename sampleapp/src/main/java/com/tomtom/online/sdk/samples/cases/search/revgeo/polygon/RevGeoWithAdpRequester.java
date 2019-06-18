@@ -10,8 +10,8 @@
  */
 package com.tomtom.online.sdk.samples.cases.search.revgeo.polygon;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import com.tomtom.online.sdk.common.func.FuncUtils;
 import com.tomtom.online.sdk.common.geojson.FeatureCollection;

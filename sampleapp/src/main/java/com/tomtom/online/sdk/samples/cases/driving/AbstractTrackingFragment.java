@@ -11,8 +11,9 @@
 package com.tomtom.online.sdk.samples.cases.driving;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.cases.ExampleFragment;

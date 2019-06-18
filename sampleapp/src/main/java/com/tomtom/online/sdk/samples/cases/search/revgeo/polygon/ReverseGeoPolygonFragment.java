@@ -11,9 +11,9 @@
 package com.tomtom.online.sdk.samples.cases.search.revgeo.polygon;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.tomtom.online.sdk.common.util.LogUtils;
 import com.tomtom.online.sdk.samples.R;

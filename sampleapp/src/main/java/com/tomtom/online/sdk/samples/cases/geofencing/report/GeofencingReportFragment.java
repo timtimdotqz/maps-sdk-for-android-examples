@@ -11,7 +11,8 @@
 package com.tomtom.online.sdk.samples.cases.geofencing.report;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.cases.ExampleFragment;

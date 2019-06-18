@@ -11,12 +11,13 @@
 package com.tomtom.online.sdk.samples.license;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.common.collect.ImmutableList;
 import com.tomtom.online.sdk.samples.R;

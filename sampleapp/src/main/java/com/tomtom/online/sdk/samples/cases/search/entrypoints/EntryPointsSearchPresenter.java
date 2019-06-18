@@ -71,7 +71,7 @@ public class EntryPointsSearchPresenter extends BaseFunctionalExamplePresenter {
         int offsetDefault = view.getContext().getResources().getDimensionPixelSize(R.dimen.offset_default);
 
         int actionBarHeight = view.getContext().getResources().getDimensionPixelSize(
-                android.support.v7.appcompat.R.dimen.abc_action_bar_default_height_material);
+                R.dimen.abc_action_bar_default_height_material);
 
         int padding = actionBarHeight + offsetDefault;
 

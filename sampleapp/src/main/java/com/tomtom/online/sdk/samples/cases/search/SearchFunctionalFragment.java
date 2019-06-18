@@ -11,8 +11,9 @@
 package com.tomtom.online.sdk.samples.cases.search;
 
 import android.content.Context;
-import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
+
+import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
 
 import com.tomtom.online.sdk.samples.R;
 import com.tomtom.online.sdk.samples.activities.ActionBarModel;

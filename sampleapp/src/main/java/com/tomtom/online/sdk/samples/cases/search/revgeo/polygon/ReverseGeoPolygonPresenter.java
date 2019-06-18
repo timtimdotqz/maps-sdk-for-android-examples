@@ -11,8 +11,9 @@
 package com.tomtom.online.sdk.samples.cases.search.revgeo.polygon;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import com.tomtom.core.maps.gestures.GesturesDetectionSettings;
 import com.tomtom.core.maps.gestures.GesturesDetectionSettingsBuilder;

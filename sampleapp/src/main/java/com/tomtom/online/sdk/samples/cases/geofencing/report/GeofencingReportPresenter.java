@@ -10,8 +10,9 @@
  */
 package com.tomtom.online.sdk.samples.cases.geofencing.report;
 
-import android.support.annotation.NonNull;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.geofencing.ReportServiceResultListener;

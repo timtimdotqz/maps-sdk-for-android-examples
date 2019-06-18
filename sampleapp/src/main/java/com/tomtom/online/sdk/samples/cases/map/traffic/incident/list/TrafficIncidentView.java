@@ -13,11 +13,12 @@ package com.tomtom.online.sdk.samples.cases.map.traffic.incident.list;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.tomtom.online.sdk.samples.R;
 

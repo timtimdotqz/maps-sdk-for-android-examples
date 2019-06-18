@@ -16,7 +16,7 @@ android {
         buildConfigField("String[]", "BUILT_IN_LOCALE", '{"en-US","es-ES","fr-FR","de-DE"}')
         applicationId 'com.tomtom.mapssdk.examplesapp'
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -47,6 +47,7 @@ android {
     testOptions {
         animationsDisabled true
         unitTests.returnDefaultValues = true
+        unitTests.includeAndroidResources = true
         unitTests.all {
             // All the usual Gradle options.
             jvmArgs '-XX:MaxPermSize=256m'
@@ -95,12 +96,11 @@ dependencies {
         implementation("com.tomtom.online:sdk-geofencing:$rootProject.internalVersions.sdk")
         //doc_dependencies_sample_app_stop
 
-    implementation "com.android.support:design:$rootProject.androidVersions.support"
-    implementation "com.android.support:appcompat-v7:$rootProject.androidVersions.support"
+    implementation "com.google.android.material:material:$rootProject.androidXVersions.material"
     implementation "com.github.florent37:singledateandtimepicker:$rootProject.libVersions.singledateandtimepicker"
-    implementation "com.android.support.constraint:constraint-layout:$rootProject.androidVersions.constraint_layout"
-    implementation "android.arch.lifecycle:viewmodel:$rootProject.androidVersions.androidarch"
-    implementation "android.arch.lifecycle:extensions:$rootProject.androidVersions.androidarch"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.androidXVersions.constraintlayout"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$rootProject.androidXVersions.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.androidXVersions.lifecycle"
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.libVersions.leakcanary"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.libVersions.leakcanary"
 

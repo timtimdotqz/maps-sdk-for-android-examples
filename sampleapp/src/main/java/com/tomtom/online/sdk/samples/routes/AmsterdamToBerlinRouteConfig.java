@@ -10,8 +10,8 @@
  */
 package com.tomtom.online.sdk.samples.routes;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.samples.R;

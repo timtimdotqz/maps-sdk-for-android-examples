@@ -10,8 +10,9 @@
  */
 package com.tomtom.online.sdk.samples.utils;
 
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
+
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.tomtom.online.sdk.samples.fragments.CurrentLocationFragment;
 import com.tomtom.online.sdk.samples.fragments.FunctionalExampleFragment;

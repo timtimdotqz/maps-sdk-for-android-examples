@@ -10,9 +10,10 @@
  */
 package com.tomtom.online.sdk.samples.cases.map.traffic.incident.list;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.tomtom.online.sdk.common.util.TimeLengthFormatter;
 import com.tomtom.online.sdk.samples.R;

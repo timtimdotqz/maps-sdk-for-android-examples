@@ -10,10 +10,11 @@
  */
 package com.tomtom.online.sdk.samples.cases.map.traffic.incident;
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.OnLifecycleEvent;
 import android.widget.Toast;
+
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import com.tomtom.online.sdk.samples.cases.map.traffic.incident.model.TrafficIncidentItem;
 import com.tomtom.online.sdk.traffic.api.incident.details.IncidentDetailsResultListener;

@@ -11,7 +11,8 @@
 package com.tomtom.online.sdk.samples.cases.runtimestyle.zorder.displayers;
 
 import android.content.Context;
-import android.support.annotation.DrawableRes;
+
+import androidx.annotation.DrawableRes;
 
 import com.google.common.collect.ImmutableList;
 import com.tomtom.online.sdk.common.func.FuncUtils;
