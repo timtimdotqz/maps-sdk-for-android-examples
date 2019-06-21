@@ -49,29 +49,26 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!-- provide here your keys
-
+        
         tag::doc_config_services[]
 
         <meta-data
             android:name="OnlineMaps.Key"
-            android:value="undefined" />
+            android:value="SgWovXlm6xyyjmeSm1qcZKCM0LNTGRKO" />
 
         <meta-data
             android:name="OnlineRouting.Key"
-            android:value="undefined" />
+            android:value="SgWovXlm6xyyjmeSm1qcZKCM0LNTGRKO" />
         <meta-data
             android:name="OnlineSearch.Key"
-            android:value="undefined" />
+            android:value="SgWovXlm6xyyjmeSm1qcZKCM0LNTGRKO" />
         <meta-data
             android:name="OnlineTraffic.Key"
-            android:value="undefined" />
+            android:value="SgWovXlm6xyyjmeSm1qcZKCM0LNTGRKO" />
         <meta-data
             android:name="GeofencingApi.Key"
-            android:value="undefined" />
+            android:value="SgWovXlm6xyyjmeSm1qcZKCM0LNTGRKO" />
         end::doc_config_services[]
-
-        -->
 
 
     </application>
